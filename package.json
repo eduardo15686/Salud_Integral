@@ -16,9 +16,22 @@
         "vue": "^3.2.37"
     },
     "dependencies": {
+        "@devindex/vue-mask": "^2.0.3",
+        "@fortawesome/fontawesome-svg-core": "^6.4.0",
+        "@fortawesome/free-solid-svg-icons": "^6.4.0",
+        "@fortawesome/vue-fontawesome": "^3.0.3",
         "@vitejs/plugin-vue": "^4.2.3",
+        "@vueform/multiselect": "^2.6.2",
+        "font-awesome": "^4.7.0",
+        "primevue": "^3.29.1",
         "v-mask": "^2.3.0",
+        "v-money3": "^3.24.0",
         "vue": "^3.3.4",
-        "vue-loader": "^17.1.1"
+        "vue-currency-input": "^3.0.5",
+        "vue-loader": "^17.1.1",
+        "vue-money-format": "^1.2.4",
+        "vue-multiselect": "^2.1.7",
+        "vue-sweetalert2": "^5.0.5",
+        "vue3-treeselect": "^0.1.10"
     }
 }

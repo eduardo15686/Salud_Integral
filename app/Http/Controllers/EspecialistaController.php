@@ -18,11 +18,13 @@ class EspecialistaController extends Controller
         $especialista->nombre = $request['nombre'];
         $especialista->apellido_pat = $request['paterno'];
         $especialista->apellido_mat = $request['materno'];
-        $especialista->titulo = $request['titulo'];;
-        $especialista->celular = $request['celular'];;
-        $especialista->correo = $request['correo'];;
-        $especialista->deposito = 200.00;
-        $especialista->slug = '$this->genSlug()';
+        $especialista->titulo = $request['titulo'];
+        $especialista->celular = $request['celular'];
+        $especialista->correo = $request['correo'];
+        $especialista->deposito = $request['deposito'];
+        $especialista->id_servicio = '1,2,3,4,5';
+        $especialista->descripcion = $request['descripcion'];
+        $especialista->slug = '';
         $especialista->estatus = 'Activo';
         $especialista->created_by = Auth::user()->id;
         $especialista->updated_by = Auth::user()->id;
@@ -35,9 +37,10 @@ class EspecialistaController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function getInfoEspecialista()
     {
-        //
+        $especialistaInfo = Especialista::where('user_id', Auth::user()->id)->where('estatus', 'Activo')->first();
+        return response()->json($especialistaInfo, 200);
     }
 
     /**

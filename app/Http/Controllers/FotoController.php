@@ -16,9 +16,9 @@ class FotoController extends Controller
     public function obtenerFoto()
     {
         $imagenPerfil = Foto::where('user_id', Auth::user()->id)
-            ->get();
+            ->first();
 
-        return (compact('imagenPerfil'));
+        return asset('img/fotos/' . $imagenPerfil['imagen_path']);
     }
 
     /**

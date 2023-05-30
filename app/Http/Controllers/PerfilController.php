@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 
 class PerfilController extends Controller
 {
-    public function GetPerfiles()
+    public function getPerfiles()
     {
         $perfiles = Perfil::all()->where('estatus', 'Activo');
 

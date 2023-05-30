@@ -67,7 +67,7 @@
                                     $opciones .= '<li class="sidebar-item"><a class="sidebar-link" data-bs-target="#opc' . $opcion['id'] . '-nav" data-bs-toggle="collapse" href="#" aria-expanded="false" ><i class="' . $opcion['class'] . '"></i><span>' . $opcion['text_html'] . '</span><i class="bi bi-chevron-down ms-auto"></i></a><ul id="opc' . $opcion['id'] . '-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">';
 
                                 foreach ($array_submenu as $sub) {
-                                    $opciones .= '<li><a href="' . asset($sub['url']) . '"><i class="' . $sub['class'] . '"></i><span>' . $sub['text_html'] . '</span></a></li>';
+                                    $opciones .= '<li class="sidebar-item" style="margin-left: 20px;"><a class="sidebar-link" href="' . asset($sub['url']) . '"><i class="' . $sub['class'] . '"></i><span>' . $sub['text_html'] . '</span></a></li>';
                                 }
                                 $opciones .= '</ul></li>';
                             } else {
@@ -113,7 +113,7 @@
                             <span class="d-none d-md-block ps-2">{{ Auth::user()->name }}</span>
                             <li class="nav-item dropdown">
                                 <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="drop2" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <img src="../img/fotos/cwamp64tmpphp4b6dtmp.png" alt="" width="35" height="35" class="rounded-circle">
+                                    <img src="" alt="" width="35" height="35" class="rounded-circle">
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up" aria-labelledby="drop2">
                                     <div class="message-body">

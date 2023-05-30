@@ -7,7 +7,11 @@
 import './bootstrap';
 import { createApp } from 'vue';
 
+import VueMask from '@devindex/vue-mask'; // <-- ADD THIS LINE
 
+import VueSweetalert2 from 'vue-sweetalert2';
+import 'sweetalert2/dist/sweetalert2.min.css';
+import PrimeVue from 'primevue/config';
 /**
  * Next, we will create a fresh Vue application instance. You may then begin
  * registering components with the application instance so they are ready
@@ -16,36 +20,22 @@ import { createApp } from 'vue';
 
 const app = createApp({});
 
-import { VueMaskDirective } from 'v-mask'
-app.directive('mask', VueMaskDirective);
+app.use(VueMask);  // <-- ADD THIS LINE
+app.use(VueSweetalert2);
+app.use(PrimeVue);
 
-
-import ExampleComponent from './components/ExampleComponent.vue';
-app.component('example-component', ExampleComponent);
 
 import Especialista from './components/clientes/Especialista.vue';
 app.component('especialista', Especialista);
 
-// Vue.component('example-component', require('./components/ExampleComponent.vue').default);
-// Vue.component('cliente', require('./components/clientes/cliente.vue').default);
-// Vue.component('prospecto', require('./components/clientes/prospecto.vue').default);
-// Vue.component('usuario', require('./components/configuracion/usuario.vue').default);
-// Vue.component('amortizacion', require('./components/configuracion/amortizacion.vue').default);
-// Vue.component('empresa', require('./components/empresas/empresa.vue').default);
-// Vue.component('control-credito', require('./components/control-creditos/control-credito.vue').default);
-// Vue.component('validacion-creditos', require('./components/validacion-creditos/validacion-creditos.vue').default);
-// Vue.component('seguimientos-pagos', require('./components/seguimientos-pagos/seguimientos-pagos.vue').default);
-// Vue.component('lista-pagos', require('./components/lista-pagos/lista-pagos.vue').default);
-// Vue.component('lista-retencion', require('./components/lista-retencion/lista-retencion.vue').default);
-// Vue.component('creditos-en-covertura', require('./components/creditos-en-covertura/creditos-en-covertura.vue').default);
-// Vue.component('creditos-activos', require('./components/creditos-activos/creditos-activos.vue').default);
-// Vue.component('consulta-rapida', require('./components/consulta-rapida/consulta-rapida.vue').default);
-// Vue.component('compra-deuda', require('./components/compra-deuda/compra-deuda.vue').default);
-// Vue.component('modal-eliminar', require('./components/modales/modal-eliminar.vue').default);
-// Vue.component('modal-select-creditos', require('./components/modales/modal-select-creditos.vue').default);
-// Vue.component('administrar', require('./components/usuarios/administrar.vue').default);
-// Vue.component('perfilador', require('./components/usuarios/perfilador.vue').default);
-// Vue.component('periodos', require('./components/configuracion/periodos.vue').default);
+import Administrar from './components/usuarios/Administrar.vue';
+app.component('administrar', Administrar);
+
+import Perfilador from './components/usuarios/Perfilador.vue';
+app.component('perfilador', Perfilador);
+
+import Servicios from './components/usuarios/Servicio.vue';
+app.component('servicios', Servicios);
 
 // Vue.component('pagination', require('laravel-vue-pagination'));
 /**
