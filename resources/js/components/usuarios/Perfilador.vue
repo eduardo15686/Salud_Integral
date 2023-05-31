@@ -66,12 +66,11 @@
     </div>
 </template>
 <script>
-import Treeselect from 'vue3-treeselect'
-import 'vue3-treeselect/dist/vue3-treeselect.css'
+
 
 export default {
     props: ['opciones', 'opcionesboton'],
-    components: { Treeselect },
+
     data() {
         return {
             value: null,
