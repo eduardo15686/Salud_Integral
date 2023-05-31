@@ -145,17 +145,25 @@
                             </div>
                             <div class="row">
                                 <h3>Información de Consulta</h3>
-
                             </div>
                             <div class="row">
-                                <div class="form-floating col-md-6">
+                                <div class="form-floating col-md-3">
                                     <div class="form-floating mb-3">
                                         <money3 type="text" class="form-control" id="floatingInput"
                                             v-model="guardarEspecialista.deposito" v-bind="config"></money3>
                                         <label for="floatingInput">Monto de Solicitud de Deposito</label>
                                     </div>
                                 </div>
-                                <div class="form-floating col-md-6">
+                                <div class="form-floating col-md-9">
+                                    <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea"
+                                        v-model="guardarEspecialista.descripcion"></textarea>
+                                    <label for="floatingTextarea">Descripción/Información
+                                        Adicional</label>
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="form-floating col-md-4">
                                     <select class="form-select" aria-label="Default select example" id="selectOptions">
                                         <option selected>Selecciona una Opción</option>
                                         <option value="1">Psicoterapia Clínica</option>
@@ -164,13 +172,23 @@
                                     </select>
                                     <label for="selectOptions">Servicios</label>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="form-floating col-md-12">
-                                    <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea"
-                                        v-model="guardarEspecialista.descripcion"></textarea>
-                                    <label for="floatingTextarea">Descripción/Información
-                                        Adicional</label>
+                                <div class="form-floating col-md-4">
+                                    <select class="form-select" aria-label="Default select example" id="selectOptions">
+                                        <option selected>Selecciona una Opción</option>
+                                        <option value="1">Psicoterapia Clínica</option>
+                                        <option value="2">Terapia Familiar</option>
+                                        <option value="3">Tanatología </option>
+                                    </select>
+                                    <label for="selectOptions">Servicios</label>
+                                </div>
+                                <div class="form-floating col-md-4">
+                                    <select class="form-select" aria-label="Default select example" id="selectOptions">
+                                        <option selected>Selecciona una Opción</option>
+                                        <option value="1">Psicoterapia Clínica</option>
+                                        <option value="2">Terapia Familiar</option>
+                                        <option value="3">Tanatología </option>
+                                    </select>
+                                    <label for="selectOptions">Servicios</label>
                                 </div>
                             </div>
                         </div>

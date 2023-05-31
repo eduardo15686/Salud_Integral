@@ -11,7 +11,6 @@ import VueMask from '@devindex/vue-mask'; // <-- ADD THIS LINE
 
 import VueSweetalert2 from 'vue-sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';
-import PrimeVue from 'primevue/config';
 /**
  * Next, we will create a fresh Vue application instance. You may then begin
  * registering components with the application instance so they are ready
@@ -22,7 +21,7 @@ const app = createApp({});
 
 app.use(VueMask);  // <-- ADD THIS LINE
 app.use(VueSweetalert2);
-app.use(PrimeVue);
+
 
 
 import Especialista from './components/clientes/Especialista.vue';
