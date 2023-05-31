@@ -19,7 +19,7 @@
                         </div>
                         <div v-else style="text-align: end;">
                             <button type="button" class="btn btn-secondary" style="background-color: #a1b6a7"
-                                @click="addDatosEspecialista">
+                                @click="editarDatosEspecialista">
                                 Editar Información
                             </button>
                         </div>
@@ -253,16 +253,13 @@ export default {
                 })
 
                 .catch((error) => { });
-
-            //console.log(thisVue.banderaBoton);
             await axios
                 .get(thisVue.path_url + "/api/especialista/getInfoEspecialista")
                 .then((res) => {
                     thisVue.infoEspecialista = res.data;
-                    console.log(res.data);
+                    thisVue.banderaBoton = Object.entries(res.data).length === 0;
                     thisVue.infoEspecialista.nombre = res.data.titulo + ' ' + res.data.nombre + ' ' + res.data.apellido_pat + ' ' + res.data.apellido_mat;
-                    //thisVue.banderaBoton = Object.entries(res.data).length === 0;
-                    console.log(Object.entries(res.data).length === 0);
+
                 })
 
                 .catch((error) => { });
@@ -270,6 +267,9 @@ export default {
 
         addDatosEspecialista() {
             $("#datosEspecialista").modal("show");
+        },
+        editarDatosEspecialista() {
+            console.log('editar informacion del especialista')
         },
 
         async guardarInfoEspecialista() {

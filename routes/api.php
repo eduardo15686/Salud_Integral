@@ -38,8 +38,12 @@ Route::middleware('auth:sanctum')->prefix('/usuarios')->group(function () {
 });
 
 Route::middleware('auth:sanctum')->prefix('/servicios')->group(function () {
-    Route::post('/nuevoServicio', [ServicioController::class, 'nuevoServicio']);
     Route::get('/getServicios', [ServicioController::class, 'getServicios']);
+    Route::get('/getCategorias/{id}', [ServicioController::class, 'getCategorias']);
+    Route::get('/getSubCategorias/{id}', [ServicioController::class, 'getSubCategorias']);
+    Route::post('/nuevoServicio', [ServicioController::class, 'nuevoServicio']);
+    Route::post('/nuevaCategoria', [ServicioController::class, 'nuevaCategoria']);
+    Route::post('/nuevaSubCategoria', [ServicioController::class, 'nuevaSubCategoria']);
 });
 
 Route::middleware('auth:sanctum')->prefix('/perfiles')->group(function () {
