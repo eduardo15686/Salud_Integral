@@ -6,6 +6,7 @@
                     <h1>Perfil</h1>
                 </div>
                 <div class="col-md-4">
+
                     <div v-for="icon in opcionesboton" class="col-auto">
                         <!-- <button type="button" class="btn btn-primary float-end mb-2 ms-2" style="background-color: #a1b6a7"
                             @click.capture="disparador(icon.function)">
@@ -37,8 +38,8 @@
             <div class="row" v-else>
                 <div class="col-md-6">
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="nombreCompleto" v-model="infoEspecialista.nombre"
-                            disabled>
+                        <input type="text" class="form-control" id="nombreCompleto"
+                            v-model="infoEspecialista.nombre_completo" disabled>
                         <label for="nombreCompleto">Nombre del Especialista</label>
                     </div>
                     <div class="form-floating mb-3">
@@ -56,16 +57,12 @@
                         <label for="correo">Correo Electronico</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="correo" v-model="infoEspecialista.correo" disabled>
-                        <label for="correo">Correo Electronico</label>
-                    </div>
-                    <div class="form-floating mb-3">
                         <input type="text" class="form-control" id="descripcion" v-model="infoEspecialista.descripcion"
                             disabled>
                         <label for="descripcion">Descripción</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="servicios" v-model="infoEspecialista.id_servicio"
+                        <input type="text" class="form-control" id="servicios" v-model="infoEspecialista.servicios"
                             disabled>
                         <label for="servicios">Servicios</label>
                     </div>
@@ -74,8 +71,10 @@
                     style=" display: flex; justify-content: center; align-items: center; flex-direction: column;">
                     <img id="imagenPerfil" :src="imagenPerfil" style="width: 70%;" />
                     <p>Foto de Perfil</p>
+
                 </div>
             </div>
+
             <!-- Modal Registrar Datos Especialista-->
             <div class="modal fade modal-lg" id="datosEspecialista" data-bs-backdrop="static" tabindex="-1"
                 aria-labelledby="datosEspecialistaLabel" aria-hidden="true">
@@ -156,39 +155,19 @@
                                 </div>
                                 <div class="form-floating col-md-9">
                                     <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea"
-                                        v-model="guardarEspecialista.descripcion"></textarea>
+                                        v-model="guardarEspecialista.descripcion" maxlength="300"></textarea>
                                     <label for="floatingTextarea">Descripción/Información
                                         Adicional</label>
                                 </div>
 
                             </div>
                             <div class="row">
-                                <div class="form-floating col-md-4">
-                                    <select class="form-select" aria-label="Default select example" id="selectOptions">
-                                        <option selected>Selecciona una Opción</option>
-                                        <option value="1">Psicoterapia Clínica</option>
-                                        <option value="2">Terapia Familiar</option>
-                                        <option value="3">Tanatología </option>
-                                    </select>
-                                    <label for="selectOptions">Servicios</label>
-                                </div>
-                                <div class="form-floating col-md-4">
-                                    <select class="form-select" aria-label="Default select example" id="selectOptions">
-                                        <option selected>Selecciona una Opción</option>
-                                        <option value="1">Psicoterapia Clínica</option>
-                                        <option value="2">Terapia Familiar</option>
-                                        <option value="3">Tanatología </option>
-                                    </select>
-                                    <label for="selectOptions">Servicios</label>
-                                </div>
-                                <div class="form-floating col-md-4">
-                                    <select class="form-select" aria-label="Default select example" id="selectOptions">
-                                        <option selected>Selecciona una Opción</option>
-                                        <option value="1">Psicoterapia Clínica</option>
-                                        <option value="2">Terapia Familiar</option>
-                                        <option value="3">Tanatología </option>
-                                    </select>
-                                    <label for="selectOptions">Servicios</label>
+                                <div class="form-floating col-md-12">
+                                    <p>Servicios que ofrece</p>
+                                    <Multiselect v-model="guardarEspecialista.id_servicio" mode="tags"
+                                        :close-on-select="false" :searchable="true" :create-option="false"
+                                        :options="options" />
+
                                 </div>
                             </div>
                         </div>
@@ -205,6 +184,118 @@
                 </div>
             </div>
             <!-- End Modal Registrar Datos Especialista -->
+
+            <!-- Modal Editar Datos Especialista-->
+            <div class="modal fade modal-lg" id="editarDatosEspecialista" data-bs-backdrop="static" tabindex="-1"
+                aria-labelledby="editarDatosEspecialistaLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="editarDatosEspecialistaLabel">
+                                Editar Información
+                            </h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <h3>Datos Personales</h3>
+                                <div class="form-floating col-md-4">
+                                    <input type="text" class="form-control" id="floatingInput" placeholder="Nombre"
+                                        v-model="infoEspecialista.nombre" />
+                                    <label for="floatingInput">Nombre</label>
+                                </div>
+                                <div class="form-floating col-md-4">
+                                    <input type="text" class="form-control" id="floatingInput" placeholder="Paterno"
+                                        v-model="infoEspecialista.apellido_pat" />
+                                    <label for="floatingInput">Apellido Paterno</label>
+                                </div>
+                                <div class="form-floating col-md-4">
+                                    <input type="text" class="form-control" id="floatingInput" placeholder="Materno"
+                                        v-model="infoEspecialista.apellido_mat" />
+                                    <label for="floatingInput">Apellido Materno</label>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" id="floatingCel"
+                                            placeholder="Titulo/Especialidad" v-model="infoEspecialista.titulo" />
+                                        <label for="floatingCel">Titulo/Especialidad</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" v-mask="'###-#######'" maxlength="11"
+                                            id="floatingCel" placeholder="Celular Ej. (618-1234567)" v-model="
+                                                infoEspecialista.celular
+                                            " />
+                                        <label for="floatingCel">Celular Ej. (618-1234567)</label>
+                                    </div>
+                                </div>
+                                <div class="form-floating col-md-5">
+                                    <input type="email" class="form-control" id="floatingInput"
+                                        placeholder="name@example.com" v-model="infoEspecialista.correo" />
+                                    <label for="floatingInput">Correo Electronico</label>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <label for="formFileSm" class="form-label">Foto de Perfil</label>
+                                    <input class="form-control form-control" name="Submit" id="formFileSm" type="file"
+                                        @change="obtenerImagen" />
+                                </div>
+                                <div v-if="banderaImagen == false" class="col-md-4" style="text-align: center">
+                                    <div class="circular--landscape">
+                                        <img :src="imagenPerfil" />
+                                    </div>
+                                </div>
+                                <div v-else class="col-md-4" style="text-align: center">
+                                    <div class="circular--landscape">
+                                        <img :src="imagen" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <h3>Información de Consulta</h3>
+                            </div>
+                            <div class="row">
+                                <div class="form-floating col-md-3">
+                                    <div class="form-floating mb-3">
+                                        <money3 type="text" class="form-control" id="floatingInput"
+                                            v-model="infoEspecialista.deposito" v-bind="config"></money3>
+                                        <label for="floatingInput">Monto de Solicitud de Deposito</label>
+                                    </div>
+                                </div>
+                                <div class="form-floating col-md-9">
+                                    <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea"
+                                        v-model="infoEspecialista.descripcion" maxlength="300"></textarea>
+                                    <label for="floatingTextarea">Descripción/Información
+                                        Adicional</label>
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="form-floating col-md-12">
+                                    <Multiselect v-model="serviciosSeleccionados" mode="tags" :close-on-select="false"
+                                        :searchable="true" :create-option="false" :options="options" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                Cerrar
+                            </button>
+                            <button type="button" class="btn btn-primary float-end mb-2 ms-2"
+                                style="background-color: #a1b6a7" @click="editarInfoEspecialista()">
+                                Editar Información
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- END Modal Editar Datos Especialista-->
         </div>
     </div>
 </template>
@@ -222,6 +313,7 @@ export default {
     data() {
         return {
             amount: 0,
+            options: [],
             config: {
                 masked: false,
                 prefix: '$',
@@ -242,6 +334,7 @@ export default {
             path_url: window.vue_url,
             guardarEspecialista: {
                 deposito: 0,
+                id_servicio: []
             },
             infoEspecialista: {
 
@@ -252,6 +345,8 @@ export default {
             },
             imagenPerfil: "",
             banderaBoton: false,
+            banderaImagen: false,
+            serviciosSeleccionados: [],
 
         };
     },
@@ -259,35 +354,88 @@ export default {
         disparador(funcion, obj = null) {
             this[funcion](obj);
         },
+        addDatosEspecialista() {
+            $("#datosEspecialista").modal("show");
+        },
+
+        editarDatosEspecialista() {
+
+            let serviciosID = this.infoEspecialista.id_servicio.split(', ');
+            serviciosID.forEach(element => {
+                this.serviciosSeleccionados.push(element)
+            });
+            console.log(serviciosID);
+            $("#editarDatosEspecialista").modal("show");
+        },
+
+        async obetenerServicios() {
+            const thisVue = this;
+            let llenarOptions = [];
+            await axios.get(thisVue.path_url + `/api/especialista/getSubCategorias`)
+                .then(res => {
+                    res.data.forEach(element => {
+                        thisVue.options.push({
+                            value: element.id,
+                            label: element.text_html,
+                        });
+                    });
+                })
+                .catch(error => {
+                    this.errors = JSON.parse(
+                        JSON.stringify(error.response.data.errors)
+                    );
+                    console.log(this.errors);
+                });
+        },
 
         async obtenerDatos() {
-
             const thisVue = this;
-
             await axios
-                .get(thisVue.path_url + "/api/especialista/obtenerFoto")
+                .get(thisVue.path_url + "/api/especialista/obtenerLinkFoto")
                 .then((res) => {
+                    console.log(res.data);
                     thisVue.imagenPerfil = res.data;
                 })
 
                 .catch((error) => { });
+            // await axios
+            //     .get(thisVue.path_url + "/api/especialista/obtenerFoto")
+            //     .then((res) => {
+            //         console.log(res.data);
+            //     })
+            //     .catch((error) => { });
+
             await axios
                 .get(thisVue.path_url + "/api/especialista/getInfoEspecialista")
                 .then((res) => {
-                    thisVue.infoEspecialista = res.data;
-                    thisVue.banderaBoton = Object.entries(res.data).length === 0;
-                    thisVue.infoEspecialista.nombre = res.data.titulo + ' ' + res.data.nombre + ' ' + res.data.apellido_pat + ' ' + res.data.apellido_mat;
-
+                    thisVue.infoEspecialista = res.data[0];
+                    thisVue.banderaBoton = Object.entries(res.data[0]).length === 0;
+                    thisVue.infoEspecialista.nombre_completo = res.data[0].titulo + ' ' + res.data[0].nombre + ' ' + res.data[0].apellido_pat + ' ' + res.data[0].apellido_mat;
+                    thisVue.infoEspecialista.servicios = res.data[1];
                 })
 
                 .catch((error) => { });
         },
 
-        addDatosEspecialista() {
-            $("#datosEspecialista").modal("show");
-        },
-        editarDatosEspecialista() {
-            console.log('editar informacion del especialista')
+        async editarInfoEspecialista() {
+            const thisVue = this;
+            thisVue.infoEspecialista.nuevoServicio = thisVue.serviciosSeleccionados;
+            console.log(thisVue.infoEspecialista);
+            await axios
+                .post(
+                    thisVue.path_url + "/api/especialista/editarEspecialista",
+                    thisVue.infoEspecialista
+                )
+                .then((res) => {
+                    this.obtenerDatos(); this.$swal(
+                        'Información Editada',
+                        res.data.message,
+                        'success'
+                    );
+                    $("#editarDatosEspecialista").modal("hide");
+                })
+
+                .catch((error) => { });
         },
 
         async guardarInfoEspecialista() {
@@ -295,7 +443,7 @@ export default {
             let formData = new FormData();
 
             formData.append("imagen", thisVue.product.imagen);
-
+            console.log(thisVue.guardarEspecialista);
             await axios
                 .post(
                     thisVue.path_url + "/api/especialista/updateFoto",
@@ -317,11 +465,14 @@ export default {
         },
 
         obtenerImagen(e) {
+
             const thisVue = this;
+            thisVue.banderaImagen = true;
             let file = e.target.files[0];
             thisVue.product.imagen = file;
 
             thisVue.cargarImagen(file);
+
         },
 
         cargarImagen(file) {
@@ -338,6 +489,7 @@ export default {
     },
     mounted() {
         this.obtenerDatos();
+        this.obetenerServicios();
     },
     computed: {
         imagen() {

@@ -13,7 +13,7 @@
                 </div>
             </div>
             <div>
-                <table class="table">
+                <table class="table table-striped">
                     <thead>
                         <tr>
                             <th scope="col">#</th>
@@ -167,6 +167,7 @@ export default {
             await axios.get(thisVue.path_url + `/api/usuarios/getUsuarios`)
                 .then(res => {
                     thisVue.tabla_users = res.data;
+                    console.log(res.data);
                 })
                 .catch(error => {
                     this.errors = JSON.parse(

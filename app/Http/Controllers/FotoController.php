@@ -13,11 +13,10 @@ class FotoController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function obtenerFoto()
+    public function obtenerLinkFoto()
     {
         $imagenPerfil = Foto::where('user_id', Auth::user()->id)
             ->first();
-
         return asset('img/fotos/' . $imagenPerfil['imagen_path']);
     }
 

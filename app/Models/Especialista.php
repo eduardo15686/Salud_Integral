@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Especialista extends Model
 {
     use HasFactory;
+
+    public function servicio()
+    {
+        return $this->hasMany('App\Models\Especialista', 'id_servicio');
+    }
 }

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Perfil;
+use App\Models\Servicio;
 
 class UsuarioController extends Controller
 {
@@ -46,4 +47,6 @@ class UsuarioController extends Controller
         else
             return json_encode(['message' => 'Ocurrio un error, contacte al administrador del sistema.'], 401);
     }
+
+
 }

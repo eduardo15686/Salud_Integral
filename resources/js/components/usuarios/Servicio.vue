@@ -23,8 +23,8 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="item in tablaServicios">
-                                <th scope="row">{{ item.id }}</th>
+                            <tr v-for="(item, index) in tablaServicios">
+                                <th scope="row">{{ index + 1 }}</th>
                                 <td>{{ item.text_html }}</td>
                                 <td><a v-for="icon in opciones"
                                         style="padding-right: 10px; cursor:pointer; font-size: large;"><i
@@ -37,12 +37,7 @@
                 </div>
             </div>
 
-
-            <!-- <Multiselect v-model="value" mode="tags" :groups="true" :close-on-select="false" :searchable="true"
-                :create-option="false" :options="options" />
-            {{ value }} -->
             <!-- MODALES -->
-
             <!-- Agregar Categoria servicio nivel 1 -->
             <div class="modal fade" id="modalNuevoServicio" tabindex="-1" aria-labelledby="modalNuevoServicioLabel"
                 aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
@@ -117,8 +112,8 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr v-for="item in tablaCategorias">
-                                            <th scope="row">{{ item.id }}</th>
+                                        <tr v-for="(item, index) in tablaCategorias">
+                                            <th scope="row">{{ index + 1 }}</th>
                                             <td>{{ item.text_html }}</td>
                                             <td>
                                                 <a style="padding-left: 10px; cursor:pointer; font-size: large;">
@@ -192,8 +187,8 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr v-for="item in tablaSubcategorias">
-                                            <th scope="row">{{ item.id }}</th>
+                                        <tr v-for="(item, index) in tablaSubcategorias">
+                                            <th scope="row">{{ index + 1 }}</th>
                                             <td>{{ item.text_html }}</td>
                                             <td>
                                             </td>

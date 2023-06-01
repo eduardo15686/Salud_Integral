@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Especialista;
+use App\Models\Servicio;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -13,6 +14,8 @@ class EspecialistaController extends Controller
      */
     public function guardarEspecialista(Request $request)
     {
+        $id_servicio = implode(', ', $request['id_servicio']);
+
         $especialista = new Especialista();
         $especialista->user_id = Auth::user()->id;
         $especialista->nombre = $request['nombre'];
@@ -22,7 +25,7 @@ class EspecialistaController extends Controller
         $especialista->celular = $request['celular'];
         $especialista->correo = $request['correo'];
         $especialista->deposito = $request['deposito'];
-        $especialista->id_servicio = '1,2,3,4,5';
+        $especialista->id_servicio = $id_servicio;
         $especialista->descripcion = $request['descripcion'];
         $especialista->slug = '';
         $especialista->estatus = 'Activo';
@@ -39,50 +42,57 @@ class EspecialistaController extends Controller
      */
     public function getInfoEspecialista()
     {
-        $especialistaInfo = Especialista::where('user_id', Auth::user()->id)->where('estatus', 'Activo')->first();
-        return response()->json($especialistaInfo, 200);
+        $servicios_nombre = [];
+        $especialistaInfo = Especialista::where('user_id', Auth::user()->id)
+            ->where('estatus', 'Activo')
+            ->first();
+
+        if (!empty($especialistaInfo)) {
+            $servicios = explode(',', $especialistaInfo['id_servicio']);
+            foreach ($servicios as $servicio) {
+                $servicioInfo = Servicio::where('id', $servicio)
+                    ->where('estatus', 'Activo')
+                    ->first();
+                array_push($servicios_nombre, $servicioInfo['text_html']);
+            }
+            $infoReal = [
+                $especialistaInfo,
+                implode(", ", $servicios_nombre)
+            ];
+            return response()->json($infoReal, 200);
+        }
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function getSubCategorias()
     {
-        //
+        $usuarios = Servicio::where('estatus', 'Activo')
+            ->where('categoria', 'Nivel_3')
+            ->get();
+        return response()->json($usuarios, 200);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Especialista $especialista)
+    public function editarEspecialista(Request $request)
     {
-        //
+        $id_servicio = implode(', ', $request['nuevoServicio']);
+        $especialista = Especialista::find($request['id']);
+        $especialista->nombre = $request['nombre'];
+        $especialista->apellido_pat = $request['apellido_pat'];
+        $especialista->apellido_mat = $request['apellido_mat'];
+        $especialista->titulo = $request['titulo'];
+        $especialista->celular = $request['celular'];
+        $especialista->correo = $request['correo'];
+        $especialista->deposito = $request['deposito'];
+        $especialista->id_servicio = $id_servicio;
+        $especialista->descripcion = $request['descripcion'];
+        $especialista->slug = '';
+        $especialista->estatus = 'Activo';
+        $especialista->created_by = Auth::user()->id;
+        $especialista->updated_by = Auth::user()->id;
+        if ($especialista->save())
+            return json_encode(['message' => 'Datos Editados Correctamente.'], 200);
+        else
+            return json_encode(['message' => 'Ocurrio un error, contacte al administrador del sistema.'], 401);
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Especialista $especialista)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Especialista $especialista)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Especialista $especialista)
-    {
-        //
-    }
-
     public function genSlug()
     {
 
