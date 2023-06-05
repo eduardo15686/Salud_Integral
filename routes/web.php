@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\EspecialistaController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,10 +19,11 @@ Route::get('/', function () {
     if (Auth::check()) {
         return Redirect::to('/home');
     }
-    return view('auth.login');
+    return view('inicio');
     // return view('welcome');
 });
 
+Route::get('/cita', [EspecialistaController::class, 'cita']);
 
 
 Auth::routes();

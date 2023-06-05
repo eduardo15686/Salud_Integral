@@ -12,8 +12,7 @@ class UsuarioController extends Controller
 {
     public function getUsuarios()
     {
-        $usuarios = User::where('estatus', 'Activo')
-            ->with('perfil')->get();
+        $usuarios = User::with('perfil')->get();
         return response()->json($usuarios, 200);
 
     }

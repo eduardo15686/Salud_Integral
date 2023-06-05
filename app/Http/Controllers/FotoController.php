@@ -16,6 +16,7 @@ class FotoController extends Controller
     public function obtenerLinkFoto()
     {
         $imagenPerfil = Foto::where('user_id', Auth::user()->id)
+            ->orderBy('id', 'desc')
             ->first();
         return asset('img/fotos/' . $imagenPerfil['imagen_path']);
     }

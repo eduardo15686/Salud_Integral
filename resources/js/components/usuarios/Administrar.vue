@@ -19,6 +19,7 @@
                             <th scope="col">#</th>
                             <th scope="col">Nombre</th>
                             <th scope="col">Correo</th>
+                            <th scope="col">Estado</th>
                             <th scope="col">Perfil</th>
                             <th scope="col">Acciones</th>
                         </tr>
@@ -28,10 +29,17 @@
                             <th scope="row">{{ item.id }}</th>
                             <td>{{ item.name }}</td>
                             <td>{{ item.email }}</td>
+                            <td>{{ item.estatus }}</td>
                             <td>{{ item.perfil.nombre_perfil }}</td>
-                            <td><a v-for="icon in opciones" style="padding-left: 10px;"><i
-                                        :class="icon.class + ' pointer ml-2'" :title="icon.text_html" aria-hidden="true"
+                            <td v-if="item.estatus == 'Activo'"><a v-for="icon in opciones"
+                                    style="padding-left: 10px; cursor:pointer;"><i :class="icon.class + ' pointer ml-2'"
+                                        :title="icon.text_html" aria-hidden="true"
                                         @click.capture="disparador(icon.function, item)"></i></a></td>
+                            <td v-else>
+                                <a style="padding-left: 10px; cursor:pointer; font-size: large;">
+                                    <i title="Reactivar Especialista" class='ml-2 ti ti-check' aria-hidden="true"
+                                        @click=""></i></a>
+                            </td>
                         </tr>
 
                     </tbody>
@@ -148,7 +156,6 @@ export default {
 
         mostrarPassword() {
             var cambio = document.getElementById("floatingContraseña");
-            console.log(cambio);
             if (cambio.type == "password") {
                 cambio.type = "text";
                 $('.icon').removeClass('fa fa-eye-slash').addClass('fa fa-eye');
@@ -167,7 +174,7 @@ export default {
             await axios.get(thisVue.path_url + `/api/usuarios/getUsuarios`)
                 .then(res => {
                     thisVue.tabla_users = res.data;
-                    console.log(res.data);
+
                 })
                 .catch(error => {
                     this.errors = JSON.parse(

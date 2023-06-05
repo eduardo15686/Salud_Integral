@@ -12,8 +12,28 @@ class EspecialistaController extends Controller
     /**
      * Display a listing of the resource.
      */
+
+    public function cita()
+    {
+        $servicios = Servicio::where('categoria', 'Nivel_2')
+            ->get();
+
+        $especialistas = Especialista::all();
+        return view('citas', compact('servicios','especialistas'));
+    }
     public function guardarEspecialista(Request $request)
     {
+
+        $request->validate([
+            'nombre' => 'required',
+            'paterno' => 'required',
+            'materno' => 'required',
+            'titulo' => 'required',
+            'celular' => 'required',
+            'correo' => 'required',
+            'id_servicio' => 'required',
+        ]);
+
         $id_servicio = implode(', ', $request['id_servicio']);
 
         $especialista = new Especialista();
@@ -59,7 +79,7 @@ class EspecialistaController extends Controller
                 $especialistaInfo,
                 implode(", ", $servicios_nombre)
             ];
-            return response()->json($infoReal, 200);
+            return response()->json([$infoReal, $especialistaInfo], 200);
         }
     }
 
