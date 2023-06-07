@@ -8,6 +8,7 @@ use App\Http\Controllers\FotoController;
 use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\ServicioController;
 use App\Http\Controllers\PerfilController;
+use App\Http\Controllers\AgendaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,6 +39,11 @@ Route::middleware('auth:sanctum')->prefix('/usuarios')->group(function () {
     Route::post('/nuevoUsuario', [UsuarioController::class, 'nuevoUsuario']);
     Route::get('/getUsuarios', [UsuarioController::class, 'getUsuarios']);
     Route::post('/deleteUsuario', [UsuarioController::class, 'deleteUsuario']);
+});
+
+Route::middleware('auth:sanctum')->prefix('/agendas')->group(function () {
+    Route::post('/obtenerDias', [AgendaController::class, 'obtenerDias']);
+    Route::get('/getSemanas', [AgendaController::class, 'getSemanas']);
 });
 
 Route::middleware('auth:sanctum')->prefix('/servicios')->group(function () {

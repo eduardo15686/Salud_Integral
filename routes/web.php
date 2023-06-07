@@ -24,6 +24,10 @@ Route::get('/', function () {
 });
 
 Route::get('/cita', [EspecialistaController::class, 'cita']);
+Route::post('/cita', [EspecialistaController::class, 'filtrar'])->name('filtrar');
+Route::get('/finalizar', function() {return view('finalizado');})->name('finalizar');
+
+
 
 
 Auth::routes();
@@ -50,3 +54,8 @@ Route::get('/usuarios/perfilador', function () {
 Route::get('/usuarios/servicios', function () {
     return view('panels.usuarios.servicios');
 })->name('servicios')->middleware('auth')->middleware('Permisos:1-10');
+
+
+Route::get('/agenda', function () {
+    return view('panels.agenda.horario');
+})->name('horario')->middleware('auth')->middleware('Permisos:1-18');

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Especialista;
+use App\Models\Prospecto;
 use App\Models\Servicio;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -17,10 +18,28 @@ class EspecialistaController extends Controller
     {
         $servicios = Servicio::where('categoria', 'Nivel_2')
             ->get();
-
-        $especialistas = Especialista::all();
-        return view('citas', compact('servicios','especialistas'));
+        $especialistas = Especialista::with('foto')->get();
+        return view('citas', compact('servicios', 'especialistas'));
     }
+
+    public function filtrar(Request $request)
+    {
+        $servicio_id = implode(', ', $request['registro']);
+        $prospecto = new Prospecto();
+        $prospecto->especialista_id = $request['especialista'];
+        $prospecto->servicios_id = $servicio_id;
+        $prospecto->nombre = $request['nombre'];
+        $prospecto->correo = $request['correo'];
+        $prospecto->celular = $request['celular'];
+        $prospecto->edad = $request['edad'];
+        $prospecto->primera_vez = $request['primera_vez'];
+        $prospecto->proceso = 'Enviada';
+        $prospecto->estatus = 'Activo';
+        $prospecto->save();
+
+        return view('finalizado');
+    }
+
     public function guardarEspecialista(Request $request)
     {
 
@@ -52,7 +71,7 @@ class EspecialistaController extends Controller
         $especialista->created_by = Auth::user()->id;
         $especialista->updated_by = Auth::user()->id;
         if ($especialista->save())
-            return json_encode(['message' => 'Datod Guardados Correctamente.'], 200);
+            return json_encode(['message' => 'Datos Guardados Correctamente.'], 200);
         else
             return json_encode(['message' => 'Ocurrio un error, contacte al administrador del sistema.'], 401);
     }

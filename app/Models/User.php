@@ -48,4 +48,9 @@ class User extends Authenticatable
     {
         return $this->belongsTo('App\Models\Perfil');
     }
+    public function foto()
+    {
+        return $this->hasOne('App\Models\Foto', 'user_id');
+    }
+
 }

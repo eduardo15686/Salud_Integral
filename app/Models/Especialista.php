@@ -13,4 +13,10 @@ class Especialista extends Model
     {
         return $this->hasMany('App\Models\Especialista', 'id_servicio');
     }
+
+    public function foto()
+    {
+        return $this->hasOne('App\Models\Foto', 'user_id', 'user_id');
+    }
+    
 }

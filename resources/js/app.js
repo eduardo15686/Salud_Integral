@@ -36,6 +36,9 @@ app.component('perfilador', Perfilador);
 import Servicios from './components/usuarios/Servicio.vue';
 app.component('servicios', Servicios);
 
+import Agenda from './components/agenda/Horario.vue';
+app.component('agenda', Agenda);
+
 // Vue.component('pagination', require('laravel-vue-pagination'));
 /**
  * The following block of code may be used to automatically register your
