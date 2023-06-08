@@ -60,6 +60,7 @@ export default {
                         'Contraseña Cambiada',
                         'La contraseña se cambio de manera correcta',
                         'success'
+                        
                     );
                     thisVue.clear();
                 })
