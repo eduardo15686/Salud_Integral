@@ -39,6 +39,9 @@ app.component('servicios', Servicios);
 import Agenda from './components/agenda/Horario.vue';
 app.component('agenda', Agenda);
 
+import Password from './components/clientes/Password.vue';
+app.component('password', Password);
+
 // Vue.component('pagination', require('laravel-vue-pagination'));
 /**
  * The following block of code may be used to automatically register your

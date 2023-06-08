@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Especialista;
 use App\Models\Prospecto;
+use App\Models\User;
 use App\Models\Servicio;
+use Hash;
+use Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -132,6 +135,31 @@ class EspecialistaController extends Controller
         else
             return json_encode(['message' => 'Ocurrio un error, contacte al administrador del sistema.'], 401);
     }
+
+    public function updatePassword(Request $request)
+    {
+        # Validation
+        $request->validate([
+            'old_password' => 'required',
+            'new_password' => 'required|confirmed',
+            'new_password_confirmation' => 'required',
+        ]);
+        // #Match The Old Password
+        if (!Hash::check($request->old_password, auth()->user()->password) == 1) {
+            return ("Las contraseñas no coinciden");
+        }
+
+        if ($request->new_password != $request->new_password_confirmation) {
+            return ("Las nuevas contraseñas no coinciden");
+        }
+        #Update the new Password
+        User::whereId(auth()->user()->id)->update([
+            'password' => Hash::make($request->new_password)
+        ]);
+
+        return back()->with("status", "Password changed successfully!");
+    }
+
     public function genSlug()
     {
 

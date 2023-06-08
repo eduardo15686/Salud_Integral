@@ -33,6 +33,7 @@ Route::middleware('auth:sanctum')->prefix('/especialista')->group(function () {
     Route::post('/guardarEspecialista', [EspecialistaController::class, 'guardarEspecialista']);
     Route::post('/editarEspecialista', [EspecialistaController::class, 'editarEspecialista']);
     Route::get('/getSubCategorias', [EspecialistaController::class, 'getSubCategorias']);
+    Route::post('/updatePassword', [EspecialistaController::class, 'updatePassword']);
 });
 
 Route::middleware('auth:sanctum')->prefix('/usuarios')->group(function () {
@@ -43,7 +44,9 @@ Route::middleware('auth:sanctum')->prefix('/usuarios')->group(function () {
 
 Route::middleware('auth:sanctum')->prefix('/agendas')->group(function () {
     Route::post('/obtenerDias', [AgendaController::class, 'obtenerDias']);
+    Route::post('/generarAgenda', [AgendaController::class, 'generarAgenda']);
     Route::get('/getSemanas', [AgendaController::class, 'getSemanas']);
+    Route::get('/getHoras', [AgendaController::class, 'getHoras']);
 });
 
 Route::middleware('auth:sanctum')->prefix('/servicios')->group(function () {

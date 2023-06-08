@@ -39,9 +39,10 @@ Route::get('/especialista', function () {
     return view('panels.especialistas.informacion');
 })->name('especialista')->middleware('auth')->middleware('Permisos:1-2');
 
-Route::get('/especialista', function () {
-    return view('panels.especialistas.informacion');
-})->name('especialista')->middleware('auth')->middleware('Permisos:1-2');
+Route::get('/contraseña', function () {
+    return view('panels.especialistas.password');
+})->name('especialista')->middleware('auth')->middleware('Permisos:1-1');
+
 
 Route::get('/usuarios/administrar', function () {
     return view('panels.usuarios.administrar');
@@ -59,3 +60,4 @@ Route::get('/usuarios/servicios', function () {
 Route::get('/agenda', function () {
     return view('panels.agenda.horario');
 })->name('horario')->middleware('auth')->middleware('Permisos:1-18');
+

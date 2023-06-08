@@ -18,5 +18,18 @@ class Especialista extends Model
     {
         return $this->hasOne('App\Models\Foto', 'user_id', 'user_id');
     }
-    
+
+    static public function getRules()
+    {
+        return [
+            'new_password' => 'required',
+        ];
+    }
+
+    static public function getMessages()
+    {
+        return [
+            'new_password.required' => 'El campo NOMBRE es requerido.',
+        ];
+    }
 }

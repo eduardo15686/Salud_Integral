@@ -326,7 +326,7 @@
     </section><!-- End Services Section -->
 
     <!-- ======= Appointment Section ======= -->
-    <section id="appointment" class="appointment section-bg">
+    <!-- <section id="appointment" class="appointment section-bg">
       <div class="container">
 
         <div class="section-title">
@@ -392,7 +392,7 @@
           <div class="text-center"><button type="submit">Agendar Cita</button></div>
         </form>
 
-      </div>
+      </div> -->
     </section><!-- End Appointment Section -->
 
     <!-- ======= Departments Section ======= -->
@@ -401,9 +401,7 @@
 
         <div class="section-title">
           <h2><Em>Especialidades</Em></h2>
-          <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint
-            consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit
-            in iste officiis commodi quidem hic quas.</p>
+          <p>Una descripción de la clinica.</p>
         </div>
 
         <div class="row gy-4">
@@ -431,12 +429,8 @@
               <div class="tab-pane active show" id="tab-1">
                 <div class="row gy-4">
                   <div class="col-lg-8 details order-2 order-lg-1">
-                    <h3>Cardiology</h3>
-                    <p class="fst-italic">Qui laudantium consequatur laborum sit qui ad sapiente dila parde sonata raqer
-                      a videna mareta paulona marka</p>
-                    <p>Et nobis maiores eius. Voluptatibus ut enim blanditiis atque harum sint. Laborum eos ipsum ipsa
-                      odit magni. Incidunt hic ut molestiae aut qui. Est repellat minima eveniet eius et quis magni
-                      nihil. Consequatur dolorem quaerat quos qui similique accusamus nostrum rem vero</p>
+                    <h3>Medicina General</h3>
+                    <p class="fst-italic">La medicina general es una rama de la medicina que no requiere especialización y trata un espectro muy amplio y variado de patologías. Su función es fundamental, ya que se centra, entre otras cosas, en la prevención de enfermedades y en garantizar un estado de salud general óptimo en los pacientes.</p>
                   </div>
                   <div class="col-lg-4 text-center order-1 order-lg-2">
                     <img src="principal/assets/img/departments-1.jpg" alt="" class="img-fluid">
@@ -476,12 +470,9 @@
               <div class="tab-pane" id="tab-4">
                 <div class="row gy-4">
                   <div class="col-lg-8 details order-2 order-lg-1">
-                    <h3>Fuga dolores inventore laboriosam ut est accusamus laboriosam dolore</h3>
-                    <p class="fst-italic">Totam aperiam accusamus. Repellat consequuntur iure voluptas iure porro quis
-                      delectus</p>
-                    <p>Eaque consequuntur consequuntur libero expedita in voluptas. Nostrum ipsam necessitatibus aliquam
-                      fugiat debitis quis velit. Eum ex maxime error in consequatur corporis atque. Eligendi asperiores
-                      sed qui veritatis aperiam quia a laborum inventore</p>
+                    <h3>Psicoterapia Clínica</h3>
+                    <p class="fst-italic">La Psicología clínica es la rama de la Psicología que se encarga de la investigación, la evaluación, el diagnóstico, el tratamiento, el pronóstico y la rehabilitación de todas aquellas cuestiones que afectan a la salud mental y que pueden generar malestar o sufrimiento en las personas.</p>
+                   
                   </div>
                   <div class="col-lg-4 text-center order-1 order-lg-2">
                     <img src="principal/assets/img/departments-4.jpg" alt="" class="img-fluid">
@@ -511,14 +502,88 @@
 
     <!-- ======= Doctors Section ======= -->
     
-
     <!-- ======= Testimonials Section ======= -->
     <section id="testimonials" class="testimonials">
       <div class="container">
 
         <div class="testimonials-slider swiper" data-aos="fade-up" data-aos-delay="100">
           <div class="swiper-wrapper">
-           
+
+            <div class="swiper-slide">
+              <div class="testimonial-wrap">
+                <div class="testimonial-item">
+                  <img src="principal/assets/img/testimonials/testimonials-1.jpg" class="testimonial-img" alt="">
+                  <h3>Nombre del especialista</h3>
+                  <h4>Especialidad/ Servicios que ofrece</h4>
+                  <p>
+                    <i class="bx bxs-quote-alt-left quote-icon-left"></i>
+                   Su descripción.
+                    <i class="bx bxs-quote-alt-right quote-icon-right"></i>
+                  </p>
+                </div>
+              </div>
+            </div><!-- End testimonial item -->
+
+            <div class="swiper-slide">
+              <div class="testimonial-wrap">
+                <div class="testimonial-item">
+                  <img src="principal/assets/img/testimonials/testimonials-1.jpg" class="testimonial-img" alt="">
+                  <h3>Nombre del especialista</h3>
+                  <h4>Especialidad/ Servicios que ofrece</h4>
+                  <p>
+                    <i class="bx bxs-quote-alt-left quote-icon-left"></i>
+                   Su descripción.
+                    <i class="bx bxs-quote-alt-right quote-icon-right"></i>
+                  </p>
+                </div>
+              </div>
+            </div><!-- End testimonial item -->
+
+            <div class="swiper-slide">
+              <div class="testimonial-wrap">
+                <div class="testimonial-item">
+                  <img src="principal/assets/img/testimonials/testimonials-1.jpg" class="testimonial-img" alt="">
+                  <h3>Nombre del especialista</h3>
+                  <h4>Especialidad/ Servicios que ofrece</h4>
+                  <p>
+                    <i class="bx bxs-quote-alt-left quote-icon-left"></i>
+                   Su descripción.
+                    <i class="bx bxs-quote-alt-right quote-icon-right"></i>
+                  </p>
+                </div>
+              </div>
+            </div><!-- End testimonial item -->
+
+            <div class="swiper-slide">
+              <div class="testimonial-wrap">
+                <div class="testimonial-item">
+                  <img src="principal/assets/img/testimonials/testimonials-1.jpg" class="testimonial-img" alt="">
+                  <h3>Nombre del especialista</h3>
+                  <h4>Especialidad/ Servicios que ofrece</h4>
+                  <p>
+                    <i class="bx bxs-quote-alt-left quote-icon-left"></i>
+                   Su descripción.
+                    <i class="bx bxs-quote-alt-right quote-icon-right"></i>
+                  </p>
+                </div>
+              </div>
+            </div><!-- End testimonial item -->
+
+            <div class="swiper-slide">
+              <div class="testimonial-wrap">
+                <div class="testimonial-item">
+                  <img src="principal/assets/img/testimonials/testimonials-1.jpg" class="testimonial-img" alt="">
+                  <h3>Nombre del especialista</h3>
+                  <h4>Especialidad/ Servicios que ofrece</h4>
+                  <p>
+                    <i class="bx bxs-quote-alt-left quote-icon-left"></i>
+                   Su descripción.
+                    <i class="bx bxs-quote-alt-right quote-icon-right"></i>
+                  </p>
+                </div>
+              </div>
+            </div><!-- End testimonial item -->
+
           </div>
           <div class="swiper-pagination"></div>
         </div>
@@ -530,29 +595,27 @@
       <div class="container">
 
         <div class="section-title">
-          <h2>Frequently Asked Questions</h2>
-          <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint
-            consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit
-            in iste officiis commodi quidem hic quas.</p>
+          <h2>Preguntas Frecuentes</h2>
+          <p>En salud integral queremos ofrecerle el mejor servicio, es por eso que dejamos a su disposición las siguientes preguntas frecuentes esperando pueda resolver algunas de sus dudas.</p>
         </div>
 
         <div class="faq-list">
           <ul>
             <li data-aos="fade-up">
               <i class="bx bx-help-circle icon-help"></i> <a data-bs-toggle="collapse" class="collapse"
-                data-bs-target="#faq-list-1">Non consectetur a erat nam at lectus urna duis? <i
+                data-bs-target="#faq-list-1">¿Cómo puedo agendar una cita?<i
                   class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
               <div id="faq-list-1" class="collapse show" data-bs-parent=".faq-list">
-                <p>
-                  Feugiat pretium nibh ipsum consequat. Tempus iaculis urna id volutpat lacus laoreet non curabitur
-                  gravida. Venenatis lectus magna fringilla urna porttitor rhoncus dolor purus non.
+                <p>            
+                  Puedes agendar una cita directamente desde esta página al dar clic en el botón “Agendar Cita”. <br>
+                  Te guiaremos paso a paso para que puedas agendar con el terapeuta que más se ajuste a ti.
                 </p>
               </div>
             </li>
 
             <li data-aos="fade-up" data-aos-delay="100">
               <i class="bx bx-help-circle icon-help"></i> <a data-bs-toggle="collapse" data-bs-target="#faq-list-2"
-                class="collapsed">Feugiat scelerisque varius morbi enim nunc? <i
+                class="collapsed">¿Cuánto tiempo se tardan en confirmar mi cita? <i
                   class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
               <div id="faq-list-2" class="collapse" data-bs-parent=".faq-list">
                 <p>
@@ -565,7 +628,7 @@
 
             <li data-aos="fade-up" data-aos-delay="200">
               <i class="bx bx-help-circle icon-help"></i> <a data-bs-toggle="collapse" data-bs-target="#faq-list-3"
-                class="collapsed">Dolor sit amet consectetur adipiscing elit? <i
+                class="collapsed">¿Qué se necesita para poder agendar una cita?<i
                   class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
               <div id="faq-list-3" class="collapse" data-bs-parent=".faq-list">
                 <p>
@@ -579,7 +642,7 @@
 
             <li data-aos="fade-up" data-aos-delay="300">
               <i class="bx bx-help-circle icon-help"></i> <a data-bs-toggle="collapse" data-bs-target="#faq-list-4"
-                class="collapsed">Tempus quam pellentesque nec nam aliquam sem et tortor consequat? <i
+                class="collapsed">¿Cómo puedo saber con qué terapeuta debo de ir?  <i
                   class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
               <div id="faq-list-4" class="collapse" data-bs-parent=".faq-list">
                 <p>
@@ -590,7 +653,7 @@
               </div>
             </li>
 
-            <li data-aos="fade-up" data-aos-delay="400">
+            <!-- <li data-aos="fade-up" data-aos-delay="400">
               <i class="bx bx-help-circle icon-help"></i> <a data-bs-toggle="collapse" data-bs-target="#faq-list-5"
                 class="collapsed">Tortor vitae purus faucibus ornare. Varius vel pharetra vel turpis nunc eget lorem
                 dolor? <i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
@@ -601,7 +664,7 @@
                   tellus in metus vulputate eu scelerisque.
                 </p>
               </div>
-            </li>
+            </li> -->
 
           </ul>
         </div>
@@ -617,10 +680,8 @@
       <div class="container">
 
         <div class="section-title">
-          <h2>Contact</h2>
-          <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint
-            consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit
-            in iste officiis commodi quidem hic quas.</p>
+          <h2>Ubicación</h2>
+          <p>La dirección escrita de las clinicas</p>
         </div>
       </div>
 

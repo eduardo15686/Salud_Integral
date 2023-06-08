@@ -5,9 +5,11 @@ export default {
 
     data() {
         return {
+            path_url: window.vue_url,
         }
     },
     methods: {
+
         disparador(funcion, obj = null,) {
             this[funcion](obj);
         },

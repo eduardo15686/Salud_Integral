@@ -19,7 +19,35 @@
                     <h5 style="margin-top: 30px;">Selecciona una semana</h5>
                 </div>
                 <div v-else class="col-md-7">
-                    <h5 style="margin-top: 30px;"><b>Semana {{ valorSemana }}</b> del {{ primerDia }} al {{ ultimoDia }}</h5>
+                    <h5 style="margin-top: 30px;"><b>Semana {{ valorSemana }}</b> del {{ primerDia }} al {{ ultimoDia }}
+                    </h5>
+                </div>
+            </div>
+            <br>
+            <div class="row" v-for="(item, index) in dias" style="margin-top: 10px;">
+                <div class="col-md-1">
+                    <p style="margin-top: 10px;"><b>{{ item.dia }}</b></p>
+                </div>
+                <div class="row col-md-5">
+                    <div class="col-md-5">
+                        <select class="form-select" aria-label="Default select example" v-model="item.primeraHora">
+                            <option v-for="(horaUno, index) in horas" :value="horaUno">{{ horaUno }}</option>
+                        </select>
+                    </div>
+                    a
+                    <div class="col-md-5">
+                        <select class="form-select" aria-label="Default select example" v-model="item.segundaHora">
+                            <option v-for="(horaDos, index) in horas" :value="horaDos">{{ horaDos }}</option>
+                        </select>
+                    </div>
+                    <div class="col-md-1">
+                        <button type="button" class="btn btn-primary">+</button>
+                    </div>
+                </div>
+                <div class="col-md-5">
+                </div>
+                <div class="col-md-1">
+                    <button type="button" class="btn btn-primary" @click="mostrarHoras(item)">Guardar</button>
                 </div>
             </div>
         </div>
@@ -37,13 +65,33 @@ export default {
             valorSemana: 0,
             primerDia: '',
             ultimoDia: '',
-            mostratFecha: false
-
+            mostratFecha: false,
+            dias: [],
+            horas: [],
         }
     },
     methods: {
         disparador(funcion, obj = null,) {
             this[funcion](obj);
+        },
+        mostrarHoras(item) {
+            // console.log(item.primeraHora);
+            // console.log(item.segundaHora);
+            // console.log(item.datos);
+            const thisVue = this;
+            let obj = {
+                primera: item.primeraHora,
+                segunda: item.segundaHora,
+                fecha: item.datos
+            }
+            axios.post(thisVue.path_url + '/api/agendas/generarAgenda', obj)
+                .then((res) => {
+
+                })
+                .catch((error) => {
+
+                });
+
         },
 
         obtenerDias() {
@@ -54,7 +102,50 @@ export default {
             }
             axios.post(thisVue.path_url + '/api/agendas/obtenerDias', obj)
                 .then((res) => {
+                    thisVue.dias[0] = {
+                        dia: 'Lunes',
+                        datos: res.data[0],
+                        primeraHora: '00:00',
+                        segundaHora: '00:00'
+                    };
+                    thisVue.dias[1] = {
+                        dia: 'Martes',
+                        datos: res.data[1],
+                        primeraHora: '00:00',
+                        segundaHora: '00:00'
+                    };
+                    thisVue.dias[2] = {
+                        dia: 'Miercoles',
+                        datos: res.data[2],
+                        primeraHora: '00:00',
+                        segundaHora: '00:00'
+                    };
+                    thisVue.dias[3] = {
+                        dia: 'Jueves',
+                        datos: res.data[3],
+                        primeraHora: '00:00',
+                        segundaHora: '00:00'
+                    };
+                    thisVue.dias[4] = {
+                        dia: 'Viernes',
+                        datos: res.data[4],
+                        primeraHora: '00:00',
+                        segundaHora: '00:00'
+                    };
+                    thisVue.dias[5] = {
+                        dia: 'Sabado',
+                        datos: res.data[5],
+                        primeraHora: '00:00',
+                        segundaHora: '00:00'
+                    };
+                    thisVue.dias[6] = {
+                        dia: 'Domingo',
+                        datos: res.data[6],
+                        primeraHora: '00:00',
+                        segundaHora: '00:00'
+                    };
                     thisVue.mostratFecha = true;
+
                     const mesPrimerDia = res.data[0].split("-");
                     const monthName = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
                     const numeroMes1 = mesPrimerDia[1];
@@ -80,11 +171,23 @@ export default {
 
                 });
         },
+
+        getHoras() {
+            const thisVue = this;
+            axios.get(thisVue.path_url + '/api/agendas/getHoras')
+                .then((res) => {
+                    thisVue.horas = res.data;
+                })
+                .catch((error) => {
+
+                });
+        },
     },
     async mounted() {
         const d = new Date();
         this.this_year = d.getFullYear();
-        this.getSemanas()
+        this.getSemanas();
+        this.getHoras();
     }
 }
 </script>
