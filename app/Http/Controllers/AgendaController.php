@@ -22,12 +22,18 @@ class AgendaController extends Controller
 
         for ($i = 0; $i < $numeroConsultas; $i++) {
             echo $NuevaFecha . '<br>';
+
             $fecha = new Agenda();
             $fecha->especialista_id = Auth::user()->id;
             $fecha->prospecto_id = 0;
-
-
-
+            $fecha->tiempo = $request['tiempoConsulta'];
+            $fecha->dia = $request['dia'];
+            $fecha->fecha = $request['fecha'];
+            $fecha->hora = $NuevaFecha;
+            $fecha->estatus = 'Activo';
+            $fecha->created_by = Auth::user()->id;
+            $fecha->updated_by = Auth::user()->id;
+            $fecha->save();
             $NuevaFecha = strtotime('+' . $request['tiempoConsulta'] . 'minute', strtotime($NuevaFecha));
             $NuevaFecha = date('H:i', $NuevaFecha);
 

@@ -151,10 +151,17 @@
                                         <div class="form-floating mb-3">
                                             <money3 type="text" class="form-control" id="floatingInput"
                                                 v-model="guardarEspecialista.deposito" v-bind="config"></money3>
-                                            <label for="floatingInput">Monto de Solicitud de Deposito</label>
+                                            <label for="floatingInput">Solicitud de anticipo</label>
                                         </div>
                                     </div>
-                                    <div class="form-floating col-md-9">
+                                    <div class="form-floating col-md-3">
+                                        <div class="form-floating mb-3">
+                                            <money3 type="text" class="form-control" id="floatingInput"
+                                                v-model="guardarEspecialista.cuota" v-bind="config"></money3>
+                                            <label for="floatingInput">Precio de consulta</label>
+                                        </div>
+                                    </div>
+                                    <div class="form-floating col-md-6">
                                         <textarea class="form-control" placeholder="Leave a comment here"
                                             id="floatingTextarea" v-model="guardarEspecialista.descripcion"
                                             maxlength="300"></textarea>
@@ -267,7 +274,7 @@
                                     <div class="form-floating mb-3">
                                         <money3 type="text" class="form-control" id="floatingInput"
                                             v-model="infoEspecialista.deposito" v-bind="config"></money3>
-                                        <label for="floatingInput">Monto de Solicitud de Deposito</label>
+                                        <label for="floatingInput">Solicitud de anticipo</label>
                                     </div>
                                 </div>
                                 <div class="form-floating col-md-9">
@@ -336,6 +343,7 @@ export default {
             path_url: window.vue_url,
             guardarEspecialista: {
                 deposito: 0,
+                cuota: 0,
                 id_servicio: []
             },
             infoEspecialista: {

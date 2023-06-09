@@ -22,7 +22,6 @@
                     </select>
                 </div>
             </div>
-            <br>
             <div class="row" style="text-align: center;">
                 <div v-if="mostratFecha == false" class="col-md-12">
                     <h5 style="margin-top: 10px;">Selecciona una semana</h5>
@@ -31,9 +30,9 @@
                     <h5 style="margin-top: 30px;"><b>Semana {{ valorSemana }}</b> del {{ primerDia }} al {{ ultimoDia }}
                     </h5>
                 </div>
-                
+
             </div>
-            <div class="row" v-for="(item, index) in dias" style="margin-top: 20px;">
+            <div class="row" v-for="(item, index) in dias" style="margin-top: 20px;" :name="item.dia">
                 <div class="col-md-1">
                     <p style="margin-top: 10px;"><b>{{ item.dia }}</b></p>
                 </div>
@@ -50,13 +49,27 @@
                         </select>
                     </div>
                     <div class="col-md-1">
-                        <button type="button" class="btn btn-primary">+</button>
+                        <button type="button" class="btn btn-primary" @click="nuevoHorario()">+</button>
                     </div>
                 </div>
-                <div class="col-md-5">
+                <div v-if="agregarHorario == true" class="row col-md-5">
+                    <div class="col-md-5">
+                        <select class="form-select" aria-label="Default select example" v-model="item.primeraHora">
+                            <option v-for="(horaUno, index) in horas" :value="horaUno">{{ horaUno }}</option>
+                        </select>
+                    </div>
+                    a
+                    <div class="col-md-5">
+                        <select class="form-select" aria-label="Default select example" v-model="item.segundaHora">
+                            <option v-for="(horaDos, index) in horas" :value="horaDos">{{ horaDos }}</option>
+                        </select>
+                    </div>
+                </div>
+                <div v-else class="col-md-5">
                 </div>
                 <div class="col-md-1">
-                    <button type="button" class="btn btn-primary" @click="mostrarHoras(item)">Guardar</button>
+                    <button type="button" class="btn btn-primary" @click="guardarHorario(item)"
+                        :id="item.dia">Guardar</button>
                 </div>
             </div>
         </div>
@@ -78,35 +91,40 @@ export default {
             dias: [],
             horas: [],
             tiempoConsulta: [],
-            getTiempoConsulta: 0
+            getTiempoConsulta: 0,
+            agregarHorario: false
         }
     },
     methods: {
         disparador(funcion, obj = null,) {
             this[funcion](obj);
         },
-        mostrarHoras(item) {
+        nuevoHorario() {
+            this.agregarHorario = true;
+        },
+        guardarHorario(item) {
             const thisVue = this;
-            // console.log(item.primeraHora);
-            // console.log(item.segundaHora);
-            //console.log(this.getTiempoConsulta);
-            let obj = {
-                primera: item.primeraHora,
-                segunda: item.segundaHora,
-                fecha: item.datos,
-                tiempoConsulta: thisVue.getTiempoConsulta
-            }
-            if (thisVue.getTiempoConsulta == 0) {
-                console.log('asegurate de ingresar tu tiempo de consulta')
-            } else {
-                axios.post(thisVue.path_url + '/api/agendas/generarAgenda', obj)
-                    .then((res) => {
+            const btncompra = document.getElementById(item.dia);
+            console.log(btncompra)
+            btncompra.disabled = true;
+            // let obj = {
+            //     primera: item.primeraHora,
+            //     segunda: item.segundaHora,
+            //     fecha: item.datos,
+            //     tiempoConsulta: thisVue.getTiempoConsulta,
+            //     dia: item.dia
+            // }
+            // if (thisVue.getTiempoConsulta == 0) {
+            //     console.log('asegurate de ingresar tu tiempo de consulta')
+            // } else {
+            //     axios.post(thisVue.path_url + '/api/agendas/generarAgenda', obj)
+            //         .then((res) => {
 
-                    })
-                    .catch((error) => {
+            //         })
+            //         .catch((error) => {
 
-                    });
-            }
+            //         });
+            // }
         },
 
         obtenerDias() {

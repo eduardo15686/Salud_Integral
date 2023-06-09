@@ -14,7 +14,7 @@ return new class extends Migration {
             $table->id();
             $table->integer('especialista_id');
             $table->integer('prospecto_id')->nullable();
-            $table->date('fecha');
+            $table->string('fecha', 20);
             $table->time('hora');
             $table->integer('created_by');
             $table->integer('updated_by');

@@ -69,6 +69,7 @@ class EspecialistaController extends Controller
         $especialista->celular = $request['celular'];
         $especialista->correo = $request['correo'];
         $especialista->deposito = $request['deposito'];
+        $especialista->precio_consulta = $request['cuota'];
         $especialista->id_servicio = $id_servicio;
         $especialista->descripcion = $request['descripcion'];
         $especialista->slug = '';
@@ -126,6 +127,7 @@ class EspecialistaController extends Controller
         $especialista->celular = $request['celular'];
         $especialista->correo = $request['correo'];
         $especialista->deposito = $request['deposito'];
+        $especialista->precio_consulta = $request['cuota'];
         $especialista->id_servicio = $id_servicio;
         $especialista->descripcion = $request['descripcion'];
         $especialista->slug = '';
