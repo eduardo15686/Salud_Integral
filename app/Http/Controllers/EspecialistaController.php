@@ -21,7 +21,7 @@ class EspecialistaController extends Controller
     {
         $servicios = Servicio::where('categoria', 'Nivel_2')
             ->get();
-        $especialistas = Especialista::with('foto')->get();
+        $especialistas = Especialista::with('foto')->where('estatus', 'Activo')->get();
         return view('citas', compact('servicios', 'especialistas'));
     }
 
@@ -36,6 +36,8 @@ class EspecialistaController extends Controller
         $prospecto->celular = $request['celular'];
         $prospecto->edad = $request['edad'];
         $prospecto->primera_vez = $request['primera_vez'];
+        $prospecto->sexo = $request['sexo'];
+        $prospecto->modalidad = $request['modalidad'];
         $prospecto->proceso = 'Enviada';
         $prospecto->estatus = 'Activo';
         $prospecto->save();

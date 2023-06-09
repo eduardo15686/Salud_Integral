@@ -2,23 +2,38 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
 use DateTime;
 use Illuminate\Http\Request;
+use App\Models\Agenda;
 
 class AgendaController extends Controller
 {
     public function generarAgenda(Request $request)
     {
         $primerhora = $request['fecha'] . ' ' . $request['primera'];
-        $date1 = new DateTime($primerhora);
-        $date2 = new DateTime("now");
-        $diff = $date1->diff($date2);
-        // 38 minutes to go [number is variable]
-        echo (($diff->days * 24) * 60) + ($diff->i) . ' minutes';
-        // passed means if its negative and to go means if its positive
-        echo ($diff->invert == 1) ? ' passed ' : ' to go ';
+        $segundahora = $request['fecha'] . ' ' . $request['segunda'];
+        $minutos = (strtotime($primerhora) - strtotime($segundahora)) / 60;
+        $minutos = abs($minutos);
+        $minutos = floor($minutos);
 
+        $numeroConsultas = $minutos / $request['tiempoConsulta'];
+        $NuevaFecha = date('H:i', strtotime($primerhora));
+
+        for ($i = 0; $i < $numeroConsultas; $i++) {
+            echo $NuevaFecha . '<br>';
+            $fecha = new Agenda();
+            $fecha->especialista_id = Auth::user()->id;
+            $fecha->prospecto_id = 0;
+
+
+
+            $NuevaFecha = strtotime('+' . $request['tiempoConsulta'] . 'minute', strtotime($NuevaFecha));
+            $NuevaFecha = date('H:i', $NuevaFecha);
+
+        }
     }
+
     public function obtenerDias(Request $request)
     {
         $sem = $request['semana'];
@@ -49,14 +64,27 @@ class AgendaController extends Controller
     public function getHoras()
     {
         $arr = array();
-
         //Haces un for de 24 horas
         for ($i = 0; $i < 24; $i++) {
             $x = "midnight +" . $i . " hour";
             $z = date('H:i', strtotime($x));
             array_push($arr, $z);
         }
-
         return $arr;
+    }
+
+    public function tiempoConsulta()
+    {
+        $array = [];
+        $empujar = [];
+        for ($i = 30; $i <= 120; ) {
+            $empujar = [
+                'value' => $i,
+                'nombre' => $i . ' minutos'
+            ];
+            array_push($array, $empujar);
+            $i = $i + 10;
+        }
+        return $array;
     }
 }

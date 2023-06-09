@@ -175,6 +175,7 @@
                                                         </label>
                                                     </div>
                                                 </div>
+                                                <div>
                                                 <div class="col-sm-6">
                                                     <p><b>¿Es tu primera vez en terapia?</b></p>
                                                     <div class="form-check">
@@ -191,6 +192,55 @@
                                                             No
                                                         </label>
                                                     </div>
+                                                </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="col-sm-6">
+                                                    <p><b>Sexo</b></p>
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="radio" name="sexo"
+                                                            value="Femenino">
+                                                        <label class="form-check-label" for="sexo">
+                                                            Femenino
+                                                        </label>
+                                                    </div>
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="radio" name="sexo"
+                                                            value="Masculino">
+                                                        <label class="form-check-label" for="sexo">
+                                                            Masculino
+                                                        </label>
+                                                    </div>
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="radio" name="sexo"
+                                                            value="Otro">
+                                                        <label class="form-check-label" for="sexo">
+                                                            Otro
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                <div class="col-sm-6">
+                                                    <p><b>¿Qué modalidad buscas?</b></p>
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="radio"
+                                                            name="modalidad" value="Presencial">
+                                                        <label class="form-check-label" for="modalidad">
+                                                            Presencial
+                                                        </label>
+                                                    </div>
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="radio"
+                                                            name="modalidad" value="En Línea">
+                                                        <label class="form-check-label" for="modalidad">
+                                                            En línea 
+                                                        </label>
+                                                    </div>
+                                                </div>
                                                 </div>
                                             </div>
                                         </div>

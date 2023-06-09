@@ -47,6 +47,7 @@ Route::middleware('auth:sanctum')->prefix('/agendas')->group(function () {
     Route::post('/generarAgenda', [AgendaController::class, 'generarAgenda']);
     Route::get('/getSemanas', [AgendaController::class, 'getSemanas']);
     Route::get('/getHoras', [AgendaController::class, 'getHoras']);
+    Route::get('/tiempoConsulta', [AgendaController::class, 'tiempoConsulta']);
 });
 
 Route::middleware('auth:sanctum')->prefix('/servicios')->group(function () {

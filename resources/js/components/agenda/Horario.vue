@@ -15,16 +15,25 @@
                         <option v-for="(item, index) in semanas" :value="item.value">{{ item.nombre }}</option>
                     </select>
                 </div>
-                <div v-if="mostratFecha == false" class="col-md-6">
-                    <h5 style="margin-top: 30px;">Selecciona una semana</h5>
-                </div>
-                <div v-else class="col-md-7">
-                    <h5 style="margin-top: 30px;"><b>Semana {{ valorSemana }}</b> del {{ primerDia }} al {{ ultimoDia }}
-                    </h5>
+                <div class="col-md-3">
+                    <label>Tiempo que dura la sesion</label>
+                    <select class="form-select" v-model="getTiempoConsulta" aria-label="Default select example">
+                        <option v-for="(item, index) in tiempoConsulta" :value="item.value">{{ item.nombre }}</option>
+                    </select>
                 </div>
             </div>
             <br>
-            <div class="row" v-for="(item, index) in dias" style="margin-top: 10px;">
+            <div class="row" style="text-align: center;">
+                <div v-if="mostratFecha == false" class="col-md-12">
+                    <h5 style="margin-top: 10px;">Selecciona una semana</h5>
+                </div>
+                <div v-else class="col-md-12">
+                    <h5 style="margin-top: 30px;"><b>Semana {{ valorSemana }}</b> del {{ primerDia }} al {{ ultimoDia }}
+                    </h5>
+                </div>
+                
+            </div>
+            <div class="row" v-for="(item, index) in dias" style="margin-top: 20px;">
                 <div class="col-md-1">
                     <p style="margin-top: 10px;"><b>{{ item.dia }}</b></p>
                 </div>
@@ -68,6 +77,8 @@ export default {
             mostratFecha: false,
             dias: [],
             horas: [],
+            tiempoConsulta: [],
+            getTiempoConsulta: 0
         }
     },
     methods: {
@@ -75,23 +86,27 @@ export default {
             this[funcion](obj);
         },
         mostrarHoras(item) {
+            const thisVue = this;
             // console.log(item.primeraHora);
             // console.log(item.segundaHora);
-            // console.log(item.datos);
-            const thisVue = this;
+            //console.log(this.getTiempoConsulta);
             let obj = {
                 primera: item.primeraHora,
                 segunda: item.segundaHora,
-                fecha: item.datos
+                fecha: item.datos,
+                tiempoConsulta: thisVue.getTiempoConsulta
             }
-            axios.post(thisVue.path_url + '/api/agendas/generarAgenda', obj)
-                .then((res) => {
+            if (thisVue.getTiempoConsulta == 0) {
+                console.log('asegurate de ingresar tu tiempo de consulta')
+            } else {
+                axios.post(thisVue.path_url + '/api/agendas/generarAgenda', obj)
+                    .then((res) => {
 
-                })
-                .catch((error) => {
+                    })
+                    .catch((error) => {
 
-                });
-
+                    });
+            }
         },
 
         obtenerDias() {
@@ -177,6 +192,14 @@ export default {
             axios.get(thisVue.path_url + '/api/agendas/getHoras')
                 .then((res) => {
                     thisVue.horas = res.data;
+                })
+                .catch((error) => {
+
+                });
+
+            axios.get(thisVue.path_url + '/api/agendas/tiempoConsulta')
+                .then((res) => {
+                    thisVue.tiempoConsulta = res.data;
                 })
                 .catch((error) => {
 
