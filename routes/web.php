@@ -23,9 +23,11 @@ Route::get('/', function () {
     // return view('welcome');
 });
 
-Route::get('/cita', [EspecialistaController::class, 'cita']);
-Route::post('/cita', [EspecialistaController::class, 'filtrar'])->name('filtrar');
-Route::get('/finalizar', function() {return view('finalizado');})->name('finalizar');
+Route::get('/', [EspecialistaController::class, 'index']);
+// Route::get('/cita', [EspecialistaController::class, 'cita']);
+// Route::post('/cita', [EspecialistaController::class, 'filtrar'])->name('filtrar');
+Route::get('/finalizar', function () {
+    return view('finalizado'); })->name('finalizar');
 
 
 
@@ -59,5 +61,13 @@ Route::get('/usuarios/servicios', function () {
 
 Route::get('/agenda', function () {
     return view('panels.agenda.horario');
-})->name('horario')->middleware('auth')->middleware('Permisos:1-18');
+})->name('horario')->middleware('auth')->middleware('Permisos:1-20');
 
+Route::get('/agenda/citas', function () {
+    return view('panels.agenda.citas');
+})->name('citas')->middleware('auth')->middleware('Permisos:1-19');
+
+
+Route::get('/cita', function () {
+    return view('panels.inicio');
+})->name('citas');

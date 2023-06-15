@@ -107,24 +107,24 @@ export default {
             const btncompra = document.getElementById(item.dia);
             console.log(btncompra)
             btncompra.disabled = true;
-            // let obj = {
-            //     primera: item.primeraHora,
-            //     segunda: item.segundaHora,
-            //     fecha: item.datos,
-            //     tiempoConsulta: thisVue.getTiempoConsulta,
-            //     dia: item.dia
-            // }
-            // if (thisVue.getTiempoConsulta == 0) {
-            //     console.log('asegurate de ingresar tu tiempo de consulta')
-            // } else {
-            //     axios.post(thisVue.path_url + '/api/agendas/generarAgenda', obj)
-            //         .then((res) => {
+            let obj = {
+                primera: item.primeraHora,
+                segunda: item.segundaHora,
+                fecha: item.datos,
+                tiempoConsulta: thisVue.getTiempoConsulta,
+                dia: item.dia
+            }
+            if (thisVue.getTiempoConsulta == 0) {
+                console.log('asegurate de ingresar tu tiempo de consulta')
+            } else {
+                axios.post(thisVue.path_url + '/api/agendas/generarAgenda', obj)
+                    .then((res) => {
 
-            //         })
-            //         .catch((error) => {
+                    })
+                    .catch((error) => {
 
-            //         });
-            // }
+                    });
+            }
         },
 
         obtenerDias() {

@@ -32,6 +32,7 @@
         "vue-loader": "^17.1.1",
         "vue-money-format": "^1.2.4",
         "vue-multiselect": "^3.0.0-beta.2",
-        "vue-sweetalert2": "^5.0.5"
+        "vue-sweetalert2": "^5.0.5",
+        "vue3-form-wizard": "^0.2.1"
     }
 }

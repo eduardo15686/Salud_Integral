@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\EspecialistaController;
 use App\Http\Controllers\FotoController;
+use App\Http\Controllers\CitaController;
 use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\ServicioController;
 use App\Http\Controllers\PerfilController;
@@ -61,4 +62,11 @@ Route::middleware('auth:sanctum')->prefix('/servicios')->group(function () {
 
 Route::middleware('auth:sanctum')->prefix('/perfiles')->group(function () {
     Route::get('/getPerfiles', [PerfilController::class, 'getPerfiles']);
+});
+
+
+Route::prefix('/citas')->group(function () {
+    Route::post('/getEspecialistas', [CitaController::class, 'getEspecialistas']);
+    Route::get('/obtenerLinkFoto', [CitaController::class, 'obtenerLinkFoto']);
+    Route::post('/agendarCita', [CitaController::class, 'agendarCita']);
 });

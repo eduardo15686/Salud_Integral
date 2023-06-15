@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Especialista;
 use App\Models\Prospecto;
+use App\Models\Agenda;
 use App\Models\User;
 use App\Models\Servicio;
+use Carbon\Carbon;
 use Hash;
 use Validator;
 use Illuminate\Http\Request;
@@ -16,33 +18,38 @@ class EspecialistaController extends Controller
     /**
      * Display a listing of the resource.
      */
-
-    public function cita()
+    public function index()
     {
-        $servicios = Servicio::where('categoria', 'Nivel_2')
-            ->get();
+        $servicios_nombre = [];
         $especialistas = Especialista::with('foto')->where('estatus', 'Activo')->get();
-        return view('citas', compact('servicios', 'especialistas'));
+        return view('inicio', compact('especialistas'));
+
     }
 
     public function filtrar(Request $request)
     {
-        $servicio_id = implode(', ', $request['registro']);
-        $prospecto = new Prospecto();
-        $prospecto->especialista_id = $request['especialista'];
-        $prospecto->servicios_id = $servicio_id;
-        $prospecto->nombre = $request['nombre'];
-        $prospecto->correo = $request['correo'];
-        $prospecto->celular = $request['celular'];
-        $prospecto->edad = $request['edad'];
-        $prospecto->primera_vez = $request['primera_vez'];
-        $prospecto->sexo = $request['sexo'];
-        $prospecto->modalidad = $request['modalidad'];
-        $prospecto->proceso = 'Enviada';
-        $prospecto->estatus = 'Activo';
-        $prospecto->save();
+        // $servicio_id = implode(', ', $request['registro']);
+        // $prospecto->especialista_id = $request['especialista'];
+        // $prospecto->servicios_id = $servicio_id;
+        // $prospecto = new Prospecto();
+        // $prospecto->nombre = $request['nombre'];
+        // $prospecto->correo = $request['correo'];
+        // $prospecto->celular = $request['celular'];
+        // $prospecto->edad = $request['edad'];
+        // $prospecto->primera_vez = $request['primera_vez'];
+        // $prospecto->sexo = $request['sexo'];
+        // $prospecto->modalidad = $request['modalidad'];
+        // $prospecto->proceso = 'Enviada';
+        // $prospecto->estatus = 'Activo';
+        // $prospecto->save();
 
+
+        // $agendar = Agenda::find($request['hora_cita']);
+        // $agendar->prospecto_id = $prospecto['id'];
+        // $agendar->proceso = 'Apartada';
+        // $agendar->save();
         return view('finalizado');
+
     }
 
     public function guardarEspecialista(Request $request)

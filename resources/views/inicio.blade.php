@@ -508,82 +508,22 @@
 
         <div class="testimonials-slider swiper" data-aos="fade-up" data-aos-delay="100">
           <div class="swiper-wrapper">
-
+            @foreach($especialistas as $especialista)
             <div class="swiper-slide">
               <div class="testimonial-wrap">
                 <div class="testimonial-item">
-                  <img src="principal/assets/img/testimonials/testimonials-1.jpg" class="testimonial-img" alt="">
-                  <h3>Nombre del especialista</h3>
-                  <h4>Especialidad/ Servicios que ofrece</h4>
+                <img src="img/fotos/{{$especialista['foto']['imagen_path']}}" style="height: 100px; width: 100px; background-repeat: no-repeat; background-position: 50%; border-radius: 50%; background-size: 100% auto;">
+                  <h3>{{ $especialista -> titulo}} {{ $especialista -> nombre}} {{ $especialista -> apellido_pat}} {{ $especialista -> apellido_mat}}</h3>
+                  <h4>{{$especialista['foto']['imagen_path']}}</h4>
                   <p>
                     <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-                   Su descripción.
+                    {{ $especialista -> descripcion}}
                     <i class="bx bxs-quote-alt-right quote-icon-right"></i>
                   </p>
                 </div>
               </div>
             </div><!-- End testimonial item -->
-
-            <div class="swiper-slide">
-              <div class="testimonial-wrap">
-                <div class="testimonial-item">
-                  <img src="principal/assets/img/testimonials/testimonials-1.jpg" class="testimonial-img" alt="">
-                  <h3>Nombre del especialista</h3>
-                  <h4>Especialidad/ Servicios que ofrece</h4>
-                  <p>
-                    <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-                   Su descripción.
-                    <i class="bx bxs-quote-alt-right quote-icon-right"></i>
-                  </p>
-                </div>
-              </div>
-            </div><!-- End testimonial item -->
-
-            <div class="swiper-slide">
-              <div class="testimonial-wrap">
-                <div class="testimonial-item">
-                  <img src="principal/assets/img/testimonials/testimonials-1.jpg" class="testimonial-img" alt="">
-                  <h3>Nombre del especialista</h3>
-                  <h4>Especialidad/ Servicios que ofrece</h4>
-                  <p>
-                    <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-                   Su descripción.
-                    <i class="bx bxs-quote-alt-right quote-icon-right"></i>
-                  </p>
-                </div>
-              </div>
-            </div><!-- End testimonial item -->
-
-            <div class="swiper-slide">
-              <div class="testimonial-wrap">
-                <div class="testimonial-item">
-                  <img src="principal/assets/img/testimonials/testimonials-1.jpg" class="testimonial-img" alt="">
-                  <h3>Nombre del especialista</h3>
-                  <h4>Especialidad/ Servicios que ofrece</h4>
-                  <p>
-                    <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-                   Su descripción.
-                    <i class="bx bxs-quote-alt-right quote-icon-right"></i>
-                  </p>
-                </div>
-              </div>
-            </div><!-- End testimonial item -->
-
-            <div class="swiper-slide">
-              <div class="testimonial-wrap">
-                <div class="testimonial-item">
-                  <img src="principal/assets/img/testimonials/testimonials-1.jpg" class="testimonial-img" alt="">
-                  <h3>Nombre del especialista</h3>
-                  <h4>Especialidad/ Servicios que ofrece</h4>
-                  <p>
-                    <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-                   Su descripción.
-                    <i class="bx bxs-quote-alt-right quote-icon-right"></i>
-                  </p>
-                </div>
-              </div>
-            </div><!-- End testimonial item -->
-
+            @endforeach
           </div>
           <div class="swiper-pagination"></div>
         </div>

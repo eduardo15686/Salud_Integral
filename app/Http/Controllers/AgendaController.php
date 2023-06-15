@@ -28,8 +28,9 @@ class AgendaController extends Controller
             $fecha->prospecto_id = 0;
             $fecha->tiempo = $request['tiempoConsulta'];
             $fecha->dia = $request['dia'];
-            $fecha->fecha = $request['fecha'];
+            $fecha->fecha = date("Y-m-d", strtotime($request['fecha']));
             $fecha->hora = $NuevaFecha;
+            $fecha->proceso = 'Disponible';
             $fecha->estatus = 'Activo';
             $fecha->created_by = Auth::user()->id;
             $fecha->updated_by = Auth::user()->id;
