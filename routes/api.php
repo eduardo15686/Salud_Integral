@@ -10,6 +10,7 @@ use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\ServicioController;
 use App\Http\Controllers\PerfilController;
 use App\Http\Controllers\AgendaController;
+use App\Http\Controllers\HorarioController;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,12 +45,17 @@ Route::middleware('auth:sanctum')->prefix('/usuarios')->group(function () {
 });
 
 Route::middleware('auth:sanctum')->prefix('/agendas')->group(function () {
-    Route::post('/obtenerDias', [AgendaController::class, 'obtenerDias']);
     Route::post('/generarAgenda', [AgendaController::class, 'generarAgenda']);
-    Route::get('/getSemanas', [AgendaController::class, 'getSemanas']);
-    Route::get('/getHoras', [AgendaController::class, 'getHoras']);
-    Route::get('/tiempoConsulta', [AgendaController::class, 'tiempoConsulta']);
+    Route::get('/verAgenda', [AgendaController::class, 'verAgenda']);
 });
+
+Route::middleware('auth:sanctum')->prefix('/horario')->group(function () {
+    Route::get('/obtenerDias', [HorarioController::class, 'obtenerDias']);
+    Route::post('/generarHorario', [HorarioController::class, 'generarHorario']);
+    Route::get('/getHoras', [HorarioController::class, 'getHoras']);
+    Route::get('/tiempoConsulta', [HorarioController::class, 'tiempoConsulta']);
+});
+
 
 Route::middleware('auth:sanctum')->prefix('/servicios')->group(function () {
     Route::get('/getServicios', [ServicioController::class, 'getServicios']);
