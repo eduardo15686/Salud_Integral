@@ -97,10 +97,11 @@ class HorarioController extends Controller
     {
         $arr = array();
         //Haces un for de 24 horas
-        for ($i = 5; $i < 22; $i++) {
-            $x = "midnight +" . $i . " hour";
+        for ($i = 360; $i < 1350; ) {
+            $x = "midnight +" . $i . " minute";
             $z = date('H:i', strtotime($x));
             array_push($arr, $z);
+            $i = $i + 30;
         }
         return $arr;
     }

@@ -12,7 +12,7 @@ class Especialista extends Model
 
     public function servicio()
     {
-        return $this->hasMany('App\Models\Especialista', 'id_servicio');
+        return $this->hasMany('App\Models\Especialista', 'servicio_id');
     }
 
     public function horario_mañana()

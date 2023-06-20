@@ -17,6 +17,7 @@ class CitaController extends Controller
     public function getEspecialistas(Request $request)
     {
         $fecha = $request['fecha'];
+
         $especialistas = Especialista::with('foto')
             ->with([
                 'horario_mañana' => function ($query) use ($fecha) {
@@ -37,6 +38,11 @@ class CitaController extends Controller
             ])
             ->where('estatus', 'Activo')
             ->get();
+
+        $array_permisos = explode(',', $especialistas[0]['servicio_id']);
+
+        
+
         return response()->json($especialistas, 200);
 
     }

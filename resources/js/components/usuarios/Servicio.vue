@@ -117,11 +117,14 @@
                                             <td>{{ item.text_html }}</td>
                                             <td>
                                                 <a style="padding-left: 10px; cursor:pointer; font-size: large;">
-                                                    <i class='ml-2 ti ti-plus' aria-hidden="true"
-                                                        @click="openModalSubCategoria(item)"></i></a><a
-                                                    style="padding-left: 10px; cursor:pointer; font-size: large;">
                                                     <i class='ml-2 ti ti-file' aria-hidden="true"
                                                         @click="openModalTablaSubcategorias(item)"></i></a>
+                                                <a style="padding-left: 10px; cursor:pointer; font-size: large;">
+                                                    <i class='ml-2 ti ti-plus' aria-hidden="true"
+                                                        @click="openModalSubCategoria(item)"></i></a>
+                                                <a style="padding-left: 10px; cursor:pointer; font-size: large;">
+                                                    <i class='ml-2 fa-regular fa-trash-can' aria-hidden="true"
+                                                        @click="openModalEliminarServicio(item)"></i></a>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -191,6 +194,11 @@
                                             <th scope="row">{{ index + 1 }}</th>
                                             <td>{{ item.text_html }}</td>
                                             <td>
+                                                <a style="padding-left: 10px; cursor:pointer; font-size: large;">
+                                                    <i class='ml-2 fa-regular fa-trash-can' aria-hidden="true"
+                                                        @click="openModalEliminarServicio(item)">
+                                                    </i>
+                                                </a>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -203,6 +211,29 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Eliminar Servicio -->
+            <div class="modal fade" id="modalEliminarServicio" tabindex="-1" aria-labelledby="modalEliminarServicioLabel"
+                aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="modalEliminarServicio">Eliminar el serivicio: {{ servicioNombre }}
+                            </h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div style="text-align: end;">
+                                <button type="button" class="btn btn-danger" @click="eliminarServicio()">Eliminar
+                                    Servicio</button>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!-- End Eliminar Servicio -->
         </div>
     </div>
 </template>
@@ -231,6 +262,7 @@ export default {
             userSelected: {},
             perfiles: [],
             servicioNombre: '',
+            servicio: {},
             parent_id: 0,
             parent_subcategoria: 0,
         }
@@ -259,7 +291,6 @@ export default {
             this.servicioNombre = (item.text_html).toUpperCase();
             this.parent_subcategoria = item.id;
             $("#modalAgregarSubCategoria").modal("show");
-            console.log(this.servicioNombre);
         },
 
         openModalTablaSubcategorias(item) {
@@ -267,8 +298,10 @@ export default {
             $("#modalTablaSubcategorias").modal("show");
         },
 
-        openModalEliminarServicio() {
-            console.log('eliminar el servicio');
+        openModalEliminarServicio(item) {
+            this.servicioNombre = (item.text_html).toUpperCase();
+            this.servicio = item;
+            $("#modalEliminarServicio").modal("show");
         },
 
 
@@ -378,14 +411,16 @@ export default {
 
         eliminarServicio() {
             const thisVue = this;
-            axios.post(thisVue.path_url + '/api/usuarios/deleteUsuario', thisVue.userSelected)
+            console.log(thisVue.servicio);
+            axios.post(thisVue.path_url + '/api/servicios/deleteServicio', thisVue.servicio)
                 .then((res) => {
-                    this.$swal(
-                        'Eliminar Usuario',
-                        res.data.message,
-                        'success'
-                    );
-                    $("#modalEliminarUsuario").modal("hide");
+                    console.log(res.data);
+                    // this.$swal(
+                    //     'Eliminar Usuario',
+                    //     res.data.message,
+                    //     'success'
+                    // );
+                    $("#modalEliminarServicio").modal("hide");
                     thisVue.getServicios();
                 })
                 .catch((error) => {

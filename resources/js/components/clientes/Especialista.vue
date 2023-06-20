@@ -173,7 +173,7 @@
                                 <div class="row">
                                     <div class="form-floating col-md-12">
                                         <p>Servicios que ofrece</p>
-                                        <Multiselect v-model="guardarEspecialista.id_servicio" mode="tags"
+                                        <Multiselect v-model="guardarEspecialista.servicio_id" mode="tags"
                                             :close-on-select="false" :searchable="true" :create-option="false"
                                             :options="options" required />
                                     </div>
@@ -344,7 +344,7 @@ export default {
             guardarEspecialista: {
                 deposito: 0,
                 cuota: 0,
-                id_servicio: []
+                servicio_id: []
             },
             infoEspecialista: {
 
@@ -370,7 +370,7 @@ export default {
 
         editarDatosEspecialista() {
 
-            let serviciosID = this.infoEspecialista.id_servicio.split(', ');
+            let serviciosID = this.infoEspecialista.servicio_id.split(', ');
             serviciosID.forEach(element => {
                 this.serviciosSeleccionados.push(element)
             });

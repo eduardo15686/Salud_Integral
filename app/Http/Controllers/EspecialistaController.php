@@ -62,10 +62,10 @@ class EspecialistaController extends Controller
             'titulo' => 'required',
             'celular' => 'required',
             'correo' => 'required',
-            'id_servicio' => 'required',
+            'servicio_id' => 'required',
         ]);
 
-        $id_servicio = implode(', ', $request['id_servicio']);
+        $servicio_id = implode(', ', $request['servicio_id']);
 
         $especialista = new Especialista();
         $especialista->user_id = Auth::user()->id;
@@ -77,7 +77,7 @@ class EspecialistaController extends Controller
         $especialista->correo = $request['correo'];
         $especialista->deposito = $request['deposito'];
         $especialista->precio_consulta = $request['cuota'];
-        $especialista->id_servicio = $id_servicio;
+        $especialista->servicio_id = $servicio_id;
         $especialista->descripcion = $request['descripcion'];
         $especialista->slug = '';
         $especialista->estatus = 'Activo';
@@ -100,7 +100,7 @@ class EspecialistaController extends Controller
             ->first();
 
         if (!empty($especialistaInfo)) {
-            $servicios = explode(',', $especialistaInfo['id_servicio']);
+            $servicios = explode(',', $especialistaInfo['servicio_id']);
             foreach ($servicios as $servicio) {
                 $servicioInfo = Servicio::where('id', $servicio)
                     ->where('estatus', 'Activo')
@@ -125,7 +125,7 @@ class EspecialistaController extends Controller
 
     public function editarEspecialista(Request $request)
     {
-        $id_servicio = implode(', ', $request['nuevoServicio']);
+        $servicio_id = implode(', ', $request['nuevoServicio']);
         $especialista = Especialista::find($request['id']);
         $especialista->nombre = $request['nombre'];
         $especialista->apellido_pat = $request['apellido_pat'];
@@ -135,7 +135,7 @@ class EspecialistaController extends Controller
         $especialista->correo = $request['correo'];
         $especialista->deposito = $request['deposito'];
         $especialista->precio_consulta = $request['cuota'];
-        $especialista->id_servicio = $id_servicio;
+        $especialista->servicio_id = $servicio_id;
         $especialista->descripcion = $request['descripcion'];
         $especialista->slug = '';
         $especialista->estatus = 'Activo';

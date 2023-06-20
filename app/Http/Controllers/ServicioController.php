@@ -81,4 +81,13 @@ class ServicioController extends Controller
             return json_encode(['message' => 'Ocurrio un error, contacte al administrador del sistema.'], 401);
     }
 
+    public function deleteServicio(Request $request)
+    {
+        $servicio = Servicio::find($request['id']);
+        $servicio->estatus = 'Inactivo';
+        $servicio->save();
+
+        Servicio::where('parent_id', $request['id'])
+            ->update(['estatus' => 'Inactivo']);
+    }
 }

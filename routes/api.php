@@ -46,7 +46,13 @@ Route::middleware('auth:sanctum')->prefix('/usuarios')->group(function () {
 
 Route::middleware('auth:sanctum')->prefix('/agendas')->group(function () {
     Route::post('/generarAgenda', [AgendaController::class, 'generarAgenda']);
-    Route::get('/verAgenda', [AgendaController::class, 'verAgenda']);
+    Route::post('/verAgenda', [AgendaController::class, 'verAgenda']);
+    Route::post('/aceptarProspecto', [AgendaController::class, 'aceptarProspecto']);
+    Route::post('/rechazarProspecto', [AgendaController::class, 'rechazarProspecto']);
+    Route::post('/inhabilitarHora', [AgendaController::class, 'inhabilitarHora']);
+    Route::get('/getPacientes', [AgendaController::class, 'getPacientes']);
+    Route::post('/agendarPaciente', [AgendaController::class, 'agendarPaciente']);
+    Route::post('/habilitarHora', [AgendaController::class, 'habilitarHora']);
 });
 
 Route::middleware('auth:sanctum')->prefix('/horario')->group(function () {
@@ -64,6 +70,7 @@ Route::middleware('auth:sanctum')->prefix('/servicios')->group(function () {
     Route::post('/nuevoServicio', [ServicioController::class, 'nuevoServicio']);
     Route::post('/nuevaCategoria', [ServicioController::class, 'nuevaCategoria']);
     Route::post('/nuevaSubCategoria', [ServicioController::class, 'nuevaSubCategoria']);
+    Route::post('/deleteServicio', [ServicioController::class, 'deleteServicio']);
 });
 
 Route::middleware('auth:sanctum')->prefix('/perfiles')->group(function () {

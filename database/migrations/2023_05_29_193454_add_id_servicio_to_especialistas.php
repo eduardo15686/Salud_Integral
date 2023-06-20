@@ -11,8 +11,8 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::table('especialistas', function (Blueprint $table) {
-            $table->string("id_servicio")->nullable()->after('deposito');
-            $table->string("descripcion")->nullable()->after('id_servicio');
+            $table->string("servicio_id")->nullable()->after('deposito');
+            $table->string("descripcion")->nullable()->after('servicio_id');
         });
     }
 
@@ -22,7 +22,7 @@ return new class extends Migration {
     public function down(): void
     {
         Schema::table('especialistas', function (Blueprint $table) {
-            $table->dropColumn('id_servicio');
+            $table->dropColumn('servicio_id');
             $table->dropColumn('descripcion');
         });
     }
