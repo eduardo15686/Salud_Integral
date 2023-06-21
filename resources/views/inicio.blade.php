@@ -71,7 +71,7 @@
       <nav id="navbar" class="navbar order-last order-lg-0">
         <ul>
           <li><a class="nav-link scrollto active" href="#hero">Inicio</a></li>
-          <li><a class="nav-link scrollto" href="#about">Porposito</a></li>
+          <li><a class="nav-link scrollto" href="#about">Propósito</a></li>
           <li><a class="nav-link scrollto" href="#services">Servicios</a></li>
           <li><a class="nav-link scrollto" href="#departments">Especialidades</a></li>
           <li><a class="nav-link scrollto" href="#testimonials">Doctores</a></li>
@@ -101,7 +101,7 @@
         Cita</a> -->
 
         <a href="/login" class="appointment-btn scrollto"><span class="d-none d-md-inline">Iniciar</span>
-        Sesion</a>
+        Sesión</a>
     </div>
   </header><!-- End Header -->
 
@@ -123,14 +123,12 @@
         <div class="row">
           <div class="col-lg-4 d-flex align-items-stretch">
             <div class="content">
-              <h3>¿QUIENES SOMOS? </h3>
+              <h3>¿QUIÉNES SOMOS? </h3>
               <p>
-                Somos un grupo de especialistas de la salud enfocados en ofrecerte servicios de calidad para tu cuidado
-                y el de tu familia, te invitamos a que conozcas nuestros servicios de calidad para el cuidado de tu
-                salud.
+              Somos un grupo de especialistas de la salud enfocados en ofrecerte servicios de calidad para tu cuidado y el de tu familia, te invitamos a que nos conozcas.
               </p>
               <div class="text-center">
-                <a href="#" class="more-btn">Learn More <i class="bx bx-chevron-right"></i></a>
+                <a href="#" class="more-btn">Aprende más<i class="bx bx-chevron-right"></i></a>
               </div>
             </div>
           </div>
@@ -141,23 +139,21 @@
                   <div class="icon-box mt-4 mt-xl-0">
                     <i class="bx bx-receipt"></i>
                     <h4>PROFESIONALES </h4>
-                    <p>Los terapeutas que colaboran en Salud Integral tienen un grado de certificación de calidad para
-                      brindar cada uno de los servicios que se ofrecen a público.</p>
+                    <p>Los terapeutas que colaboran en Salud Integral, poseen un alto grado de profesionalismo, confidencialidad y calidez humana, lo que los hace aptos para atenderte de la mejor manera.</p>
                   </div>
                 </div>
                 <div class="col-xl-4 d-flex align-items-stretch">
                   <div class="icon-box mt-4 mt-xl-0">
                     <i class="bx bx-cube-alt"></i>
                     <h4>ESPECIALIDADES</h4>
-                    <p>Las especialidades que se ofrecen como servicio en Salud Integral son un compendio de servicios
-                      mas solicitados por los usuarios dentro de las ramas de la salud.</p>
+                    <p>Los servicios especiales que se ofrecen en Salud Integral, son las problemáticas comunes a las que él ser humanó se enfrenta día con día.</p>
                   </div>
                 </div>
                 <div class="col-xl-4 d-flex align-items-stretch">
                   <div class="icon-box mt-4 mt-xl-0">
                     <i class="bx bx-images"></i>
                     <h4>COMO PROGRAMAR UNA CITA</h4>
-                    <p>Este sitio web esta programado para agilizar el proceso de contacto con especialistas </p>
+                    <p>A través de este sitio web, podrás llevar a cabo el proceso de contacto directo con el especialista de tu elección y que se ajuste a tus necesidades.</p>
                   </div>
                 </div>
               </div>
@@ -179,28 +175,26 @@
 
           <div
             class="col-xl-7 col-lg-6 icon-boxes d-flex flex-column align-items-stretch justify-content-center py-5 px-lg-5">
-            <h3>NUESTRO PROPOSITO</h3>
+            <h3>NUESTRO PROPÓSITO</h3>
             <p>Sin texto</p>
 
             <div class="icon-box">
               <div class="icon"><i class="bx bx-fingerprint"></i></div>
               <h4 class="title"><a href="">MISIÓN </a></h4>
-              <p class="description">Proveer a través de cada uno de los terapeutas un servicio de calidad que les
-                permita a los pacientes tener un mejor estado de salud.</p>
+              <p class="description">Proveer a través de cada uno de los servicios de Salud Integral, las herramientas necesarias, físicas y emocionales, para lograr el bienestar integral de los pacientes.</p>
             </div>
 
             <div class="icon-box">
               <div class="icon"><i class="bx bx-gift"></i></div>
               <h4 class="title"><a href="">VISIÓN</a></h4>
-              <p class="description">Convertirnos en un referente de proveedores de servicio de salud para cada uno de
-                los pacientes que optan por nuestros servicios.</p>
+              <p class="description">Convertirnos en un referente de proveedores de servicios de salud, para cada uno de los pacientes que optan por Salud Integral.</p>
             </div>
 
             <div class="icon-box">
               <div class="icon"><i class="bx bx-atom"></i></div>
               <h4 class="title"><a href="">OBJETIVOS</a></h4>
-              <p class="description">• Brindar una mayor cantidad y calidad de servicios médicos.
-                <br>• Mantener un servicio de mejora continua. • Promover el cuidado de la salud. <br>
+              <p class="description">•Brindar una mayor cantidad y calidad de servicios enfocados a la salud integral.
+                <br>•Mantener un servicio de mejora continua.<br>
               </p>
             </div>
 
