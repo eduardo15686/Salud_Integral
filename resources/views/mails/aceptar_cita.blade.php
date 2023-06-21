@@ -42,29 +42,30 @@
         <br />
         <br />
         <br />
-        <div>
+        <div style="width: 970px; text-align: center">
             <img
-                src="principal/assets/img/logo.png"
+                src="{{ $message->embed(public_path('/principal/assets/img/logo.png')) }}"
                 alt=""
                 width="135"
                 height="50"
             />
+            
         </div>
         <div class="container box" style="width: 970px; text-align: center">
             <h1 style="text-align: center"><tutofox /></h1>
             <h3>Solicitud de cita confirmada</h3>
             <h4>
-                Hola, nombre del paciente, con aprecio te informamos que tu
+                Hola, <b>{{ $nombre }}</b>, con aprecio te informamos que tu
                 solicitud de cita ha sido CONFIRMADA por nuestro especialista:
             </h4>
             <br /><br />
-            <h4>
+            <p>
                 <b>FECHA DE CITA:</b> MIÉRCOLES 25 DE JUNIO DE 2023 <br />
                 <b>HORA:</b> 15:00 HRS <br />
                 <b>NOMBRE DEL TERAPEUTA:</b> M.P.C. ADRIANA MACIAS CELIS <br />
                 <b>MODALIDAD DE TERAPIA:</b> PRESENCIAL <br />
                 <b>PRECIO DE CONSULTA:</b> $600.00 PESOS
-            </h4>
+            </p>
         </div>
         <br />
         <div class="container box" style="width: 970px">
@@ -94,7 +95,7 @@
                 COMPROMISO
             </h4>
             <img
-                src="http://salud-integral.test/principal/assets/img/logo.png"
+            src="{{ $message->embed(public_path('/principal/assets/img/Contenido-04.png')) }}"
                 alt=""
                 width="150"
                 height="150"

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 
+use App\Models\Especialista;
 use Auth;
 use Carbon\Carbon;
 use DateTime;
@@ -166,7 +167,21 @@ class AgendaController extends Controller
         // $agendar->paciente_id = $paciente['id'];
         // $agendar->proceso = 'Agendada';
         // $agendar->save();
-        Mail::to('devilwars15@hotmail.com')->send(new ConfirmarCitaProspecto());
+
+        $especialista = Especialista::where('user_id', Auth::user()->id)->get();
+
+        $paciente['nombre'] = $request['prospecto']['nombre'];
+        $paciente['especialista'] = $especialista[0]['titulo'] . ' ' . $especialista[0]['nombre']
+            . ' ' . $especialista[0]['apellido_pat'] . ' ' . $especialista[0]['apellido_mat'];
+
+
+        // // $files = [public_path('principal/assets/img/logo.png')];
+        // // Mail::to('eduardo15686@gmail.com')->send(new ConfirmarCitaProspecto($especialista));
+        // Mail::send('mails.aceptar_cita', $paciente, function ($message) {
+        //     $message->to('eduardo15686@gmail.com')
+        //         ->subject('Cita Confirmada "Salud Integral"');
+        // });
+        return $paciente;
     }
 
     public function rechazarProspecto(Request $request)

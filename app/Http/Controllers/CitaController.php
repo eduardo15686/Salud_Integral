@@ -90,14 +90,6 @@ class CitaController extends Controller
         return response()->json($agendar, 200);
 
     }
-    public function obtenerLinkFoto()
-    {
-        $imagenPerfil = Foto::where('user_id', 1)
-            ->orderBy('id', 'desc')
-            ->first();
-        return asset('img/fotos/' . $imagenPerfil['imagen_path']);
-    }
-
     public function obtenerHorario()
     {
         $especialistas = Especialista::with('foto')
