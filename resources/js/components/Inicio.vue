@@ -39,26 +39,30 @@
                             <div class="row">
                                 <div class="col-md-8">
                                     <div style="margin-left: 10px;">
-                                        <img :src="'http://salud-integral.test/img/fotos/' + item.foto.imagen_path"
+                                        <img :src="'http://salud-integral.test/img/fotos/' + item.especialista.foto.imagen_path"
                                             style="height: 60px; width: 60px; background-repeat: no-repeat; background-position: 50%; border-radius: 50%; background-size: 100% auto;">
                                     </div>
                                     <div class="card-body" style="margin-left: 10px;">
-                                        <h5 class="card-title">{{ item.titulo }} {{ item.nombre }} {{ item.apellido_pat }}
-                                            {{
-                                                item.apellido_mat }}</h5>
-                                        <p class="card-text">{{ item.descripcion }}</p>
+                                        <h4 class="card-title">{{ item.especialista.titulo }} {{ item.especialista.nombre }}
+                                            {{ item.especialista.apellido_pat }}
+                                            {{ item.especialista.apellido_mat }}</h4>
+                                        <h5>{{ item.especialidad }}</h5>
+                                        <p class="card-text">{{ item.especialista.descripcion }}</p>
                                     </div>
                                 </div>
 
-                                <div v-if="item.contador != 0" class="row col-md-4" style="text-align: center;">
+                                <div v-if="item.especialista.contador != 0" class="row col-md-4"
+                                    style="text-align: center;">
                                     <div class="col-md-6">
-                                        <div v-for="(horas, index) in item.horario_mañana" style="padding-bottom: 5px;">
+                                        <div v-for="(horas, index) in item.especialista.horario_mañana"
+                                            style="padding-bottom: 5px;">
                                             <button type="button" class="btn btn-primary btn-sm"
                                                 v-on:click="obtenerHora(horas)">{{ horas.hora.substring(0, 5) }}</button>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
-                                        <div v-for="(horas, index) in item.horario_tarde" style="padding-bottom: 5px;">
+                                        <div v-for="(horas, index) in item.especialista.horario_tarde"
+                                            style="padding-bottom: 5px;">
                                             <button type="button" class="btn btn-primary btn-sm"
                                                 v-on:click="obtenerHora(horas)">{{ horas.hora.substring(0, 5) }}</button>
                                         </div>
@@ -295,6 +299,7 @@ export default {
             axios.post(thisVue.path_url + '/api/citas/getEspecialistas', obj)
                 .then((res) => {
                     thisVue.especialistas = res.data;
+                    console.log(thisVue.especialistas);
 
                 })
                 .catch((error) => {

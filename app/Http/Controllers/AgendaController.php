@@ -149,24 +149,24 @@ class AgendaController extends Controller
     {
 
 
-        $prospecto = Prospecto::find($request['prospecto']['id']);
-        $prospecto->proceso = 'Aceptada';
-        $prospecto->save();
+        // $prospecto = Prospecto::find($request['prospecto']['id']);
+        // $prospecto->proceso = 'Aceptada';
+        // $prospecto->save();
 
-        $paciente = new Paciente;
-        $paciente->especialista_id = Auth::user()->id;
-        $paciente->nombre = $request['prospecto']['nombre'];
-        $paciente->correo = $request['prospecto']['correo'];
-        $paciente->celular = $request['prospecto']['celular'];
-        $paciente->sexo = $request['prospecto']['sexo'];
-        $paciente->estatus = 'Activo';
-        $paciente->save();
+        // $paciente = new Paciente;
+        // $paciente->especialista_id = Auth::user()->id;
+        // $paciente->nombre = $request['prospecto']['nombre'];
+        // $paciente->correo = $request['prospecto']['correo'];
+        // $paciente->celular = $request['prospecto']['celular'];
+        // $paciente->sexo = $request['prospecto']['sexo'];
+        // $paciente->estatus = 'Activo';
+        // $paciente->save();
 
-        $agendar = Agenda::find($request['id']);
-        $agendar->paciente_id = $paciente['id'];
-        $agendar->proceso = 'Agendada';
-        $agendar->save();
-        //Mail::to('eduardo15686@gmail.com')->send(new ConfirmarCitaProspecto());
+        // $agendar = Agenda::find($request['id']);
+        // $agendar->paciente_id = $paciente['id'];
+        // $agendar->proceso = 'Agendada';
+        // $agendar->save();
+        Mail::to('devilwars15@hotmail.com')->send(new ConfirmarCitaProspecto());
     }
 
     public function rechazarProspecto(Request $request)

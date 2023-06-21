@@ -9,6 +9,7 @@ use App\Models\Prospecto;
 use App\Models\Agenda;
 
 
+use App\Models\Servicio;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -17,7 +18,10 @@ class CitaController extends Controller
     public function getEspecialistas(Request $request)
     {
         $fecha = $request['fecha'];
-
+        $infoReal = [];
+        $servicios_nombre = [];
+        $infoReal = [];
+        $guardarInfo = [];
         $especialistas = Especialista::with('foto')
             ->with([
                 'horario_mañana' => function ($query) use ($fecha) {
@@ -39,11 +43,25 @@ class CitaController extends Controller
             ->where('estatus', 'Activo')
             ->get();
 
-        $array_permisos = explode(',', $especialistas[0]['servicio_id']);
+        foreach ($especialistas as $especialista) {
 
-        
+            $servicios_nombre = [];
+            $servicios = explode(',', $especialista['servicio_id']);
+            foreach ($servicios as $servicio) {
+                $servicioInfo = Servicio::where('id', $servicio)
+                    ->where('estatus', 'Activo')
+                    ->first();
+                array_push($servicios_nombre, $servicioInfo['text_html']);
 
-        return response()->json($especialistas, 200);
+            }
+            $infoReal = [
+                'especialista' => $especialista,
+                'especialidad' => implode(", ", $servicios_nombre)
+            ];
+
+            array_push($guardarInfo, $infoReal);
+        }
+        return response()->json($guardarInfo, 200);
 
     }
     public function agendarCita(Request $request)
