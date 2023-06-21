@@ -33,7 +33,6 @@ class FotoController extends Controller
             $nombreimagen = Str::slug($request->imagen) . "." . $imagen->guessExtension();
             $ruta = public_path("img/fotos/");
             $imagen->move($ruta, $nombreimagen);
-
             $foto->imagen_path = $nombreimagen;
         }
         $foto->save();

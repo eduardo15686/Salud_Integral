@@ -75,7 +75,7 @@ export default {
         return {
             path_url: window.vue_url,
             this_year: null,
-            guardarHorario: {},
+            //guardarHorario: {},
             semanas: [],
             valorSemana: 0,
             mostratFecha: false,

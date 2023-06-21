@@ -51,6 +51,7 @@ class AgendaController extends Controller
                     $fecha = new Agenda();
                     $fecha->especialista_id = Auth::user()->id;
                     $fecha->prospecto_id = 0;
+                    $fecha->paciente_id = 0;
                     $fecha->tiempo = $horario[$j]['tiempo'];
                     $fecha->fecha = date("Y-m-d", strtotime($res[$j]));
                     $fecha->hora = $NuevaFecha;
