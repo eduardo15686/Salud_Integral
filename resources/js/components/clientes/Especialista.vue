@@ -118,9 +118,8 @@
                                     <div class="col-md-4">
                                         <div class="form-floating">
                                             <input type="text" class="form-control" v-mask="'###-#######'" maxlength="11"
-                                                id="floatingCel" placeholder="Celular Ej. (618-1234567)" v-model="
-                                                    guardarEspecialista.celular
-                                                " required />
+                                                id="floatingCel" placeholder="Celular Ej. (618-1234567)" v-model="guardarEspecialista.celular
+                                                    " required />
                                             <label for="floatingCel">Celular Ej. (618-1234567)</label>
                                         </div>
                                     </div>
@@ -236,9 +235,8 @@
                                 <div class="col-md-4">
                                     <div class="form-floating">
                                         <input type="text" class="form-control" v-mask="'###-#######'" maxlength="11"
-                                            id="floatingCel" placeholder="Celular Ej. (618-1234567)" v-model="
-                                                infoEspecialista.celular
-                                            " />
+                                            id="floatingCel" placeholder="Celular Ej. (618-1234567)" v-model="infoEspecialista.celular
+                                                " />
                                         <label for="floatingCel">Celular Ej. (618-1234567)</label>
                                     </div>
                                 </div>
@@ -403,6 +401,7 @@ export default {
                 .get(thisVue.path_url + "/api/especialista/obtenerLinkFoto")
                 .then((res) => {
                     thisVue.imagenPerfil = res.data;
+                    console.log(thisVue.imagenPerfil);
                 })
 
                 .catch((error) => { });

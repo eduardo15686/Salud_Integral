@@ -94,7 +94,7 @@
                 COMPROMISO
             </h4>
             <img
-                src="principal/assets/img/Contenido-04.png"
+                src="http://salud-integral.test/principal/assets/img/logo.png"
                 alt=""
                 width="150"
                 height="150"

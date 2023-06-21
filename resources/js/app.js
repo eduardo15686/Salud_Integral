@@ -42,11 +42,12 @@ app.component('agenda', Agenda);
 import Password from './components/clientes/Password.vue';
 app.component('password', Password);
 
-import ProcesoCitas from './components/inicio.vue';
+import ProcesoCitas from './components/Inicio.vue';
 app.component('generar-cita', ProcesoCitas);
 
 import Citas from './components/agenda/Cita.vue';
 app.component('citas', Citas);
+
 
 // Vue.component('pagination', require('laravel-vue-pagination'));
 /**
