@@ -454,13 +454,6 @@ export default {
             formData.append("imagen", thisVue.product.imagen);
             await axios
                 .post(
-                    thisVue.path_url + "/api/especialista/updateFoto",
-                    formData
-                ).then((res) => {
-                }).catch((error) => { });
-
-            await axios
-                .post(
                     thisVue.path_url + "/api/especialista/guardarEspecialista",
                     thisVue.guardarEspecialista
                 )
@@ -470,6 +463,15 @@ export default {
                 })
 
                 .catch((error) => { });
+
+            await axios
+                .post(
+                    thisVue.path_url + "/api/especialista/updateFoto",
+                    formData
+                ).then((res) => {
+                }).catch((error) => { });
+
+
         },
 
         obtenerImagen(e) {

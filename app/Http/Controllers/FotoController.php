@@ -28,16 +28,14 @@ class FotoController extends Controller
     {
         $foto = new Foto();
         $foto->user_id = Auth::user()->id;
+        if ($request->hasfile("imagen")) {
+            $imagen = $request->file("imagen");
+            $nombreimagen = Str::slug($request->imagen) . "." . $imagen->guessExtension();
+            $ruta = public_path("img/fotos/");
+            $imagen->move($ruta, $nombreimagen);
 
-        // if ($request->hasfile("imagen")) {
-        //     $imagen = $request->file("imagen");
-        //     $nombreimagen = Str::slug($request->imagen) . "." . $imagen->guessExtension();
-        //     $ruta = public_path("img/fotos/");
-        //     $imagen->move($ruta, $nombreimagen);
-
-        //     $foto->imagen_path = $nombreimagen;
-        // }
-        $foto->imagen_path = 'cwamp64tmpphpa7c4tmp.jpg';
+            $foto->imagen_path = $nombreimagen;
+        }
         $foto->save();
     }
 
