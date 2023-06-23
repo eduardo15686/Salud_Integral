@@ -204,6 +204,7 @@
             </div>
 
             <div v-else class="row"></div>
+            
             <!-- Modal Aparatada-->
             <div class="modal fade" id="modalHoraApartada" tabindex="-1" aria-labelledby="modalHoraApartadaLabel"
                 aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
