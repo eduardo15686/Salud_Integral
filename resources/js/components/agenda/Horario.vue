@@ -58,10 +58,16 @@
                     <div v-else class="col-md-5">
                     </div>
                     <div class="col-md-1">
-                        <button type="button" class="btn btn-primary" @click="guardarHorario(item)"
-                            :id="item.dia">Guardar</button>
+                        <button type="button" class="btn btn-primary" @click="guardarHorario(item)" :id="item.dia"
+                            hidden>Guardar</button>
                     </div>
                 </div>
+                <div class="row">
+                    <div style="text-align: end;">
+                        <button type="button" class="btn btn-primary" @click="generarHorario()">Guardar Horario</button>
+                    </div>
+                </div>
+
             </div>
 
             <!-- <div v-if="ventanaEditarHorario == true">
@@ -156,10 +162,25 @@ export default {
             thisVue.crearHorario = true;
 
         },
+        generarHorario() {
+            document.getElementById("Lunes").click();
+            document.getElementById("Martes").click();
+            document.getElementById("Miercoles").click();
+            document.getElementById("Jueves").click();
+            document.getElementById("Viernes").click();
+            document.getElementById("Sabado").click();
+            document.getElementById("Domingo").click();
+
+            this.$swal(
+                'Horario Guardado',
+                'El horario se guardó de manera exitosa',
+                'success'
+
+            );
+        },
         guardarHorario(item) {
             const thisVue = this;
             const btncompra = document.getElementById(item.dia);
-
             let obj = {
                 inicio_mat: item.inicio_mat,
                 final_mat: item.final_mat,
@@ -180,12 +201,7 @@ export default {
             } else {
                 axios.post(thisVue.path_url + '/api/horario/generarHorario', obj)
                     .then((res) => {
-                        this.$swal(
-                            'Horario Guardado',
-                            'El horario se guardó de manera exitosa',
-                            'success'
 
-                        );
                         btncompra.disabled = true;
                     })
                     .catch((error) => {

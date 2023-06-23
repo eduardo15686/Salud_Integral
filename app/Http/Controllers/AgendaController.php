@@ -20,80 +20,84 @@ class AgendaController extends Controller
 {
     public function generarAgenda(Request $request)
     {
-        // $fecha = new DateTime(Carbon::today());
-        // $semana = $fecha->format('W');
-        // $a = $fecha->format('Y');
-        // $sem = $semana + ($request['contador']);
-        // $enero = mktime(1, 1, 1, 1, 1, $a);
-        // $mos = (11 - date('w', $enero)) % 7 - 3;
-        // $inicios = strtotime(($sem - 1) . ' weeks ' . $mos . ' days', $enero);
-        // for ($x = 0; $x <= 6; $x++) {
-        //     $dias[] = date('d-m-Y', strtotime("+ $x day", $inicios));
-        // }
-        // $res = ($dias);
-        // $horario = Horario::all()
-        //     ->where('especialista_id', Auth::user()->id)
-        //     ->where('estatus', 'Activo');
+        $primerhora = '';
+        $segundahora = '';
+        $primerhora_vesp = '';
+        $segundahora_vesp = '';
 
-        // for ($j = 0; $j <= 6; $j++) {
-        //     $primerhora = $res[$j] . ' ' . $horario[$j]['inicio_mat'];
-        //     $segundahora = $res[$j] . ' ' . $horario[$j]['final_mat'];
-        //     $minutos = (strtotime($primerhora) - strtotime($segundahora)) / 60;
-        //     $minutos = abs($minutos);
-        //     $minutos = floor($minutos);
+        $fecha = new DateTime(Carbon::today());
+        $semana = $fecha->format('W');
+        $a = $fecha->format('Y');
+        $sem = $semana + ($request['contador']);
+        $enero = mktime(1, 1, 1, 1, 1, $a);
+        $mos = (11 - date('w', $enero)) % 7 - 3;
+        $inicios = strtotime(($sem - 1) . ' weeks ' . $mos . ' days', $enero);
+        for ($x = 0; $x <= 6; $x++) {
+            $dias[] = date('d-m-Y', strtotime("+ $x day", $inicios));
+        }
+        $res = ($dias);
+        $horario = Horario::all()
+            ->where('especialista_id', Auth::user()->id)
+            ->where('estatus', 'Activo');
 
-        //     $numeroConsultas = $minutos / $horario[$j]['tiempo'];
-        //     $NuevaFecha = date('H:i', strtotime($primerhora));
+        for ($j = 0; $j <= 6; $j++) {
+            $primerhora = $res[$j] . ' ' . $horario[$j]['inicio_mat'];
+            $segundahora = $res[$j] . ' ' . $horario[$j]['final_mat'];
+            $minutos = (strtotime($primerhora) - strtotime($segundahora)) / 60;
+            $minutos = abs($minutos);
+            $minutos = floor($minutos);
 
-        //     if (floor($numeroConsultas) != 0) {
-        //         for ($i = 0; $i < floor($numeroConsultas); $i++) {
-        //             $fecha = new Agenda();
-        //             $fecha->especialista_id = Auth::user()->id;
-        //             $fecha->prospecto_id = 0;
-        //             $fecha->paciente_id = 0;
-        //             $fecha->tiempo = $horario[$j]['tiempo'];
-        //             $fecha->fecha = date("Y-m-d", strtotime($res[$j]));
-        //             $fecha->hora = $NuevaFecha;
-        //             $fecha->proceso = 'Disponible';
-        //             $fecha->estatus = 'Activo';
-        //             $fecha->created_by = Auth::user()->id;
-        //             $fecha->updated_by = Auth::user()->id;
-        //             $fecha->save();
-        //             $NuevaFecha = strtotime('+' . $horario[$j]['tiempo'] . 'minute', strtotime($NuevaFecha));
-        //             $NuevaFecha = date('H:i', $NuevaFecha);
-        //         }
-        //     }
-        // }
-        // for ($j = 0; $j <= 6; $j++) {
-        //     $primerhora_vesp = $res[$j] . ' ' . $horario[$j]['inicio_vesp'];
-        //     $segundahora_vesp = $res[$j] . ' ' . $horario[$j]['final_vesp'];
-        //     $minutos = (strtotime($primerhora_vesp) - strtotime($segundahora_vesp)) / 60;
-        //     $minutos = abs($minutos);
-        //     $minutos = floor($minutos);
+            $numeroConsultas = $minutos / $horario[$j]['tiempo'];
+            $NuevaFecha = date('H:i', strtotime($primerhora));
 
-        //     $numeroConsultas = $minutos / $horario[$j]['tiempo'];
-        //     $NuevaFecha = date('H:i', strtotime($primerhora_vesp));
+            if (floor($numeroConsultas) != 0) {
+                for ($i = 0; $i < floor($numeroConsultas); $i++) {
+                    $fecha = new Agenda();
+                    $fecha->especialista_id = Auth::user()->id;
+                    $fecha->prospecto_id = 0;
+                    $fecha->paciente_id = 0;
+                    $fecha->tiempo = $horario[$j]['tiempo'];
+                    $fecha->fecha = date("Y-m-d", strtotime($res[$j]));
+                    $fecha->hora = $NuevaFecha;
+                    $fecha->proceso = 'Disponible';
+                    $fecha->estatus = 'Activo';
+                    $fecha->created_by = Auth::user()->id;
+                    $fecha->updated_by = Auth::user()->id;
+                    $fecha->save();
+                    $NuevaFecha = strtotime('+' . $horario[$j]['tiempo'] . 'minute', strtotime($NuevaFecha));
+                    $NuevaFecha = date('H:i', $NuevaFecha);
+                }
+            }
+        }
+        for ($j = 0; $j <= 6; $j++) {
+            $primerhora_vesp = $res[$j] . ' ' . $horario[$j]['inicio_vesp'];
+            $segundahora_vesp = $res[$j] . ' ' . $horario[$j]['final_vesp'];
+            $minutos = (strtotime($primerhora_vesp) - strtotime($segundahora_vesp)) / 60;
+            $minutos = abs($minutos);
+            $minutos = floor($minutos);
 
-        //     if (floor($numeroConsultas) != 0) {
-        //         for ($i = 0; $i < floor($numeroConsultas); $i++) {
-        //             $fecha = new Agenda();
-        //             $fecha->especialista_id = Auth::user()->id;
-        //             $fecha->prospecto_id = 0;
-        //             $fecha->paciente_id = 0;
-        //             $fecha->tiempo = $horario[$j]['tiempo'];
-        //             $fecha->fecha = date("Y-m-d", strtotime($res[$j]));
-        //             $fecha->hora = $NuevaFecha;
-        //             $fecha->proceso = 'Disponible';
-        //             $fecha->estatus = 'Activo';
-        //             $fecha->created_by = Auth::user()->id;
-        //             $fecha->updated_by = Auth::user()->id;
-        //             $fecha->save();
-        //             $NuevaFecha = strtotime('+' . $horario[$j]['tiempo'] . 'minute', strtotime($NuevaFecha));
-        //             $NuevaFecha = date('H:i', $NuevaFecha);
-        //         }
-        //     }
-        // }
-        echo 'generamos agenda';
+            $numeroConsultas = $minutos / $horario[$j]['tiempo'];
+            $NuevaFecha = date('H:i', strtotime($primerhora_vesp));
+
+            if (floor($numeroConsultas) != 0) {
+                for ($i = 0; $i < floor($numeroConsultas); $i++) {
+                    $fecha = new Agenda();
+                    $fecha->especialista_id = Auth::user()->id;
+                    $fecha->prospecto_id = 0;
+                    $fecha->paciente_id = 0;
+                    $fecha->tiempo = $horario[$j]['tiempo'];
+                    $fecha->fecha = date("Y-m-d", strtotime($res[$j]));
+                    $fecha->hora = $NuevaFecha;
+                    $fecha->proceso = 'Disponible';
+                    $fecha->estatus = 'Activo';
+                    $fecha->created_by = Auth::user()->id;
+                    $fecha->updated_by = Auth::user()->id;
+                    $fecha->save();
+                    $NuevaFecha = strtotime('+' . $horario[$j]['tiempo'] . 'minute', strtotime($NuevaFecha));
+                    $NuevaFecha = date('H:i', $NuevaFecha);
+                }
+            }
+        }
     }
     public function verAgenda(Request $request)
     {
