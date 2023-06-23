@@ -36,9 +36,10 @@ class AgendaController extends Controller
             $dias[] = date('d-m-Y', strtotime("+ $x day", $inicios));
         }
         $res = ($dias);
-        $horario = Horario::all()
+        $horario = Horario::orderBy('dia', 'asc')
             ->where('especialista_id', Auth::user()->id)
-            ->where('estatus', 'Activo');
+            ->where('estatus', 'Activo')
+            ->get();
 
         for ($j = 0; $j <= 6; $j++) {
             $primerhora = $res[$j] . ' ' . $horario[$j]['inicio_mat'];

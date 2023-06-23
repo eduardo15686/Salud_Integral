@@ -64,7 +64,7 @@
                 </div>
                 <div class="row">
                     <div style="text-align: end;">
-                        <button type="button" class="btn btn-primary" @click="generarHorario()">Guardar Horario</button>
+                        <button type="button" class="btn btn-primary" @click="generarHorario()" id="guardarHorarioFinal">Guardar Horario</button>
                     </div>
                 </div>
 
@@ -170,17 +170,10 @@ export default {
             document.getElementById("Viernes").click();
             document.getElementById("Sabado").click();
             document.getElementById("Domingo").click();
-
-            this.$swal(
-                'Horario Guardado',
-                'El horario se guardó de manera exitosa',
-                'success'
-
-            );
         },
         guardarHorario(item) {
             const thisVue = this;
-            const btncompra = document.getElementById(item.dia);
+            const btncompra = document.getElementById('guardarHorarioFinal');
             let obj = {
                 inicio_mat: item.inicio_mat,
                 final_mat: item.final_mat,
@@ -201,12 +194,18 @@ export default {
             } else {
                 axios.post(thisVue.path_url + '/api/horario/generarHorario', obj)
                     .then((res) => {
-
                         btncompra.disabled = true;
                     })
                     .catch((error) => {
 
                     });
+                this.$swal(
+                    'Horario Guardado',
+                    'El horario se guardó de manera exitosa',
+                    'success'
+
+                );
+                thisVue.crearHorario = false;
             }
         },
 
