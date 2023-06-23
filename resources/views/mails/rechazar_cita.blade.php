@@ -53,31 +53,15 @@
         </div>
         <div class="container box" style="width: 970px; text-align: center">
             <h1 style="text-align: center"><tutofox /></h1>
-            <h3>Solicitud de cita confirmada</h3>
+            <h3>Solicitud de cita en espera</h3>
             <h4>
-                Hola, <b>{{ $nombre }}</b>, con aprecio te informamos que tu
-                solicitud de cita ha sido CONFIRMADA por nuestro especialista:
+                Hola, {{$nombre}}, te informamos que tu solicitud de cita aún no ha sido CONFIRMADA por nuestro especialista debido a que la información presentada en el formulario de contacto no ha sido clara, nuestro equipo de soporte se contactara para terminar el proceso en menos de 24 hrs, de lo contrario te pedimos vuelvas agendar a través de http://saludintegraltest.duckdns.org/cita;
             </h4>
             <br /><br />
-            <p>
-                <b>FECHA DE CITA:</b> {{$fecha}} <br />
-                <b>HORA:</b> {{substr($hora, 0,5)}} HRS <br />
-                <b>NOMBRE DEL TERAPEUTA:</b> {{$especialista}} <br />
-                <b>MODALIDAD DE TERAPIA:</b> {{$modalidad}} <br />
-                <b>PRECIO DE CONSULTA:</b> ${{$precio_consulta}}.00 PESOS
-            </p>
+            
         </div>
         <br />
         <div class="container box" style="width: 970px">
-            <p style="padding: 20px">
-                Recibimos tu número de contacto, por lo que nuestros
-                especialistas te contactaran para aclarar cualquier duda, te
-                dejaremos algunas sugerencias para mejorar tu experiencia con
-                nuestros servicios. <br />
-                <br />
-                <b>• Acudir con 5 minutos de anticipación a la sesión.</b>
-                <br />
-            </p>
             <p style="padding: 20px">
                 DIRECCIÓN DE CONSULTORIO: Diego de Vilchis #2951 Col. San
                 Felipe, Chihuahua, Chihuahua C.P. 31203, Chihuahua, Mexico
@@ -101,8 +85,7 @@
                 height="150"
             />
             <p style="padding: 30px; font-size: x-small">
-                Todos los datos de nuestros pacientes son confidenciales y sus datos están protegidos, 
-                consulte nuestro aviso de
+                Todos los datos de nuestros pacientes son confidenciales y sus datos están protegidos, consulte nuestro aviso de
                 privacidad en http://saludintegraltest.duckdns.org/
             </p>
         </div>

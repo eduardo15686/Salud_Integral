@@ -51,7 +51,7 @@
                                     </div>
                                 </div>
 
-                                <div v-if="item.especialista.contador != 0" class="row col-md-4"
+                                <div v-if="item.especialista.contador_mañana != 0 || item.especialista.contador_tarde != 0" class="row col-md-4"
                                     style="text-align: center;">
                                     <div class="col-md-6">
                                         <div v-for="(horas, index) in item.especialista.horario_mañana"

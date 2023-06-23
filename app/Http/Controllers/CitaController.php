@@ -35,11 +35,16 @@ class CitaController extends Controller
 
             ])
             ->withCount([
-                'horario_tarde as contador' => function ($query) use ($fecha) {
+                'horario_tarde as contador_tarde' => function ($query) use ($fecha) {
                     $query->whereDate('fecha', '>=', Carbon::today());
                     $query->whereDate('fecha', $fecha);
                 }
-            ])
+            ])->withCount([
+                    'horario_mañana as contador_mañana' => function ($query) use ($fecha) {
+                        $query->whereDate('fecha', '>=', Carbon::today());
+                        $query->whereDate('fecha', $fecha);
+                    }
+                ])
             ->where('estatus', 'Activo')
             ->get();
 

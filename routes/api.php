@@ -53,6 +53,7 @@ Route::middleware('auth:sanctum')->prefix('/agendas')->group(function () {
     Route::get('/getPacientes', [AgendaController::class, 'getPacientes']);
     Route::post('/agendarPaciente', [AgendaController::class, 'agendarPaciente']);
     Route::post('/habilitarHora', [AgendaController::class, 'habilitarHora']);
+    Route::post('/agendarHoraEspecial', [AgendaController::class, 'agendarHoraEspecial']);
 });
 
 Route::middleware('auth:sanctum')->prefix('/horario')->group(function () {
@@ -60,6 +61,8 @@ Route::middleware('auth:sanctum')->prefix('/horario')->group(function () {
     Route::post('/generarHorario', [HorarioController::class, 'generarHorario']);
     Route::get('/getHoras', [HorarioController::class, 'getHoras']);
     Route::get('/tiempoConsulta', [HorarioController::class, 'tiempoConsulta']);
+    Route::get('/getHorario', [HorarioController::class, 'getHorario']);
+    
 });
 
 

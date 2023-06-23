@@ -615,17 +615,17 @@
 
         <div class="section-title">
           <h2>Ubicación</h2>
-          <p>La dirección escrita de las clinicas</p>
+          <p>Diego de Vilchis #2951 Col. San Felipe, Chihuahua, Chihuahua C.P. 31203, Chihuahua, México.</p>
         </div>
       </div>
 
       <div>
         <iframe style="border:0; width: 100%; height: 350px;"
-          src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d12097.433213460943!2d-74.0062269!3d40.7101282!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xb89d1fe6bc499443!2sDowntown+Conference+Center!5e0!3m2!1smk!2sbg!4v1539943755621"
+          src="https://maps.google.com/maps?width=600&amp;height=400&amp;hl=en&amp;q=Diego de Vilchis 2944, San Felipe III Etapa, 31203 Chihuahua, Chih.&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"
           frameborder="0" allowfullscreen></iframe>
       </div>
 
-      
+     
     </section><!-- End Contact Section -->
 
   </main><!-- End #main -->

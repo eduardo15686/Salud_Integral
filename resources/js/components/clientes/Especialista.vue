@@ -47,6 +47,11 @@
                         <label for="montoDeposito">Monto de Solicitud del Deposito</label>
                     </div>
                     <div class="form-floating mb-3">
+                        <money3 type="text" class="form-control" id="montoDeposito" v-model="infoEspecialista.precio_consulta"
+                            v-bind="config" disabled></money3>
+                        <label for="montoDeposito">Precio de consulta</label>
+                    </div>
+                    <div class="form-floating mb-3">
                         <input type="text" class="form-control" id="celular" v-mask="'###-#######'"
                             v-model="infoEspecialista.celular" disabled>
                         <label for="celular">Número de Contacto</label>
@@ -91,17 +96,17 @@
                                     <h3>Datos Personales</h3>
                                     <div class="form-floating col-md-4">
                                         <input type="text" class="form-control" id="floatingInput" placeholder="Nombre"
-                                            v-model="guardarEspecialista.nombre" required />
+                                            v-model="guardarEspecialista.nombre" required name="nombre"/>
                                         <label for="floatingInput">Nombre</label>
                                     </div>
                                     <div class="form-floating col-md-4">
                                         <input type="text" class="form-control" id="floatingInput" placeholder="Paterno"
-                                            v-model="guardarEspecialista.paterno" required />
+                                            v-model="guardarEspecialista.paterno" required name="apellido_pat"/>
                                         <label for="floatingInput">Apellido Paterno</label>
                                     </div>
                                     <div class="form-floating col-md-4">
                                         <input type="text" class="form-control" id="floatingInput" placeholder="Materno"
-                                            v-model="guardarEspecialista.materno" required />
+                                            v-model="guardarEspecialista.materno" required name="apellido_mat"/>
                                         <label for="floatingInput">Apellido Materno</label>
                                     </div>
                                 </div>
@@ -111,7 +116,7 @@
                                         <div class="form-floating">
                                             <input type="text" class="form-control" id="floatingCel"
                                                 placeholder="Titulo/Especialidad" v-model="guardarEspecialista.titulo"
-                                                required />
+                                                required name="titulo"/>
                                             <label for="floatingCel">Titulo/Especialidad</label>
                                         </div>
                                     </div>
@@ -119,13 +124,13 @@
                                         <div class="form-floating">
                                             <input type="text" class="form-control" v-mask="'###-#######'" maxlength="11"
                                                 id="floatingCel" placeholder="Celular Ej. (618-1234567)" v-model="guardarEspecialista.celular
-                                                    " required />
+                                                    " required name="celular"/>
                                             <label for="floatingCel">Celular Ej. (618-1234567)</label>
                                         </div>
                                     </div>
                                     <div class="form-floating col-md-5">
                                         <input type="email" class="form-control" id="floatingInput"
-                                            placeholder="name@example.com" v-model="guardarEspecialista.correo" required />
+                                            placeholder="name@example.com" v-model="guardarEspecialista.correo" required name="correo"/>
                                         <label for="floatingInput">Correo Electronico</label>
                                     </div>
                                 </div>
@@ -149,21 +154,21 @@
                                     <div class="form-floating col-md-3">
                                         <div class="form-floating mb-3">
                                             <money3 type="text" class="form-control" id="floatingInput"
-                                                v-model="guardarEspecialista.deposito" v-bind="config"></money3>
+                                                v-model="guardarEspecialista.deposito" v-bind="config" name="anticipo"></money3>
                                             <label for="floatingInput">Solicitud de anticipo</label>
                                         </div>
                                     </div>
                                     <div class="form-floating col-md-3">
                                         <div class="form-floating mb-3">
                                             <money3 type="text" class="form-control" id="floatingInput"
-                                                v-model="guardarEspecialista.cuota" v-bind="config"></money3>
+                                                v-model="guardarEspecialista.cuota" v-bind="config" name="precio_consulta"></money3>
                                             <label for="floatingInput">Precio de consulta</label>
                                         </div>
                                     </div>
                                     <div class="form-floating col-md-6">
                                         <textarea class="form-control" placeholder="Leave a comment here"
                                             id="floatingTextarea" v-model="guardarEspecialista.descripcion"
-                                            maxlength="300"></textarea>
+                                            maxlength="300" name="descripcion"></textarea>
                                         <label for="floatingTextarea">Descripción/Información
                                             Adicional</label>
                                     </div>
@@ -275,7 +280,14 @@
                                         <label for="floatingInput">Solicitud de anticipo</label>
                                     </div>
                                 </div>
-                                <div class="form-floating col-md-9">
+                                <div class="form-floating col-md-3">
+                                    <div class="form-floating mb-3">
+                                        <money3 type="text" class="form-control" id="floatingInput"
+                                            v-model="infoEspecialista.precio_consulta" v-bind="config"></money3>
+                                        <label for="floatingInput">Solicitud de anticipo</label>
+                                    </div>
+                                </div>
+                                <div class="form-floating col-md-6">
                                     <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea"
                                         v-model="infoEspecialista.descripcion" maxlength="300"></textarea>
                                     <label for="floatingTextarea">Descripción/Información

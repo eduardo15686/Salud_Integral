@@ -46,8 +46,8 @@ class AgendaController extends Controller
             $numeroConsultas = $minutos / $horario[$j]['tiempo'];
             $NuevaFecha = date('H:i', strtotime($primerhora));
 
-            if ($numeroConsultas != 0) {
-                for ($i = 0; $i < $numeroConsultas; $i++) {
+            if (floor($numeroConsultas) != 0) {
+                for ($i = 0; $i < floor($numeroConsultas); $i++) {
                     $fecha = new Agenda();
                     $fecha->especialista_id = Auth::user()->id;
                     $fecha->prospecto_id = 0;
@@ -75,8 +75,8 @@ class AgendaController extends Controller
             $numeroConsultas = $minutos / $horario[$j]['tiempo'];
             $NuevaFecha = date('H:i', strtotime($primerhora_vesp));
 
-            if ($numeroConsultas != 0) {
-                for ($i = 0; $i < $numeroConsultas; $i++) {
+            if (floor($numeroConsultas) != 0) {
+                for ($i = 0; $i < floor($numeroConsultas); $i++) {
                     $fecha = new Agenda();
                     $fecha->especialista_id = Auth::user()->id;
                     $fecha->prospecto_id = 0;
@@ -109,37 +109,44 @@ class AgendaController extends Controller
         }
         $res = ($dias);
 
-        $lunes = Agenda::where('estatus', 'Activo')
+        $lunes = Agenda::orderBy('hora', 'asc')
+            ->where('estatus', 'Activo')
             ->where('fecha', date("Y-m-d", strtotime($res[0])))
             ->with('prospecto')
             ->with('paciente')
             ->get();
-        $martes = Agenda::where('estatus', 'Activo')
+        $martes = Agenda::orderBy('hora', 'asc')
+            ->where('estatus', 'Activo')
             ->where('fecha', date("Y-m-d", strtotime($res[1])))
             ->with('prospecto')
             ->with('paciente')
             ->get();
-        $miercoles = Agenda::where('estatus', 'Activo')
+        $miercoles = Agenda::orderBy('hora', 'asc')
+            ->where('estatus', 'Activo')
             ->where('fecha', date("Y-m-d", strtotime($res[2])))
             ->with('prospecto')
             ->with('paciente')
             ->get();
-        $jueves = Agenda::where('estatus', 'Activo')
+        $jueves = Agenda::orderBy('hora', 'asc')
+            ->where('estatus', 'Activo')
             ->where('fecha', date("Y-m-d", strtotime($res[3])))
             ->with('prospecto')
             ->with('paciente')
             ->get();
-        $viernes = Agenda::where('estatus', 'Activo')
+        $viernes = Agenda::orderBy('hora', 'asc')
+            ->where('estatus', 'Activo')
             ->where('fecha', date("Y-m-d", strtotime($res[4])))
             ->with('prospecto')
             ->with('paciente')
             ->get();
-        $sabado = Agenda::where('estatus', 'Activo')
+        $sabado = Agenda::orderBy('hora', 'asc')
+            ->where('estatus', 'Activo')
             ->where('fecha', date("Y-m-d", strtotime($res[5])))
             ->with('prospecto')
             ->with('paciente')
             ->get();
-        $domingo = Agenda::where('estatus', 'Activo')
+        $domingo = Agenda::orderBy('hora', 'asc')
+            ->where('estatus', 'Activo')
             ->where('fecha', date("Y-m-d", strtotime($res[6])))
             ->with('prospecto')
             ->with('paciente')
@@ -149,40 +156,41 @@ class AgendaController extends Controller
     }
     public function aceptarProspecto(Request $request)
     {
+        $prospecto = Prospecto::find($request['prospecto']['id']);
+        $prospecto->proceso = 'Aceptada';
+        $prospecto->save();
 
+        $paciente = new Paciente;
+        $paciente->especialista_id = Auth::user()->id;
+        $paciente->nombre = $request['prospecto']['nombre'];
+        $paciente->correo = $request['prospecto']['correo'];
+        $paciente->celular = $request['prospecto']['celular'];
+        $paciente->sexo = $request['prospecto']['sexo'];
+        $paciente->estatus = 'Activo';
+        $paciente->save();
 
-        // $prospecto = Prospecto::find($request['prospecto']['id']);
-        // $prospecto->proceso = 'Aceptada';
-        // $prospecto->save();
-
-        // $paciente = new Paciente;
-        // $paciente->especialista_id = Auth::user()->id;
-        // $paciente->nombre = $request['prospecto']['nombre'];
-        // $paciente->correo = $request['prospecto']['correo'];
-        // $paciente->celular = $request['prospecto']['celular'];
-        // $paciente->sexo = $request['prospecto']['sexo'];
-        // $paciente->estatus = 'Activo';
-        // $paciente->save();
-
-        // $agendar = Agenda::find($request['id']);
-        // $agendar->paciente_id = $paciente['id'];
-        // $agendar->proceso = 'Agendada';
-        // $agendar->save();
+        $agendar = Agenda::find($request['id']);
+        $agendar->paciente_id = $paciente['id'];
+        $agendar->proceso = 'Agendada';
+        $agendar->save();
 
         $especialista = Especialista::where('user_id', Auth::user()->id)->get();
 
-        $paciente['nombre'] = $request['prospecto']['nombre'];
-        $paciente['especialista'] = $especialista[0]['titulo'] . ' ' . $especialista[0]['nombre']
+        $pacienteInfo['nombre'] = $request['prospecto']['nombre'];
+        $pacienteInfo['especialista'] = $especialista[0]['titulo'] . ' ' . $especialista[0]['nombre']
             . ' ' . $especialista[0]['apellido_pat'] . ' ' . $especialista[0]['apellido_mat'];
+        $pacienteInfo['fecha'] = $agendar['fecha'];
+        $pacienteInfo['hora'] = $agendar['hora'];
+        $pacienteInfo['modalidad'] = $prospecto['modalidad'];
+        $pacienteInfo['precio_consulta'] = $especialista[0]['precio_consulta'];
 
-
-        // // $files = [public_path('principal/assets/img/logo.png')];
-        // // Mail::to('eduardo15686@gmail.com')->send(new ConfirmarCitaProspecto($especialista));
-        // Mail::send('mails.aceptar_cita', $paciente, function ($message) {
-        //     $message->to('eduardo15686@gmail.com')
-        //         ->subject('Cita Confirmada "Salud Integral"');
-        // });
-        return $paciente;
+        // $files = [public_path('principal/assets/img/logo.png')];
+        // Mail::to('eduardo15686@gmail.com')->send(new ConfirmarCitaProspecto($especialista));
+        Mail::send('mails.aceptar_cita', $pacienteInfo, function ($message) {
+            $message->to('eduardo15686@gmail.com')
+                ->subject('Cita Confirmada "Salud Integral"');
+        });
+        return $especialista;
     }
 
     public function rechazarProspecto(Request $request)
@@ -193,9 +201,15 @@ class AgendaController extends Controller
         $agendar->save();
 
         $prospecto = Prospecto::find($request['prospecto']['id']);
-        $prospecto->proceso = 'Aceptada';
+        $prospecto->proceso = 'Rechazada';
         $prospecto->save();
-        //Mail::to('eduardo15686@gmail.com')->send(new ConfirmarCitaProspecto());
+
+        $paciente['nombre'] = $request['prospecto']['nombre'];
+
+        Mail::send('mails.rechazar_cita', $paciente, function ($message) {
+            $message->to('eduardo15686@gmail.com')
+                ->subject('Cita En Espera "Salud Integral"');
+        });
     }
 
     public function inhabilitarHora(Request $request)
@@ -231,5 +245,21 @@ class AgendaController extends Controller
         // return response()->json($paciente, 200);
     }
 
+    public function agendarHoraEspecial(Request $request)
+    {
+        $fecha = new Agenda();
+        $fecha->especialista_id = Auth::user()->id;
+        $fecha->prospecto_id = 0;
+        $fecha->paciente_id = $request['paciente_id'];
+        $fecha->tiempo = $request['tiempo'];
+        $fecha->fecha = $request['fecha'];
+        $fecha->hora = $request['hora'];
+        $fecha->proceso = 'Especial';
+        $fecha->estatus = 'Activo';
+        $fecha->created_by = Auth::user()->id;
+        $fecha->updated_by = Auth::user()->id;
+        $fecha->save();
+        
+    }
 
 }

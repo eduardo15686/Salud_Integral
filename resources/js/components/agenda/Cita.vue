@@ -12,7 +12,10 @@
 
             <br>
             <div class="row">
-                <div class="col-md-5"></div>
+                <div class="col-md-5" style="text-align: start;">
+                    <button type="button" class="btn btn-primary" style="margin: 5px;" @click="openModalEspecial()">Agregar
+                        Horario Especial</button>
+                </div>
                 <div class="col-md-7">
                     <button type="button" class="btn btn-success" style="margin: 5px;" disabled>Disponible</button>
                     <button type="button" class="btn btn-warning" style="margin: 5px;" disabled>Solicitada</button>
@@ -67,6 +70,9 @@
                         <button v-if="item.proceso == 'Inactiva'" type="button" class="btn btn-dark"
                             style=" width:80px;height:40px;" @click="horaInhabilitada(item)">{{ item.hora.substring(0, 5)
                             }}</button>
+                        <button v-if="item.proceso == 'Especial'" type="button" class="btn btn-success"
+                            style="width:80px;height:40px; background-color: #cca9dd; border-color: #cca9dd;"
+                            @click="horaEspecial(item)">{{ item.hora.substring(0, 5) }}</button>
                     </div>
                 </div>
                 <div class="col-md-1" style="text-align: center;">
@@ -85,6 +91,9 @@
                         <button v-if="item.proceso == 'Inactiva'" type="button" class="btn btn-dark"
                             style=" width:80px;height:40px;" @click="horaInhabilitada(item)">{{ item.hora.substring(0, 5)
                             }}</button>
+                        <button v-if="item.proceso == 'Especial'" type="button" class="btn btn-success"
+                            style="width:80px;height:40px; background-color: #cca9dd; border-color: #cca9dd;"
+                            @click="horaEspecial(item)">{{ item.hora.substring(0, 5) }}</button>
                     </div>
                 </div>
                 <div class="col-md-1" style="text-align: center;">
@@ -103,6 +112,9 @@
                         <button v-if="item.proceso == 'Inactiva'" type="button" class="btn btn-dark"
                             style=" width:80px;height:40px;" @click="horaInhabilitada(item)">{{ item.hora.substring(0, 5)
                             }}</button>
+                        <button v-if="item.proceso == 'Especial'" type="button" class="btn btn-success"
+                            style="width:80px;height:40px; background-color: #cca9dd; border-color: #cca9dd;"
+                            @click="horaEspecial(item)">{{ item.hora.substring(0, 5) }}</button>
                     </div>
                 </div>
                 <div class="col-md-1" style="text-align: center;">
@@ -121,6 +133,9 @@
                         <button v-if="item.proceso == 'Inactiva'" type="button" class="btn btn-dark"
                             style=" width:80px;height:40px;" @click="horaInhabilitada(item)"> {{ item.hora.substring(0, 5)
                             }}</button>
+                        <button v-if="item.proceso == 'Especial'" type="button" class="btn btn-success"
+                            style="width:80px;height:40px; background-color: #cca9dd; border-color: #cca9dd;"
+                            @click="horaEspecial(item)">{{ item.hora.substring(0, 5) }}</button>
                     </div>
                 </div>
                 <div class="col-md-1" style="text-align: center;">
@@ -139,6 +154,9 @@
                         <button v-if="item.proceso == 'Inactiva'" type="button" class="btn btn-dark"
                             style=" width:80px;height:40px;" @click="horaInhabilitada(item)">{{ item.hora.substring(0, 5)
                             }}</button>
+                        <button v-if="item.proceso == 'Especial'" type="button" class="btn btn-success"
+                            style="width:80px;height:40px; background-color: #cca9dd; border-color: #cca9dd;"
+                            @click="horaEspecial(item)">{{ item.hora.substring(0, 5) }}</button>
                     </div>
                 </div>
                 <div class="col-md-1" style="text-align: center;">
@@ -157,6 +175,9 @@
                         <button v-if="item.proceso == 'Inactiva'" type="button" class="btn btn-dark"
                             style=" width:80px;height:40px;" @click="horaInhabilitada(item)">{{ item.hora.substring(0, 5)
                             }}</button>
+                        <button v-if="item.proceso == 'Especial'" type="button" class="btn btn-success"
+                            style="width:80px;height:40px; background-color: #cca9dd; border-color: #cca9dd;"
+                            @click="horaEspecial(item)">{{ item.hora.substring(0, 5) }}</button>
                     </div>
                 </div>
                 <div class="col-md-1" style="text-align: center;">
@@ -175,6 +196,9 @@
                         <button v-if="item.proceso == 'Inactiva'" type="button" class="btn btn-dark"
                             style=" width:80px;height:40px;" @click="horaInhabilitada(item)">{{ item.hora.substring(0, 5)
                             }}</button>
+                        <button v-if="item.proceso == 'Especial'" type="button" class="btn btn-success"
+                            style="width:80px;height:40px; background-color: #cca9dd; border-color: #cca9dd;"
+                            @click="horaEspecial(item)">{{ item.hora.substring(0, 5) }}</button>
                     </div>
                 </div>
             </div>
@@ -303,6 +327,26 @@
                 </div>
             </div><!-- End Modal Agendada-->
 
+            <!-- Modal Especial-->
+            <div class="modal fade" id="modalHoraEspecial" tabindex="-1" aria-labelledby="modalHoraEspecialLabel"
+                aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="modalHoraEspecial">Información de la cita</h4>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <p><b>Nombre del Paciente:</b> {{ infoPaciente.nombre }}</p>
+                                <p><b>Tiempo de Consulta:</b> {{ infoHorario.tiempo }} minutos</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div><!-- End Modal Especial-->
+
             <!-- Modal Inhabilitada-->
             <div class="modal fade" id="modalHoraInhabilitada" tabindex="-1" aria-labelledby="modalHoraInhabilitadaLabel"
                 aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
@@ -323,6 +367,61 @@
                     </div>
                 </div>
             </div><!-- End Modal Inhabilitada-->
+
+
+            <!-- Modal Horario Especial-->
+            <div class="modal fade" id="modalHorarioEspecial" tabindex="-1" aria-labelledby="modalHorarioEspecialLabel"
+                aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="modalHorarioEspecialLabel">Agendar Horario Especial</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <p>Selecciona un paciente</p>
+                                    <select class="form-select" aria-label="Default select example"
+                                        v-model="infoPaciente.id">
+                                        <option v-for="(item, index) in pacientes" :value="item.id">{{ item.nombre }}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <p>Fecha de consulta</p>
+                                    <div style="margin-bottom: 20px;">
+                                        <input id="startDate" class="form-control" type="date" v-model="fechaCita" />
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <p>Hora de la consulta</p>
+                                    <select class="form-select" aria-label="Default select example" v-model="horaConsulta">
+                                        <option v-for="(item, index) in horas" :value="item">{{ item }}
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="col-md-4">
+                                    <p>Tiempo de consulta</p>
+                                    <select class="form-select" v-model="getTiempoConsulta"
+                                        aria-label="Default select example">
+                                        <option v-for="(item, index) in tiempoConsulta" :value="item.value">{{ item.nombre
+                                        }}</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-success" @click="agendarHoraEspecial()">Agendar</button>
+                        <!-- <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary">Save changes</button>
+                        </div> -->
+                    </div>
+                </div>
+            </div><!--End Modal Horario Especial-->
         </div>
     </div>
 </template>
@@ -348,12 +447,19 @@ export default {
             btngenerarAgenda: true,
             contador: 0,
             fechas: {},
+            tiempoConsulta: [],
+            getTiempoConsulta: 0,
             mesInicialEstablecido: 0,
             mesFinalEstablecido: 0,
             infoProspecto: {},
             infoPaciente: {},
+            infoHorario: {},
+            idPaciente: 0,
             agendarProspecto: {},
             pacientes: {},
+            fechaCita: this.day,
+            horas: [],
+            horaConsulta: '',
 
         }
     },
@@ -362,6 +468,10 @@ export default {
         disparador(funcion, obj = null,) {
             this[funcion](obj);
         },
+        openModalEspecial() {
+            $("#modalHorarioEspecial").modal("show");
+        },
+
         aumentarContador() {
             const thisVue = this;
             thisVue.contador = thisVue.contador + 1;
@@ -376,6 +486,13 @@ export default {
             const thisVue = this;
             thisVue.infoPaciente = item.paciente;
             $("#modalHoraAgendada").modal("show");
+        },
+        horaEspecial(item) {
+            const thisVue = this;
+            thisVue.infoPaciente = item.paciente;
+            thisVue.infoHorario = item;
+            console.log(item);
+            $("#modalHoraEspecial").modal("show");
         },
         horaApartada(item) {
             const thisVue = this;
@@ -435,6 +552,28 @@ export default {
                 .then((res) => {
                     thisVue.verAgenda();
                     $("#modalHoraDisponible").modal("hide");
+                    thisVue.agendarProspecto = {};
+                    thisVue.infoPaciente = {};
+
+                })
+                .catch((error) => {
+                });
+        },
+        agendarHoraEspecial() {
+            const thisVue = this;
+
+            let obj = {
+                paciente_id: thisVue.infoPaciente.id,
+                hora: thisVue.horaConsulta,
+                fecha: thisVue.fechaCita,
+                tiempo: thisVue.getTiempoConsulta
+
+            }
+            console.log(obj);
+            axios.post(thisVue.path_url + '/api/agendas/agendarHoraEspecial', obj)
+                .then((res) => {
+                    thisVue.verAgenda();
+                    $("#modalHorarioEspecial").modal("hide");
                     thisVue.agendarProspecto = {};
                     thisVue.infoPaciente = {};
 
@@ -523,11 +662,31 @@ export default {
 
                 });
         },
+        getHoras() {
+            const thisVue = this;
+            axios.get(thisVue.path_url + '/api/horario/getHoras')
+                .then((res) => {
+                    thisVue.horas = res.data;
+                })
+                .catch((error) => {
+
+                });
+
+            axios.get(thisVue.path_url + '/api/horario/tiempoConsulta')
+                .then((res) => {
+                    thisVue.tiempoConsulta = res.data;
+                })
+                .catch((error) => {
+
+                });
+        },
     },
     async mounted() {
+        let date = new Date();
+        let day = date.getDate();
         this.getPacientes();
         this.verAgenda();
-
+        this.getHoras();
     }
 }
 </script>
