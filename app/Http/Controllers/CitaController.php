@@ -75,27 +75,25 @@ class CitaController extends Controller
         // $servicio_id = implode(', ', $request['registro']);
         // $prospecto->especialista_id = $request['especialista'];
         // $prospecto->servicios_id = $servicio_id;
-        // $prospecto = new Prospecto();
-        // $prospecto->nombre = $request['nombre'];
-        // $prospecto->correo = $request['correo'];
-        // $prospecto->celular = $request['celular'];
-        // $prospecto->edad = $request['edad'];
-        // $prospecto->primera_vez = $request['primera_vez'];
-        // $prospecto->sexo = $request['sexo'];
-        // $prospecto->modalidad = $request['modalidad'];
-        // $prospecto->proceso = 'Enviada';
-        // $prospecto->estatus = 'Activo';
-        // $prospecto->save();
+        $prospecto = new Prospecto();
+        $prospecto->nombre = $request['nombre'];
+        $prospecto->correo = $request['correo'];
+        $prospecto->celular = $request['celular'];
+        $prospecto->edad = $request['edad'];
+        $prospecto->primera_vez = $request['primera_vez'];
+        $prospecto->sexo = $request['sexo'];
+        $prospecto->modalidad = $request['modalidad'];
+        $prospecto->proceso = 'Enviada';
+        $prospecto->estatus = 'Activo';
+        $prospecto->save();
 
 
-        // $agendar = Agenda::find($request['hora_cita']);
-        // $agendar->prospecto_id = $prospecto['id'];
-        // $agendar->proceso = 'Apartada';
-        // $agendar->save();
+        $agendar = Agenda::find($request['hora_cita']);
+        $agendar->prospecto_id = $prospecto['id'];
+        $agendar->proceso = 'Apartada';
+        $agendar->save();
 
-        // return response()->json($agendar, 200);
-
-        return $request;
+        return response()->json($agendar, 200);
 
     }
     public function obtenerHorario()
