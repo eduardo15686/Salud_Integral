@@ -204,17 +204,22 @@
             </div>
 
             <div v-else class="row"></div>
-            
+
             <!-- Modal Aparatada-->
             <div class="modal fade" id="modalHoraApartada" tabindex="-1" aria-labelledby="modalHoraApartadaLabel"
                 aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h4 class="modal-title" id="modalHoraApartada">Información del prospecto</h4>
+                            <h4 class="modal-title" id="modalHoraApartada">Información del Prospecto</h4>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
+                            <div style="text-align: center;">
+                                <h5>Fecha y Hora: {{ agendarProspecto.fecha
+                                }} / {{ agendarProspecto.hora }}</h5>
+                            </div>
+                            <br>
                             <div class="row">
                                 <div class="col-md-6">
                                     <h5>Datos de contacto</h5>
@@ -535,7 +540,15 @@ export default {
             const thisVue = this;
             axios.post(thisVue.path_url + '/api/agendas/aceptarProspecto', thisVue.agendarProspecto)
                 .then((res) => {
-                    console.log(res.data);
+                    console.log(thisVue.agendarProspecto);
+                    this.$swal(
+                        'Prospecto Agendado',
+                        'Nombre: ' + thisVue.agendarProspecto.prospecto.nombre + ' <br> ' +
+                        'Fecha: ' + thisVue.agendarProspecto.fecha + ' <br> ' +
+                        'Hora: ' + thisVue.agendarProspecto.hora.substring(0, 5) + ' <br> ',
+                        'success'
+
+                    );
                     thisVue.verAgenda();
                     $("#modalHoraApartada").modal("hide");
                 })
@@ -586,6 +599,12 @@ export default {
             const thisVue = this;
             axios.post(thisVue.path_url + '/api/agendas/rechazarProspecto', thisVue.agendarProspecto)
                 .then((res) => {
+                    this.$swal(
+                        'Solicitud Rechazada',
+                        '',
+                        'info'
+
+                    );
                     thisVue.verAgenda();
                     $("#modalHoraApartada").modal("hide");
                 })
@@ -601,7 +620,14 @@ export default {
             };
             axios.post(thisVue.path_url + '/api/agendas/generarAgenda', obj)
                 .then((res) => {
+                    this.$swal(
+                        'Agenda Generada',
+                        'Del ' + thisVue.mesInicialEstablecido + ' al ' + thisVue.mesFinalEstablecido,
+                        'success'
+
+                    );
                     thisVue.verAgenda();
+
                 })
                 .catch((error) => {
 

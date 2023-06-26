@@ -1,5 +1,6 @@
 <?php
 
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -11,6 +12,7 @@ use App\Http\Controllers\ServicioController;
 use App\Http\Controllers\PerfilController;
 use App\Http\Controllers\AgendaController;
 use App\Http\Controllers\HorarioController;
+use App\Http\Controllers\PacienteController;
 
 /*
 |--------------------------------------------------------------------------
@@ -62,7 +64,13 @@ Route::middleware('auth:sanctum')->prefix('/horario')->group(function () {
     Route::get('/getHoras', [HorarioController::class, 'getHoras']);
     Route::get('/tiempoConsulta', [HorarioController::class, 'tiempoConsulta']);
     Route::get('/getHorario', [HorarioController::class, 'getHorario']);
-    
+
+});
+
+Route::middleware('auth:sanctum')->prefix('/pacientes')->group(function () {
+    Route::get('/getPacientes', [PacienteController::class, 'getPacientes']);
+    Route::post('/guardarPaciente', [PacienteController::class, 'guardarPaciente']);
+
 });
 
 

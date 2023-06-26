@@ -71,3 +71,8 @@ Route::get('/agenda/citas', function () {
 Route::get('/cita', function () {
     return view('panels.inicio');
 })->name('citas');
+
+
+Route::get('/paciente', function () {
+    return view('panels.pacientes.paciente');
+})->name('pacientes')->middleware('auth')->middleware('Permisos:1-21');

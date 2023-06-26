@@ -48,6 +48,10 @@ app.component('generar-cita', ProcesoCitas);
 import Citas from './components/agenda/Cita.vue';
 app.component('citas', Citas);
 
+import Pacientes from './components/pacientes/Paciente.vue';
+app.component('pacientes', Pacientes);
+
+
 
 // Vue.component('pagination', require('laravel-vue-pagination'));
 /**
