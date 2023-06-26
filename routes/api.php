@@ -70,6 +70,9 @@ Route::middleware('auth:sanctum')->prefix('/horario')->group(function () {
 Route::middleware('auth:sanctum')->prefix('/pacientes')->group(function () {
     Route::get('/getPacientes', [PacienteController::class, 'getPacientes']);
     Route::post('/guardarPaciente', [PacienteController::class, 'guardarPaciente']);
+    Route::get('/getPaciente/{id}', [PacienteController::class, 'getPaciente']);
+    Route::post('/editarPaciente', [PacienteController::class, 'editarPaciente']);
+    Route::post('/eliminarPaciente', [PacienteController::class, 'eliminarPaciente']);
 
 });
 
