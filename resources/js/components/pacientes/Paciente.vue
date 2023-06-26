@@ -183,7 +183,31 @@
 
 
                         </div>
-                        <button type="button" class="btn btn-danger" @click="eliminarPaciente()">Eliminar</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                        <!-- <div class="modal-footer">
+                            
+                            <button type="button" class="btn btn-primary" @click="editarPaciente()">Editar</button>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+            <!-- End Modal Eliminar Paciente-->
+
+             <!-- Modal Eliminar Paciente-->
+             <div class="modal fade" id="modalExpediente" data-bs-backdrop="static" data-bs-keyboard="false"
+                tabindex="-1" aria-labelledby="modalExpedienteLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="modalExpedienteLabel">Expediente</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div>
+                                <b>Nombre:</b> {{ infoPaciente.nombre }}
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-danger" @click="eliminarPaciente()">Cerrar</button>
                         <!-- <div class="modal-footer">
                             
                             <button type="button" class="btn btn-primary" @click="editarPaciente()">Editar</button>

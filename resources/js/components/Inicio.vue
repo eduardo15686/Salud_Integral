@@ -39,8 +39,8 @@
                             <div class="row">
                                 <div class="col-md-8">
                                     <div style="margin-left: 10px;">
-                                        <img :src="'http://salud-integral.test/img/fotos/' + item.especialista.foto.imagen_path"
-                                            style="height: 60px; width: 60px; background-repeat: no-repeat; background-position: 50%; border-radius: 50%; background-size: 100% auto;">
+                                        <!-- <img :src="'http://salud-integral.test/img/fotos/' + item.especialista.foto.imagen_path"
+                                            style="height: 60px; width: 60px; background-repeat: no-repeat; background-position: 50%; border-radius: 50%; background-size: 100% auto;"> -->
                                     </div>
                                     <div class="card-body" style="margin-left: 10px;">
                                         <h4 class="card-title">{{ item.especialista.titulo }} {{ item.especialista.nombre }}
