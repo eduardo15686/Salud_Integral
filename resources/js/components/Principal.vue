@@ -13,8 +13,8 @@
             <br>
             <div class="row">
                 <div class="col-md-5" style="text-align: start;">
-                    <button type="button" class="btn btn-primary" style="margin: 5px;" @click="openModalEspecial()">Agregar
-                        Horario Especial</button>
+                    <!-- <button type="button" class="btn btn-primary" style="margin: 5px;" @click="openModalEspecial()">Agregar
+                        Horario Especial</button> -->
                 </div>
                 <div class="col-md-7">
                     <button type="button" class="btn btn-success" style="margin: 5px;" disabled>Disponible</button>
@@ -34,7 +34,7 @@
                 <div v-else class="col-md-7"></div>
             </div> -->
             <br>
-            <div class="row">
+            <!-- <div class="row">
                 <div class="col-md-2"></div>
                 <div class="col-md-1">
                     <button class='btn btn-outline-dark' @click="disminuirContador()"><i
@@ -49,7 +49,7 @@
                     <button class='btn btn-outline-dark' @click="aumentarContador()"><i
                             class="ti ti-arrow-right"></i></button>
                 </div>
-            </div>
+            </div> -->
 
             <div v-if="btngenerarAgenda == false" class="row">
                 <div class="col-md-3"></div>
@@ -320,15 +320,43 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h4 class="modal-title" id="modalHoraAgendada">Información del paciente</h4>
+                            <h4 class="modal-title" id="modalHoraAgendada">{{ infoPaciente.nombre }}</h4>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
+                            <!-- <div style="text-align: center;">
+                                <h5 style="font-size: large;">Información</h5>
+                            </div> -->
                             <div class="row">
-                                <p><b>Nombre:</b> {{ infoPaciente.nombre }}</p>
+                                <div class="col-md-6">
+                                    <p><b>Fecha:</b> {{ }}</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p><b>Hora:</b> {{ }}</p>
+                                </div>
                             </div>
-                        </div>
+                            <br>
+                            <div style="text-align: center;">
+                                <h5 style="font-size: large;">Historial Clínico</h5>
+                            </div>
+                            <div class="row">
+                                <div class="mb-3">
+                                    <label for="exampleFormControlInput1" class="form-label">Tareas Asignadas</label>
+                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="2"
+                                        placeholder="Tareas asignadas al paciente esta sesión"
+                                        v-model="infoHistorial.tareas"></textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="exampleFormControlTextarea1" class="form-label">Observaciones</label>
+                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
+                                        placeholder="Observaciones de la sesión"
+                                        v-model="infoHistorial.observaciones"></textarea>
+                                </div>
+                            </div>
 
+                        </div>
+                        <button type="button" class="btn btn-success" @click="guardarHistorialClinico()">Guardar
+                            Información</button>
                     </div>
                 </div>
             </div><!-- End Modal Agendada-->
@@ -459,6 +487,8 @@ export default {
             mesFinalEstablecido: 0,
             infoProspecto: {},
             infoPaciente: {},
+            infoHistorial: {},
+            infoPacienteHistorial: {},
             infoHorario: {},
             idPaciente: 0,
             agendarProspecto: {},
@@ -477,6 +507,26 @@ export default {
         openModalEspecial() {
             $("#modalHorarioEspecial").modal("show");
         },
+        guardarHistorialClinico() {
+            const thisVue = this;
+            thisVue.infoHistorial.paciente_id = thisVue.infoPacienteHistorial.paciente.id;
+            thisVue.infoHistorial.agenda_id = thisVue.infoPacienteHistorial.id;
+            thisVue.infoHistorial.fecha = thisVue.infoPacienteHistorial.fecha;
+            axios.post(thisVue.path_url + '/api/expedientes/guardarExpediente', thisVue.infoHistorial)
+                .then((res) => {
+                    this.$swal(
+                        'Prospecto Agendado',
+                        'Nombre: ',
+                        'success'
+
+                    );
+                    thisVue.verAgenda();
+                    $("#modalHoraAgendada").modal("hide");
+                })
+                .catch((error) => {
+                });
+            console.log(thisVue.infoHistorial)
+        },
 
         aumentarContador() {
             const thisVue = this;
@@ -491,6 +541,7 @@ export default {
         horaAgendada(item) {
             const thisVue = this;
             thisVue.infoPaciente = item.paciente;
+            thisVue.infoPacienteHistorial = item;
             $("#modalHoraAgendada").modal("show");
         },
         horaEspecial(item) {

@@ -20,4 +20,9 @@ class Agenda extends Model
     {
         return $this->belongsTo('App\Models\Paciente');
     }
+
+    public function expediente()
+    {
+        return $this->hasOne('App\Models\Expediente',);
+    }
 }

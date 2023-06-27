@@ -36,8 +36,8 @@ app.component('perfilador', Perfilador);
 import Servicios from './components/usuarios/Servicio.vue';
 app.component('servicios', Servicios);
 
-import Agenda from './components/agenda/Horario.vue';
-app.component('agenda', Agenda);
+import Horario from './components/agenda/Horario.vue';
+app.component('horario', Horario);
 
 import Password from './components/clientes/Password.vue';
 app.component('password', Password);
@@ -45,11 +45,14 @@ app.component('password', Password);
 import ProcesoCitas from './components/Inicio.vue';
 app.component('generar-cita', ProcesoCitas);
 
-import Citas from './components/agenda/Cita.vue';
-app.component('citas', Citas);
+import Agenda from './components/agenda/Agenda.vue';
+app.component('agenda', Agenda);
 
 import Pacientes from './components/pacientes/Paciente.vue';
 app.component('pacientes', Pacientes);
+
+import Principal from './components/Principal.vue';
+app.component('principal', Principal);
 
 
 

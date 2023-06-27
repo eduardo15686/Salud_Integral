@@ -1,6 +1,7 @@
 <?php
 
 
+use App\Http\Controllers\ExpedienteController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -89,6 +90,12 @@ Route::middleware('auth:sanctum')->prefix('/servicios')->group(function () {
 
 Route::middleware('auth:sanctum')->prefix('/perfiles')->group(function () {
     Route::get('/getPerfiles', [PerfilController::class, 'getPerfiles']);
+});
+
+Route::middleware('auth:sanctum')->prefix('/expedientes')->group(function () {
+    Route::post('/guardarExpediente', [ExpedienteController::class, 'guardarExpediente']);
+    Route::get('/getExpedientes/{id}', [ExpedienteController::class, 'getExpedientes']);
+
 });
 
 

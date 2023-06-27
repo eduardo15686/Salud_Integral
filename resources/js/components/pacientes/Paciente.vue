@@ -16,9 +16,9 @@
                     </div>
                 </div>
             </div>
-            <div>
+            <div class="row">
 
-                <table class="table table-striped">
+                <table class="table table-striped col-md-12">
                     <thead>
                         <tr>
                             <th scope="col">#</th>
@@ -180,10 +180,9 @@
                             <div>
                                 <b>Nombre:</b> {{ infoPaciente.nombre }}
                             </div>
-
-
                         </div>
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal"
+                            @click="eliminarPaciente()">Eliminar</button>
                         <!-- <div class="modal-footer">
                             
                             <button type="button" class="btn btn-primary" @click="editarPaciente()">Editar</button>
@@ -193,9 +192,9 @@
             </div>
             <!-- End Modal Eliminar Paciente-->
 
-             <!-- Modal Eliminar Paciente-->
-             <div class="modal fade" id="modalExpediente" data-bs-backdrop="static" data-bs-keyboard="false"
-                tabindex="-1" aria-labelledby="modalExpedienteLabel" aria-hidden="true">
+            <!-- Modal expediente Paciente-->
+            <div class="modal fade" id="modalExpediente" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+                aria-labelledby="modalExpedienteLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -204,10 +203,28 @@
                         </div>
                         <div class="modal-body">
                             <div>
-                                <b>Nombre:</b> {{ infoPaciente.nombre }}
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">Fecha</th>
+                                            <th scope="col">Datos</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr v-for="(item, index) in expedientes">
+                                            <th scope="row">{{ index + 1 }}</th>
+                                            <td>{{ item.fecha }}</td>
+                                            <td> <a style="padding-left: 10px; cursor:pointer; font-size: large;">
+                                                    <i class='fa-regular fa-file-lines' aria-hidden="true"
+                                                        @click="infoExpediente(item)"></i></a></td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
-                        <button type="button" class="btn btn-danger" @click="eliminarPaciente()">Cerrar</button>
+                        <!-- <button type="button" class="btn btn-danger" @click="eliminarPaciente()">Cerrar</button> -->
                         <!-- <div class="modal-footer">
                             
                             <button type="button" class="btn btn-primary" @click="editarPaciente()">Editar</button>
@@ -215,7 +232,42 @@
                     </div>
                 </div>
             </div>
-            <!-- End Modal Eliminar Paciente-->
+            <!-- End Modal expediente Paciente-->
+
+            <!-- Modal expediente Paciente-->
+            <div class="modal fade" id="modalInfoExpediente" data-bs-backdrop="static" data-bs-keyboard="false"
+                tabindex="-1" aria-labelledby="modalInfoExpedienteLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="modalInfoExpedienteLabel">Expediente</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div>
+                                <h5>Tareas</h5>
+                                <div class="form-floating">
+                                    <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2"
+                                        style="height: 100px" v-model="observaciones.tareas" disabled></textarea>
+                                </div>
+                                <p>{{ }}</p>
+                            </div>
+                            <div>
+                                <h5>Observaciones</h5>
+                                <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2"
+                                    style="height: 100px" v-model="observaciones.observaciones" disabled></textarea>
+                            </div>
+                        </div>
+                        <!-- <button type="button" class="btn btn-danger" @click="eliminarPaciente()">Cerrar</button> -->
+                        <!-- <div class="modal-footer">
+                            
+                            <button type="button" class="btn btn-primary" @click="editarPaciente()">Editar</button>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+            <!-- End Modal expediente Paciente-->
+
         </div>
     </div>
 </template>
@@ -232,7 +284,9 @@ export default {
             guardarInfoPaciente: {},
             edad: [],
             pacientes: [],
-            infoPaciente: {}
+            infoPaciente: {},
+            expedientes: [],
+            observaciones: {},
 
         }
 
@@ -244,6 +298,14 @@ export default {
 
         openModalPacienteNuevo() {
             $("#modalNuevoPaciente").modal("show");
+        },
+
+        infoExpediente(item) {
+            console.log(item);
+            this.observaciones.tareas = item.tareas;
+            this.observaciones.observaciones = item.observaciones;
+            $("#modalInfoExpediente").modal("show");
+
         },
 
         async openModalEditarPaciente(item) {
@@ -266,7 +328,20 @@ export default {
             $("#modalEliminarPaciente").modal("show");
         },
         openModalExpediente(item) {
-            console.log('expediente', item);
+
+            const thisVue = this;
+            $("#modalExpediente").modal("show");
+            axios.get(thisVue.path_url + '/api/expedientes/getExpedientes/' + item.id)
+                .then((res) => {
+                    thisVue.expedientes = res.data;
+                    console.log(thisVue.expedientes);
+                })
+
+                .catch((error) => {
+
+                });
+
+
         },
         async getPacientes() {
             const thisVue = this;
@@ -355,6 +430,8 @@ export default {
                 })
             }
         },
+
+
     },
     async mounted() {
         this.selectEdad();

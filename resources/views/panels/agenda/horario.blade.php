@@ -23,6 +23,6 @@
 
 ?>
 
-<agenda :opciones="{{json_encode($opcionesVista)}}" :opcionesboton="{{json_encode($opcionesVistaBoton)}}"></agenda>
+<horario :opciones="{{json_encode($opcionesVista)}}" :opcionesboton="{{json_encode($opcionesVistaBoton)}}"></horario>
 
 @endsection

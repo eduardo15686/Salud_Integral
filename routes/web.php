@@ -59,19 +59,18 @@ Route::get('/usuarios/servicios', function () {
 })->name('servicios')->middleware('auth')->middleware('Permisos:1-10');
 
 
-Route::get('/agenda', function () {
+Route::get('/horario', function () {
     return view('panels.agenda.horario');
 })->name('horario')->middleware('auth')->middleware('Permisos:1-20');
 
-Route::get('/agenda/citas', function () {
-    return view('panels.agenda.citas');
-})->name('citas')->middleware('auth')->middleware('Permisos:1-19');
+Route::get('/agenda', function () {
+    return view('panels.agenda.agenda');
+})->name('agenda')->middleware('auth')->middleware('Permisos:1-19');
 
 
 Route::get('/cita', function () {
     return view('panels.inicio');
 })->name('citas');
-
 
 Route::get('/paciente', function () {
     return view('panels.pacientes.paciente');
