@@ -18,7 +18,7 @@ class FotoController extends Controller
         $imagenPerfil = Foto::where('user_id', Auth::user()->id)
             ->orderBy('id', 'desc')
             ->first();
-        return asset('img/fotos/' . $imagenPerfil['imagen_path']);
+        return asset($imagenPerfil['imagen_path']);
     }
 
     /**
@@ -28,25 +28,18 @@ class FotoController extends Controller
     {
 
 
-        // $foto = new Foto();
-        // $foto->user_id = Auth::user()->id;
-        // if ($request->hasfile("imagen")) {
-        //     $imagen = $request->file("imagen");
-        //     $nombreimagen = Str::slug($request->imagen) . "." . $imagen->guessExtension();
-        //     $ruta = public_path("img/fotos/");
-        //     $imagen->move($ruta, $nombreimagen);
-        //     $foto->imagen_path = $nombreimagen;
-        // }
-
-        // if ($foto->save()) {
-        //     return $request;
-        // } else {
-        //     return $request;
-        // }
-        // $foto->save();
-
-        return $request->file("imagen")->store('public/imagenes');
-
+        $foto = new Foto();
+        $foto->user_id = Auth::user()->id;
+        if ($request->hasfile("imagen")) {
+            $file = $request->file("imagen");
+            $destinationPath = 'imagenes/perfil/';
+            $filename = time() . '-' . $file->getClientOriginalName();
+            // $imagen = $request->file("imagen")->store('public/imagenes');
+            // $foto->imagen_path = $imagen;
+            $uploadSuccess = $request->file("imagen")->move($destinationPath, $filename);
+            $foto->imagen_path = $destinationPath . $filename;
+        }
+        $foto->save();
     }
 
     /**

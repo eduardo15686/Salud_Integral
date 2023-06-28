@@ -50,6 +50,12 @@
                     @click="guardarInfoEspecialista()">
                     Guardar Información
                 </button>
+                <div class="col-md-6"
+                    style=" display: flex; justify-content: center; align-items: center; flex-direction: column;">
+                    <img id="imagenPerfil" :src="imagenPerfil" style="width: 70%;" />
+                    <p>Foto de Perfil</p>
+
+                </div>
                 <!-- <div class="col-md-6">
                     <div class="form-floating mb-3">
                         <input type="text" class="form-control" id="nombreCompleto"
@@ -429,14 +435,14 @@ export default {
 
         async obtenerDatos() {
             const thisVue = this;
-            // await axios
-            //     .get(thisVue.path_url + "/api/especialista/obtenerLinkFoto")
-            //     .then((res) => {
-            //         thisVue.imagenPerfil = res.data;
-            //         console.log(thisVue.imagenPerfil);
-            //     })
+            await axios
+                .get(thisVue.path_url + "/api/especialista/obtenerLinkFoto")
+                .then((res) => {
+                    thisVue.imagenPerfil = res.data;
+                    console.log(thisVue.imagenPerfil);
+                })
 
-            //     .catch((error) => { });
+                .catch((error) => { });
 
             // await axios
             //     .get(thisVue.path_url + "/api/especialista/obtenerFoto")
