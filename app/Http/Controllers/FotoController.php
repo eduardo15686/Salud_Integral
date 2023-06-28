@@ -26,21 +26,26 @@ class FotoController extends Controller
      */
     public function updateFoto(Request $request)
     {
-        $foto = new Foto();
-        $foto->user_id = Auth::user()->id;
-        if ($request->hasfile("imagen")) {
-            $imagen = $request->file("imagen");
-            $nombreimagen = Str::slug($request->imagen) . "." . $imagen->guessExtension();
-            $ruta = public_path("img/fotos/");
-            $imagen->move($ruta, $nombreimagen);
-            $foto->imagen_path = $nombreimagen;
-        }
-        if ($foto->save()) {
-            return $request;
-        } else {
-            return $request;
-        }
+
+
+        // $foto = new Foto();
+        // $foto->user_id = Auth::user()->id;
+        // if ($request->hasfile("imagen")) {
+        //     $imagen = $request->file("imagen");
+        //     $nombreimagen = Str::slug($request->imagen) . "." . $imagen->guessExtension();
+        //     $ruta = public_path("img/fotos/");
+        //     $imagen->move($ruta, $nombreimagen);
+        //     $foto->imagen_path = $nombreimagen;
+        // }
+
+        // if ($foto->save()) {
+        //     return $request;
+        // } else {
+        //     return $request;
+        // }
         // $foto->save();
+
+        return $request->file("imagen")->store('public/imagenes');
 
     }
 
