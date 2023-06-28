@@ -18,7 +18,8 @@ class FotoController extends Controller
         $imagenPerfil = Foto::where('user_id', Auth::user()->id)
             ->orderBy('id', 'desc')
             ->first();
-        return asset($imagenPerfil['imagen_path']);
+        $rest = substr($imagenPerfil['imagen_path'], 6);
+        return asset('storage' . $rest);
     }
 
     /**
@@ -26,18 +27,17 @@ class FotoController extends Controller
      */
     public function updateFoto(Request $request)
     {
-
-
         $foto = new Foto();
         $foto->user_id = Auth::user()->id;
         if ($request->hasfile("imagen")) {
-            $file = $request->file("imagen");
-            $destinationPath = 'imagenes/perfil/';
-            $filename = time() . '-' . $file->getClientOriginalName();
-            // $imagen = $request->file("imagen")->store('public/imagenes');
-            // $foto->imagen_path = $imagen;
-            $uploadSuccess = $request->file("imagen")->move($destinationPath, $filename);
-            $foto->imagen_path = $destinationPath . $filename;
+            $imagen = $request->file("imagen");
+            // $nombreimagen = Str::slug($request->imagen) . "." . $imagen->guessExtension();
+            // $ruta = public_path("img/fotos/");
+            // $imagen->move($ruta, $nombreimagen);
+            // $foto->imagen_path = $nombreimagen;
+            $nombreimagen = Str::slug($request->imagen) . "." . $imagen->guessExtension();
+            $imagen = $request->file("imagen")->store('public/imagenes');
+            $foto->imagen_path = $imagen;
         }
         $foto->save();
     }

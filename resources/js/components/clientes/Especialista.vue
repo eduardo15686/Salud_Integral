@@ -440,6 +440,7 @@ export default {
                 .then((res) => {
                     thisVue.imagenPerfil = res.data;
                     console.log(thisVue.imagenPerfil);
+                    //'http://salud-integral.test/storage/imagenes/w9RjGz9vCMniWlekiMiMZk4OHdLeMqwzqWk1jYzV.jpg'
                 })
 
                 .catch((error) => { });
