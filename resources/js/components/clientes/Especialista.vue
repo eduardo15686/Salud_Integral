@@ -429,14 +429,14 @@ export default {
 
         async obtenerDatos() {
             const thisVue = this;
-            await axios
-                .get(thisVue.path_url + "/api/especialista/obtenerLinkFoto")
-                .then((res) => {
-                    thisVue.imagenPerfil = res.data;
-                    console.log(thisVue.imagenPerfil);
-                })
+            // await axios
+            //     .get(thisVue.path_url + "/api/especialista/obtenerLinkFoto")
+            //     .then((res) => {
+            //         thisVue.imagenPerfil = res.data;
+            //         console.log(thisVue.imagenPerfil);
+            //     })
 
-                .catch((error) => { });
+            //     .catch((error) => { });
 
             // await axios
             //     .get(thisVue.path_url + "/api/especialista/obtenerFoto")
