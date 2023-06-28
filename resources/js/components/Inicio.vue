@@ -39,8 +39,8 @@
                             <div class="row">
                                 <div class="col-md-8">
                                     <div style="margin-left: 10px;">
-                                        <!-- <img :src="'http://salud-integral.test/img/fotos/' + item.especialista.foto.imagen_path"
-                                            style="height: 60px; width: 60px; background-repeat: no-repeat; background-position: 50%; border-radius: 50%; background-size: 100% auto;"> -->
+                                        <img :src="path_url + 'storage/' + (item.especialista.foto.imagen_path).substring(6)"
+                                            style="height: 60px; width: 60px; background-repeat: no-repeat; background-position: 50%; border-radius: 50%; background-size: 100% auto;">
                                     </div>
                                     <div class="card-body" style="margin-left: 10px;">
                                         <h4 class="card-title">{{ item.especialista.titulo }} {{ item.especialista.nombre }}
@@ -51,8 +51,8 @@
                                     </div>
                                 </div>
 
-                                <div v-if="item.especialista.contador_mañana != 0 || item.especialista.contador_tarde != 0" class="row col-md-4"
-                                    style="text-align: center;">
+                                <div v-if="item.especialista.contador_mañana != 0 || item.especialista.contador_tarde != 0"
+                                    class="row col-md-4" style="text-align: center;">
                                     <div class="col-md-6">
                                         <div v-for="(horas, index) in item.especialista.horario_mañana"
                                             style="padding-bottom: 5px;">

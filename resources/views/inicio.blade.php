@@ -506,7 +506,10 @@
             <div class="swiper-slide">
               <div class="testimonial-wrap">
                 <div class="testimonial-item">
-                <img src="img/fotos/{{$especialista['foto']['imagen_path']}}" style="height: 100px; width: 100px; background-repeat: no-repeat; background-position: 50%; border-radius: 50%; background-size: 100% auto;">
+                <?php 
+                $imagenReal =  substr($especialista['foto']['imagen_path'],6);
+                echo '<img src="storage/'. $imagenReal.'" style="height: 100px; width: 100px; background-repeat: no-repeat; background-position: 50%; border-radius: 50%; background-size: 100% auto;">'
+                ?>
                   <h3>{{ $especialista -> titulo}} {{ $especialista -> nombre}} {{ $especialista -> apellido_pat}} {{ $especialista -> apellido_mat}}</h3>
                   <h4>{{$especialista['foto']['imagen_path']}}</h4>
                   <p>

@@ -21,9 +21,8 @@ class EspecialistaController extends Controller
     public function index()
     {
         $servicios_nombre = [];
-        $especialistas = Especialista::
-            // with('foto')->
-            where('estatus', 'Activo')
+        $especialistas = Especialista::with('foto')
+            ->where('estatus', 'Activo')
             ->get();
         return view('inicio', compact('especialistas'));
 

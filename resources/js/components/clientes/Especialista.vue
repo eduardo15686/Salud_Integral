@@ -414,7 +414,6 @@ export default {
                 .then((res) => {
                     thisVue.imagenPerfil = res.data;
                 })
-
                 .catch((error) => { });
 
             // await axios

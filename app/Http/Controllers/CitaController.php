@@ -22,9 +22,8 @@ class CitaController extends Controller
         $servicios_nombre = [];
         $infoReal = [];
         $guardarInfo = [];
-        $especialistas = Especialista::
-        // with('foto')->
-        with([
+        $especialistas = Especialista::with('foto')
+            ->with([
                 'horario_mañana' => function ($query) use ($fecha) {
                     $query->whereDate('fecha', '>=', Carbon::today());
                     $query->whereDate('fecha', $fecha);
@@ -48,6 +47,7 @@ class CitaController extends Controller
                 ])
             ->where('estatus', 'Activo')
             ->get();
+        
 
         foreach ($especialistas as $especialista) {
 
@@ -98,9 +98,8 @@ class CitaController extends Controller
     }
     public function obtenerHorario()
     {
-        $especialistas = Especialista::
-        // with('foto')->
-        with([
+        $especialistas = Especialista::with('foto')
+            ->with([
                 'horario_mañana' => function ($query) {
                     $query->whereDate('fecha', '>=', Carbon::today());
                 }
