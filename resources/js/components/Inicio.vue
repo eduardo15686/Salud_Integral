@@ -46,7 +46,7 @@
                                         <h4 class="card-title">{{ item.especialista.titulo }} {{ item.especialista.nombre }}
                                             {{ item.especialista.apellido_pat }}
                                             {{ item.especialista.apellido_mat }}</h4>
-                                        <h5>{{ item.especialidad }}</h5>
+                                        <!-- <h5>{{ item.especialidad }}</h5> -->
                                         <p class="card-text">{{ item.especialista.descripcion }}</p>
                                     </div>
                                 </div>
