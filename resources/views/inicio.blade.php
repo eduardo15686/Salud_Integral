@@ -502,19 +502,19 @@
 
         <div class="testimonials-slider swiper" data-aos="fade-up" data-aos-delay="100">
           <div class="swiper-wrapper">
-            @foreach($especialistas as $especialista)
+            @foreach($guardarInfo as $especialista)
             <div class="swiper-slide">
               <div class="testimonial-wrap">
                 <div class="testimonial-item">
                 <?php 
-                $imagenReal =  substr($especialista['foto']['imagen_path'],6);
+                $imagenReal =  substr($especialista['especialista']['foto']['imagen_path'],6);
                 echo '<img src="storage/'. $imagenReal.'" style="height: 100px; width: 100px; background-repeat: no-repeat; background-position: 50%; border-radius: 50%; background-size: 100% auto;">'
                 ?>
-                  <h3>{{ $especialista -> titulo}} {{ $especialista -> nombre}} {{ $especialista -> apellido_pat}} {{ $especialista -> apellido_mat}}</h3>
-                  <h4>{{$especialista['foto']['imagen_path']}}</h4>
+                  <h3>{{ $especialista['especialista'] -> titulo}} {{ $especialista['especialista'] -> nombre}} {{ $especialista['especialista']-> apellido_pat}} {{ $especialista['especialista'] -> apellido_mat}}</h3>
+                  <h4>{{$especialista['especialidad']}}</h4>
                   <p>
                     <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-                    {{ $especialista -> descripcion}}
+                    {{ $especialista['especialista'] -> descripcion}}
                     <i class="bx bxs-quote-alt-right quote-icon-right"></i>
                   </p>
                 </div>

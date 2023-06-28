@@ -20,11 +20,42 @@ class EspecialistaController extends Controller
      */
     public function index()
     {
+        $infoReal = [];
+        $servicios_nombre = [];
+        $infoReal = [];
+        $guardarInfo = [];
         $servicios_nombre = [];
         $especialistas = Especialista::with('foto')
             ->where('estatus', 'Activo')
             ->get();
-        return view('inicio', compact('especialistas'));
+
+
+        foreach ($especialistas as $especialista) {
+
+            $servicios_nombre = [];
+            $servicios = explode(',', $especialista['servicio_id']);
+            foreach ($servicios as $servicio) {
+                $servicioInfo = Servicio::where('id', $servicio)
+                    ->where('estatus', 'Activo')
+                    ->first();
+                array_push($servicios_nombre, $servicioInfo['text_html']);
+
+            }
+            $infoReal = [
+                'especialista' => $especialista,
+                'especialidad' => implode(", ", $servicios_nombre)
+            ];
+
+            array_push($guardarInfo, $infoReal);
+        }
+
+        
+        //return response()->json($guardarInfo, 200);
+        // 
+        // $especialistas = Especialista::with('foto')
+        //     ->where('estatus', 'Activo')
+        //     ->get();
+        return view('inicio', compact('guardarInfo'));
 
     }
 
