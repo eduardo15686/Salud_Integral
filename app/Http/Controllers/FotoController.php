@@ -35,7 +35,13 @@ class FotoController extends Controller
             $imagen->move($ruta, $nombreimagen);
             $foto->imagen_path = $nombreimagen;
         }
-        $foto->save();
+        if ($foto->save()) {
+            return $request;
+        } else {
+            return $request;
+        }
+        // $foto->save();
+
     }
 
     /**
