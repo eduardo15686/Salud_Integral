@@ -4,7 +4,7 @@
         <div v-if="procesoCita == true" class="col-md-6">
             <div class="card" style="background-color: azure; text-align: left;">
                 <FormWizard @on-complete="onComplete" color="#bbd3c9" next-button-text="Siguiente"
-                    back-button-text="Anterior" finish-button-text="Finalizar">
+                    back-button-text="Anterior" finish-button-text="Finalizar" @on-change="vamosSiguente">
                     <TabContent title="Registro" icon="fa fa-user">
                         <div class="tab-pane" id="informacion">
                             <h3 style="text-align: center;">REGISTRO DE CITA</h3>
@@ -17,6 +17,31 @@
                                         ofrecerle el mejor servicio que se merece.</p>
 
                                 </div>
+                            </div>
+                        </div>
+                    </TabContent>
+                    <TabContent title="¿Qué buscas solucionar?" icon="fa-solid fa-question">
+                        <div class="row">
+                            <div class="form-floating col-md-4">
+                                <label class="form-label">Que buscas solucionar con la terapia</label>
+                                <Multiselect v-model="servicioSeleccionado" :searchable="true" :create-option="false"
+                                    :options="options" @select="cambiosEspecialidad()" />
+
+                            </div>
+                            <div class="form-floating col-md-1" style="text-align: start; margin-top: 25px;">
+                                <button type="button" class="btn btn-primary" @click="getNuevaLista()">Aceptar</button>
+                            </div>
+                            <div class="form-floating col-md-6" style="margin-left: 25px;">
+
+                                <div class="mb-3">
+                                    <label for="exampleFormControlTextarea1" class="form-label">Ingresa la
+                                        descripción</label>
+                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="1"
+                                        v-model="generarCita.comentario"></textarea>
+                                </div>
+                                <p style="font-size: smaller;">Si no encontraste lo que buscabas, ingresa una breve
+                                    descripción de lo que buscas
+                                    solucionar.</p>
                             </div>
                         </div>
                     </TabContent>
@@ -34,7 +59,7 @@
                             </div>
                         </div>
 
-                        <div v-for="(item, index) in especialistas" class="card">
+                        <div v-for="(item, index) in nuevaLista" class="card">
 
                             <div class="row">
                                 <div class="col-md-8">
@@ -188,6 +213,9 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="row" style="text-align: center;">
+                            <p><b>¿Qué buscas solucionar con la terapia?</b></p>
+                        </div>
                     </TabContent>
                     <TabContent title="Datos de Contacto" icon="fa-regular fa-address-book">
                         <div class="row">
@@ -239,35 +267,73 @@
     </div>
 </template>
 <script>
+import Multiselect from '@vueform/multiselect'
 import { FormWizard, TabContent } from "vue3-form-wizard";
 import "vue3-form-wizard/dist/style.css";
 export default {
     components: {
         FormWizard,
         TabContent,
+        Multiselect
     },
     data() {
         return {
             path_url: window.vue_url,
-            especialistas: {},
+            options: [],
+            servicioSeleccionado: 0,
+            especialistas: [],
             generarCita: {},
             nuevoHorario: [],
             fechaCita: 0,
             mesActual: '',
             fechaCompleta: '',
-            procesoCita: true
+            procesoCita: true,
+            contador: 0,
+            nuevaLista: []
         }
     },
     methods: {
 
         obtenerHora(horas) {
-            console.log(horas.id)
             this.generarCita.hora_cita = horas.id;
+        },
 
+        vamosSiguente() {
+            const thisVue = this;
+            this.contador = this.contador + 1;
+            console.log(this.contador);
+            if (this.contador == 2) {
+                if (this.nuevaLista.length == 0) {
+                    this.nuevaLista = this.especialistas;
+                    //console.log(this.nuevaLista, 'entramos a sigueinte');
+                }
+            }
+        },
+
+        getNuevaLista() {
+            
+            this.nuevaLista = [];
+            console.log(this.nuevaLista);
+            this.especialistas.forEach(especialidades => {
+                if (especialidades.especialista.servicio_id.includes(this.servicioSeleccionado)) {
+                    console.log('coinciden las especialidades con ', especialidades.especialista.nombre);
+                    this.nuevaLista.push(especialidades);
+                }
+            });
+            if (this.nuevaLista.length == 0) {
+                this.$swal(
+                    'Terapeutas no econtrados',
+                    'No encontramos terapeuta con las especificaciones buscadas, te sugerimos ingresar una breve descripción del problema que buscas solucionar y a continuación selecciona al terapeuta de tu preferencia.',
+                    'warning'
+                );
+            }
+            //this.servicioSeleccionado = 0;
         },
 
         onComplete() {
             const thisVue = this;
+            thisVue.generarCita.servicios_id = thisVue.servicioSeleccionado;
+            console.log(thisVue.generarCita);
             axios.post(thisVue.path_url + '/api/citas/agendarCita', thisVue.generarCita)
                 .then((res) => {
                     thisVue.procesoCita = false;
@@ -277,8 +343,32 @@ export default {
                 });
         },
 
+        async obtenerServicios() {
+            const thisVue = this;
+            await axios.get(thisVue.path_url + `/api/citas/getSubCategorias`)
+                .then(res => {
+                    res.data.forEach(element => {
+                        thisVue.options.push({
+                            value: element.id,
+                            label: element.text_html,
+                        });
+                    });
+                })
+                .catch(error => {
+                    this.errors = JSON.parse(
+                        JSON.stringify(error.response.data.errors)
+                    );
+                    console.log(this.errors);
+                });
+        },
+
+        cambiosEspecialidad() {
+            //console.log(this.serviciosSeleccionados);
+        },
+
         getEspecialistas() {
             const thisVue = this;
+
             let nombre = '';
             var meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
             let numeroMes = (thisVue.fechaCita.substring(5, 7))
@@ -299,13 +389,14 @@ export default {
             axios.post(thisVue.path_url + '/api/citas/getEspecialistas', obj)
                 .then((res) => {
                     thisVue.especialistas = res.data;
-                    console.log(thisVue.especialistas);
 
                 })
                 .catch((error) => {
 
                 });
+
         },
+
     },
 
 
@@ -321,6 +412,7 @@ export default {
             this.fechaCita = (`${year}-${month}-${day}`)
         }
         this.getEspecialistas();
+        this.obtenerServicios();
     }
 }
 </script>

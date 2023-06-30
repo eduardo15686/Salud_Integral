@@ -72,10 +72,10 @@ class CitaController extends Controller
     }
     public function agendarCita(Request $request)
     {
-        // $servicio_id = implode(', ', $request['registro']);
-        // $prospecto->especialista_id = $request['especialista'];
-        // $prospecto->servicios_id = $servicio_id;
         $prospecto = new Prospecto();
+        //$servicio_id = implode(', ', $request['registro']);
+        //$prospecto->especialista_id = $request['especialista'];
+        $prospecto->servicios_id = $request['servicios_id'];
         $prospecto->nombre = $request['nombre'];
         $prospecto->correo = $request['correo'];
         $prospecto->celular = $request['celular'];
@@ -83,6 +83,7 @@ class CitaController extends Controller
         $prospecto->primera_vez = $request['primera_vez'];
         $prospecto->sexo = $request['sexo'];
         $prospecto->modalidad = $request['modalidad'];
+        $prospecto->comentarios = $request['comentario'];
         $prospecto->proceso = 'Enviada';
         $prospecto->estatus = 'Activo';
         $prospecto->save();
@@ -108,5 +109,13 @@ class CitaController extends Controller
             ->get();
 
         return response()->json($especialistas, 200);
+    }
+
+    public function getSubCategorias()
+    {
+        $usuarios = Servicio::where('estatus', 'Activo')
+            ->where('categoria', 'Nivel_3')
+            ->get();
+        return response()->json($usuarios, 200);
     }
 }

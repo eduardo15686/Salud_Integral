@@ -47,8 +47,8 @@
                         <label for="montoDeposito">Monto de Solicitud del Deposito</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <money3 type="text" class="form-control" id="montoDeposito" v-model="infoEspecialista.precio_consulta"
-                            v-bind="config" disabled></money3>
+                        <money3 type="text" class="form-control" id="montoDeposito"
+                            v-model="infoEspecialista.precio_consulta" v-bind="config" disabled></money3>
                         <label for="montoDeposito">Precio de consulta</label>
                     </div>
                     <div class="form-floating mb-3">
@@ -96,17 +96,17 @@
                                     <h3>Datos Personales</h3>
                                     <div class="form-floating col-md-4">
                                         <input type="text" class="form-control" id="floatingInput" placeholder="Nombre"
-                                            v-model="guardarEspecialista.nombre" required name="nombre"/>
+                                            v-model="guardarEspecialista.nombre" required name="nombre" />
                                         <label for="floatingInput">Nombre</label>
                                     </div>
                                     <div class="form-floating col-md-4">
                                         <input type="text" class="form-control" id="floatingInput" placeholder="Paterno"
-                                            v-model="guardarEspecialista.paterno" required name="apellido_pat"/>
+                                            v-model="guardarEspecialista.paterno" required name="apellido_pat" />
                                         <label for="floatingInput">Apellido Paterno</label>
                                     </div>
                                     <div class="form-floating col-md-4">
                                         <input type="text" class="form-control" id="floatingInput" placeholder="Materno"
-                                            v-model="guardarEspecialista.materno" required name="apellido_mat"/>
+                                            v-model="guardarEspecialista.materno" required name="apellido_mat" />
                                         <label for="floatingInput">Apellido Materno</label>
                                     </div>
                                 </div>
@@ -116,7 +116,7 @@
                                         <div class="form-floating">
                                             <input type="text" class="form-control" id="floatingCel"
                                                 placeholder="Titulo/Especialidad" v-model="guardarEspecialista.titulo"
-                                                required name="titulo"/>
+                                                required name="titulo" />
                                             <label for="floatingCel">Titulo/Especialidad</label>
                                         </div>
                                     </div>
@@ -124,13 +124,14 @@
                                         <div class="form-floating">
                                             <input type="text" class="form-control" v-mask="'###-#######'" maxlength="11"
                                                 id="floatingCel" placeholder="Celular Ej. (618-1234567)" v-model="guardarEspecialista.celular
-                                                    " required name="celular"/>
+                                                    " required name="celular" />
                                             <label for="floatingCel">Celular Ej. (618-1234567)</label>
                                         </div>
                                     </div>
                                     <div class="form-floating col-md-5">
                                         <input type="email" class="form-control" id="floatingInput"
-                                            placeholder="name@example.com" v-model="guardarEspecialista.correo" required name="correo"/>
+                                            placeholder="name@example.com" v-model="guardarEspecialista.correo" required
+                                            name="correo" />
                                         <label for="floatingInput">Correo Electronico</label>
                                     </div>
                                 </div>
@@ -154,21 +155,23 @@
                                     <div class="form-floating col-md-3">
                                         <div class="form-floating mb-3">
                                             <money3 type="text" class="form-control" id="floatingInput"
-                                                v-model="guardarEspecialista.deposito" v-bind="config" name="anticipo"></money3>
+                                                v-model="guardarEspecialista.deposito" v-bind="config" name="anticipo">
+                                            </money3>
                                             <label for="floatingInput">Solicitud de anticipo</label>
                                         </div>
                                     </div>
                                     <div class="form-floating col-md-3">
                                         <div class="form-floating mb-3">
                                             <money3 type="text" class="form-control" id="floatingInput"
-                                                v-model="guardarEspecialista.cuota" v-bind="config" name="precio_consulta"></money3>
+                                                v-model="guardarEspecialista.cuota" v-bind="config" name="precio_consulta">
+                                            </money3>
                                             <label for="floatingInput">Precio de consulta</label>
                                         </div>
                                     </div>
                                     <div class="form-floating col-md-6">
                                         <textarea class="form-control" placeholder="Leave a comment here"
-                                            id="floatingTextarea" v-model="guardarEspecialista.descripcion"
-                                            maxlength="300" name="descripcion"></textarea>
+                                            id="floatingTextarea" v-model="guardarEspecialista.descripcion" maxlength="300"
+                                            name="descripcion"></textarea>
                                         <label for="floatingTextarea">Descripción/Información
                                             Adicional</label>
                                     </div>
@@ -179,7 +182,7 @@
                                         <p>Servicios que ofrece</p>
                                         <Multiselect v-model="guardarEspecialista.servicio_id" mode="tags"
                                             :close-on-select="false" :searchable="true" :create-option="false"
-                                            :options="options" required />
+                                            :options="options" required @change="cambiosEspecialidad()" />
                                     </div>
                                 </div>
                             </div>
@@ -298,7 +301,8 @@
                             <div class="row">
                                 <div class="form-floating col-md-12">
                                     <Multiselect v-model="serviciosSeleccionados" mode="tags" :close-on-select="false"
-                                        :searchable="true" :create-option="false" :options="options" />
+                                        :searchable="true" :create-option="false" :options="options"
+                                        @change="cambiosEspecialidad()" />
                                 </div>
                             </div>
                         </div>
@@ -378,6 +382,9 @@ export default {
             $("#datosEspecialista").modal("show");
         },
 
+        cambiosEspecialidad() {
+            console.log('cambiamos');
+        },
         editarDatosEspecialista() {
 
             let serviciosID = this.infoEspecialista.servicio_id.split(', ');
@@ -389,7 +396,6 @@ export default {
 
         async obetenerServicios() {
             const thisVue = this;
-            let llenarOptions = [];
             await axios.get(thisVue.path_url + `/api/especialista/getSubCategorias`)
                 .then(res => {
                     res.data.forEach(element => {
@@ -446,7 +452,8 @@ export default {
                     thisVue.infoEspecialista
                 )
                 .then((res) => {
-                    this.obtenerDatos(); this.$swal(
+                    this.obtenerDatos();
+                    this.$swal(
                         'Información Editada',
                         res.data.message,
                         'success'

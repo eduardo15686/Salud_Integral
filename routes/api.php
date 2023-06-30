@@ -103,4 +103,5 @@ Route::prefix('/citas')->group(function () {
     Route::post('/getEspecialistas', [CitaController::class, 'getEspecialistas']);
     Route::get('/obtenerLinkFoto', [CitaController::class, 'obtenerLinkFoto']);
     Route::post('/agendarCita', [CitaController::class, 'agendarCita']);
+    Route::get('/getSubCategorias', [CitaController::class, 'getSubCategorias']);
 });
