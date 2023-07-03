@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Prospecto extends Model
 {
     use HasFactory;
+
+    public function servicios()
+    {
+        return $this->belongsTo('App\Models\Servicio',);
+    }
 }

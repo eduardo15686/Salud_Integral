@@ -301,13 +301,12 @@ export default {
         vamosSiguente() {
             const thisVue = this;
             this.contador = this.contador + 1;
-            console.log(this.contador);
-            if (this.contador == 2) {
+           // if (this.contador == 2) {
                 if (this.nuevaLista.length == 0) {
                     this.nuevaLista = this.especialistas;
                     //console.log(this.nuevaLista, 'entramos a sigueinte');
                 }
-            }
+           // }
         },
 
         getNuevaLista() {

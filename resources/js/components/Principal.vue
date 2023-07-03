@@ -210,14 +210,18 @@
                 aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
                 <div class="modal-dialog">
                     <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="modal-title" id="modalHoraApartada">Información del Prospecto</h4>
+                        <div class="modal-header" style="background-color: #ffca6d;">
+                            <h4 class="modal-title" id="modalHoraApartada">Hora Solicitada</h4>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <div style="text-align: center;">
-                                <h5>Fecha y Hora: {{ agendarProspecto.fecha
-                                }} / {{ agendarProspecto.hora }}</h5>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p><b>Fecha:</b> {{ agendarProspecto.fecha }}</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p><b>Hora:</b> {{ agendarProspecto.hora }}</p>
+                                </div>
                             </div>
                             <br>
                             <div class="row">
@@ -233,6 +237,12 @@
                                     <p><b>Sexo:</b> {{ infoProspecto.sexo }}</p>
                                     <p><b>Modalidad:</b> {{ infoProspecto.modalidad }}</p>
                                     <p><b>¿Primera vez en terapia?:</b> {{ infoProspecto.primera_vez }}</p>
+                                    <p><b>¿Qué busca solucionar el prospecto?:</b> {{ nombreEspecialidad }}</p>
+                                    <div class="mb-3">
+                                        <label class="form-label">Problema del prospecto:</label>
+                                        <textarea class="form-control" rows="3" v-model="infoProspecto.comentarios"
+                                            disabled></textarea>
+                                    </div>
                                 </div>
                             </div>
 
@@ -269,16 +279,24 @@
             </div><!-- End Modal Aparatada-->
 
             <!-- Modal Disponible-->
-            <div class="modal fade modal-lg" id="modalHoraDisponible" tabindex="-1"
-                aria-labelledby="modalHoraDisponibleLabel" aria-hidden="true" data-bs-backdrop="static"
-                data-bs-keyboard="false">
+            <div class="modal fade" id="modalHoraDisponible" tabindex="-1" aria-labelledby="modalHoraDisponibleLabel"
+                aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
                 <div class="modal-dialog">
                     <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="modalHoraDisponible">Hora Disponible</h5>
+                        <div class="modal-header" style="background-color: #65e9d1;">
+                            <h4 class="modal-title" id="modalHoraDisponible">Hora Disponible</h4>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p><b>Fecha:</b> {{ agendarProspecto.fecha }}</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p><b>Hora:</b> {{ agendarProspecto.hora }}</p>
+                                </div>
+                            </div>
+                            <br>
                             <div class="row">
                                 <div class="col-md-8">
                                     <p>Selecciona un paciente</p>
@@ -294,16 +312,16 @@
                                             @click="agendarPaciente">Agendar</button>
                                     </div>
                                 </div>
-                                <div class="col-md-2">
+                                <div class="col-md-4" style="text-align: center;">
                                     <p>Inhabilitar hora</p>
                                     <button type="button" class="btn btn-dark"
                                         @click="inhabilitarHora()">Inhabilitar</button>
                                 </div>
-                                <div class="col-md-2">
-                                    <p>Sesion especial</p>
+                                <!-- <div class="col-md-2">
+                                    <p>Sesión especial</p>
                                     <button type="button" class="btn btn-success"
                                         style="background-color: #cca9dd; border-color: #cca9dd;">Especial</button>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                         <!-- <div class="modal-footer">
@@ -319,22 +337,23 @@
                 aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
                 <div class="modal-dialog">
                     <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="modal-title" id="modalHoraAgendada">{{ infoPaciente.nombre }}</h4>
+                        <div class="modal-header" style="background-color: #fcb29f;">
+                            <h4 class="modal-title" id="modalHoraAgendada">Hora Agendada</h4>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <!-- <div style="text-align: center;">
-                                <h5 style="font-size: large;">Información</h5>
-                            </div> -->
+                            <div class="row" style="text-align: center; margin-bottom: 20px;">
+                                <h4><b>{{ infoPaciente.nombre }}</b></h4>
+                            </div>
                             <div class="row">
                                 <div class="col-md-6">
-                                    <p><b>Fecha:</b> {{ }}</p>
+                                    <p><b>Fecha:</b> {{ agendarProspecto.fecha }}</p>
                                 </div>
                                 <div class="col-md-6">
-                                    <p><b>Hora:</b> {{ }}</p>
+                                    <p><b>Hora:</b> {{ agendarProspecto.hora }}</p>
                                 </div>
                             </div>
+
                             <br>
                             <div style="text-align: center;">
                                 <h5 style="font-size: large;">Historial Clínico</h5>
@@ -366,13 +385,24 @@
                 aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
                 <div class="modal-dialog">
                     <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="modal-title" id="modalHoraEspecial">Información de la cita</h4>
+                        <div class="modal-header" style="background-color: #dec7e9;">
+                            <h4 class="modal-title" id="modalHoraEspecial">Horario Especial</h4>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
+                            <div class="row" style="text-align: center; margin-bottom: 20px;">
+                                <h4><b>{{ infoPaciente.nombre }}</b></h4>
+                            </div>
                             <div class="row">
-                                <p><b>Nombre del Paciente:</b> {{ infoPaciente.nombre }}</p>
+                                <div class="col-md-6">
+                                    <p><b>Fecha:</b> {{ agendarProspecto.fecha }}</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p><b>Hora:</b> {{ agendarProspecto.hora }}</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <!-- <p><b>Nombre del Paciente:</b> {{ infoPaciente.nombre }}</p> -->
                                 <p><b>Tiempo de Consulta:</b> {{ infoHorario.tiempo }} minutos</p>
                             </div>
                         </div>
@@ -386,18 +416,22 @@
                 aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
                 <div class="modal-dialog">
                     <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="modal-title" id="modalHoraInhabilitada">Habilitar Hora</h4>
+                        <div class="modal-header" style="background-color: #747c87;">
+                            <h4 class="modal-title" id="modalHoraInhabilitada" style="color: white;">Hora Inhabilitada</h4>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             <div class="row">
-                                <div class="col-md-12" style="text-align: end;">
-                                    <button type="button" class="btn btn-success" @click="habilitarHora">Habilitar
-                                        Hora</button>
+                                <div class="col-md-6">
+                                    <p><b>Fecha:</b> {{ agendarProspecto.fecha }}</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p><b>Hora:</b> {{ agendarProspecto.hora }}</p>
                                 </div>
                             </div>
                         </div>
+                        <button type="button" class="btn btn-success" @click="habilitarHora">Habilitar
+                            Hora</button>
                     </div>
                 </div>
             </div><!-- End Modal Inhabilitada-->
@@ -496,6 +530,7 @@ export default {
             fechaCita: this.day,
             horas: [],
             horaConsulta: '',
+            nombreEspecialidad: '',
 
         }
     },
@@ -525,7 +560,6 @@ export default {
                 })
                 .catch((error) => {
                 });
-            console.log(thisVue.infoHistorial)
         },
 
         aumentarContador() {
@@ -548,23 +582,28 @@ export default {
             const thisVue = this;
             thisVue.infoPaciente = item.paciente;
             thisVue.infoHorario = item;
-            console.log(item);
             $("#modalHoraEspecial").modal("show");
         },
         horaApartada(item) {
             const thisVue = this;
+            
             thisVue.agendarProspecto = item;
+            thisVue.agendarProspecto.hora = thisVue.agendarProspecto.hora.substring(0, 5);
             thisVue.infoProspecto = item.prospecto;
+            thisVue.nombreEspecialidad = item.prospecto.servicios.alt_html;
+            console.log(thisVue.nombreEspecialidad);
             $("#modalHoraApartada").modal("show");
         },
         horaDisponible(item) {
             const thisVue = this;
             thisVue.agendarProspecto = item;
+            thisVue.agendarProspecto.hora = thisVue.agendarProspecto.hora.substring(0, 5);
             $("#modalHoraDisponible").modal("show");
         },
         horaInhabilitada(item) {
             const thisVue = this;
             thisVue.agendarProspecto = item;
+            thisVue.agendarProspecto.hora = thisVue.agendarProspecto.hora.substring(0, 5);
             $("#modalHoraInhabilitada").modal("show");
         },
         inhabilitarHora() {
@@ -591,7 +630,6 @@ export default {
             const thisVue = this;
             axios.post(thisVue.path_url + '/api/agendas/aceptarProspecto', thisVue.agendarProspecto)
                 .then((res) => {
-                    console.log(thisVue.agendarProspecto);
                     this.$swal(
                         'Prospecto Agendado',
                         'Nombre: ' + thisVue.agendarProspecto.prospecto.nombre + ' <br> ' +
@@ -612,7 +650,6 @@ export default {
                 id: thisVue.agendarProspecto.id,
                 paciente_id: thisVue.infoPaciente.id
             }
-            console.log(obj);
             axios.post(thisVue.path_url + '/api/agendas/agendarPaciente', obj)
                 .then((res) => {
                     thisVue.verAgenda();
@@ -634,7 +671,6 @@ export default {
                 tiempo: thisVue.getTiempoConsulta
 
             }
-            console.log(obj);
             axios.post(thisVue.path_url + '/api/agendas/agendarHoraEspecial', obj)
                 .then((res) => {
                     thisVue.verAgenda();

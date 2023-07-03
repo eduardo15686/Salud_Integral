@@ -117,7 +117,11 @@ class AgendaController extends Controller
         $lunes = Agenda::orderBy('hora', 'asc')
             ->where('estatus', 'Activo')
             ->where('fecha', date("Y-m-d", strtotime($res[0])))
-            ->with('prospecto')
+            ->with([
+                'prospecto' => function ($query) {
+                    $query->with('servicios');
+                }
+            ])
             ->with('paciente')
             ->get();
         $martes = Agenda::orderBy('hora', 'asc')
@@ -189,10 +193,11 @@ class AgendaController extends Controller
         $pacienteInfo['modalidad'] = $prospecto['modalidad'];
         $pacienteInfo['precio_consulta'] = $especialista[0]['precio_consulta'];
 
+
         // $files = [public_path('principal/assets/img/logo.png')];
         // Mail::to('eduardo15686@gmail.com')->send(new ConfirmarCitaProspecto($especialista));
-        Mail::send('mails.aceptar_cita', $pacienteInfo, function ($message) {
-            $message->to('eduardo15686@gmail.com')
+        Mail::send('mails.aceptar_cita', $pacienteInfo, function ($message) use ($request) {
+            $message->to($request['prospecto']['correo'])
                 ->subject('Cita Confirmada "Salud Integral"');
         });
         return $especialista;
@@ -211,8 +216,8 @@ class AgendaController extends Controller
 
         $paciente['nombre'] = $request['prospecto']['nombre'];
 
-        Mail::send('mails.rechazar_cita', $paciente, function ($message) {
-            $message->to('eduardo15686@gmail.com')
+        Mail::send('mails.rechazar_cita', $paciente, function ($message) use ($request) {
+            $message->to($request['prospecto']['correo'])
                 ->subject('Cita En Espera "Salud Integral"');
         });
     }
