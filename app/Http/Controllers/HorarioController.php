@@ -30,13 +30,30 @@ class HorarioController extends Controller
             return json_encode(['message' => 'Ocurrio un error, contacte al administrador del sistema.'], 401);
     }
 
+    public function modificarHorario(Request $request)
+    {
+        $horario = Horario::find($request['id']);
+        $horario->tiempo = $request['tiempoConsulta'];
+        $horario->inicio_mat = $request['inicio_mat'];
+        $horario->final_mat = $request['final_mat'];
+        $horario->inicio_vesp = $request['inicio_vesp'];
+        $horario->final_vesp = $request['final_vesp'];
+
+        if ($horario->save())
+            return json_encode(['message' => 'Datos Editados Correctamente.'], 200);
+        else
+            return json_encode(['message' => 'Ocurrio un error, contacte al administrador del sistema.'], 401);
+    }
+
+
     public function getHorario()
     {
         $horarioCount = Horario::where('especialista_id', Auth::user()->id)
             ->where('estatus', 'Activo')
             ->count();
 
-        $horario = Horario::where('especialista_id', Auth::user()->id)
+        $horario = Horario::orderBy('dia', 'asc')
+            ->where('especialista_id', Auth::user()->id)
             ->where('estatus', 'Activo')
             ->get();
 

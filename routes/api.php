@@ -62,6 +62,7 @@ Route::middleware('auth:sanctum')->prefix('/agendas')->group(function () {
 Route::middleware('auth:sanctum')->prefix('/horario')->group(function () {
     Route::get('/obtenerDias', [HorarioController::class, 'obtenerDias']);
     Route::post('/generarHorario', [HorarioController::class, 'generarHorario']);
+    Route::post('/modificarHorario', [HorarioController::class, 'modificarHorario']);
     Route::get('/getHoras', [HorarioController::class, 'getHoras']);
     Route::get('/tiempoConsulta', [HorarioController::class, 'tiempoConsulta']);
     Route::get('/getHorario', [HorarioController::class, 'getHorario']);
