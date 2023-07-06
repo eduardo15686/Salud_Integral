@@ -1,7 +1,9 @@
 <template>
     <div class="row">
+
         <div class="col-md-3"></div>
         <div v-if="procesoCita == true" class="col-md-6">
+
             <div class="card" style="background-color: azure; text-align: left;">
                 <FormWizard @on-complete="onComplete" color="#bbd3c9" next-button-text="Siguiente"
                     back-button-text="Anterior" finish-button-text="Finalizar" @on-change="vamosSiguente">
@@ -22,14 +24,11 @@
                     </TabContent>
                     <TabContent title="¿Qué buscas solucionar?" icon="fa-solid fa-question">
                         <div class="row">
-                            <div class="form-floating col-md-4">
+                            <div class="form-floating col-md-5">
                                 <label class="form-label">Que buscas solucionar con la terapia</label>
                                 <Multiselect v-model="servicioSeleccionado" :searchable="true" :create-option="false"
-                                    :options="options" @select="cambiosEspecialidad()" />
+                                    :options="options" @select="getNuevaLista()" />
 
-                            </div>
-                            <div class="form-floating col-md-1" style="text-align: start; margin-top: 25px;">
-                                <button type="button" class="btn btn-primary" @click="getNuevaLista()">Aceptar</button>
                             </div>
                             <div class="form-floating col-md-6" style="margin-left: 25px;">
 
@@ -59,35 +58,32 @@
                             </div>
                         </div>
 
-                        <div v-for="(item, index) in nuevaLista" class="card">
-
+                        <div v-for="(item, index) in especialistas" class="card">
                             <div class="row">
                                 <div class="col-md-8">
                                     <div style="margin-left: 10px;">
-                                        <img :src="path_url + 'storage/' + (item.especialista.foto.imagen_path).substring(6)"
+                                        <img :src="path_url + 'storage/' + (item.foto.imagen_path).substring(6)"
                                             style="height: 60px; width: 60px; background-repeat: no-repeat; background-position: 50%; border-radius: 50%; background-size: 100% auto;">
                                     </div>
                                     <div class="card-body" style="margin-left: 10px;">
-                                        <h4 class="card-title">{{ item.especialista.titulo }} {{ item.especialista.nombre }}
-                                            {{ item.especialista.apellido_pat }}
-                                            {{ item.especialista.apellido_mat }}</h4>
+                                        <h4 class="card-title">{{ item.titulo }} {{ item.nombre }}
+                                            {{ item.apellido_pat }}
+                                            {{ item.apellido_mat }}</h4>
                                         <!-- <h5>{{ item.especialidad }}</h5> -->
-                                        <p class="card-text">{{ item.especialista.descripcion }}</p>
+                                        <p class="card-text">{{ item.descripcion }}</p>
                                     </div>
                                 </div>
 
-                                <div v-if="item.especialista.contador_mañana != 0 || item.especialista.contador_tarde != 0"
-                                    class="row col-md-4" style="text-align: center;">
+                                <div v-if="item.contador_mañana != 0 || item.contador_tarde != 0" class="row col-md-4"
+                                    style="text-align: center;">
                                     <div class="col-md-6">
-                                        <div v-for="(horas, index) in item.especialista.horario_mañana"
-                                            style="padding-bottom: 5px;">
+                                        <div v-for="(horas, index) in item.horario_mañana" style="padding-bottom: 5px;">
                                             <button type="button" class="btn btn-primary btn-sm"
                                                 v-on:click="obtenerHora(horas)">{{ horas.hora.substring(0, 5) }}</button>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
-                                        <div v-for="(horas, index) in item.especialista.horario_tarde"
-                                            style="padding-bottom: 5px;">
+                                        <div v-for="(horas, index) in item.horario_tarde" style="padding-bottom: 5px;">
                                             <button type="button" class="btn btn-primary btn-sm"
                                                 v-on:click="obtenerHora(horas)">{{ horas.hora.substring(0, 5) }}</button>
                                         </div>
@@ -240,10 +236,21 @@
                                 </div>
                             </div>
                         </div>
+                        <!-- <ul>
+                            <li v-for="error in errors" style="background-color: red;"><strong>{{ error[0] }}</strong></li>
+                        </ul> -->
                     </TabContent>
                 </FormWizard>
+                <div v-if="bandera != false"
+                    style="text-align: center; background-color:#f8d7da; border-radius: 10px; padding-bottom: 25px;">
+                    <ul>
+                        <p style="color: #9c413d;"><strong>ASEGURATE DE INGRESAR TODOS LOS DATOS DEL FORMULARIO</strong></p>
+                        <li v-for="error in errors" style="color: #9c413d;">{{ error[0] }}</li>
+                    </ul>
+                </div>
             </div>
         </div>
+
         <div v-else class="col-md-6">
             <div class="card" style="background-color: azure; text-align: left;">
                 <div class="tab-pane" id="informacion">
@@ -264,6 +271,8 @@
                 </div>
             </div>
         </div>
+
+
     </div>
 </template>
 <script>
@@ -289,7 +298,9 @@ export default {
             fechaCompleta: '',
             procesoCita: true,
             contador: 0,
-            nuevaLista: []
+            nuevaLista: [],
+            bandera: false,
+            errors: []
         }
     },
     methods: {
@@ -301,22 +312,37 @@ export default {
         vamosSiguente() {
             const thisVue = this;
             this.contador = this.contador + 1;
-           // if (this.contador == 2) {
-                if (this.nuevaLista.length == 0) {
-                    this.nuevaLista = this.especialistas;
-                    //console.log(this.nuevaLista, 'entramos a sigueinte');
-                }
-           // }
+            // if (this.contador == 2) {
+            if (this.nuevaLista.length == 0) {
+                this.nuevaLista = this.especialistas;
+                //console.log(this.nuevaLista, 'entramos a sigueinte');
+            }
+            // }
         },
 
         getNuevaLista() {
-            
+            const thisVue = this;
             this.nuevaLista = [];
             console.log(this.nuevaLista);
             this.especialistas.forEach(especialidades => {
-                if (especialidades.especialista.servicio_id.includes(this.servicioSeleccionado)) {
-                    console.log('coinciden las especialidades con ', especialidades.especialista.nombre);
+                if (especialidades.servicio_id.includes(this.servicioSeleccionado)) {
+                    console.log('coinciden las especialidades con ', especialidades.id);
                     this.nuevaLista.push(especialidades);
+                    thisVue.especialistas = [];
+                    let obj = {
+                        especialista: this.nuevaLista,
+                        fecha: thisVue.fechaCita,
+
+                    };
+                    axios.post(thisVue.path_url + '/api/citas/getEspecialistasFiltro', obj)
+                        .then((res) => {
+                            res.data.forEach(element => {
+                                thisVue.especialistas.push(element[0])
+                            });
+                        })
+                        .catch((error) => {
+
+                        });
                 }
             });
             if (this.nuevaLista.length == 0) {
@@ -332,12 +358,20 @@ export default {
         onComplete() {
             const thisVue = this;
             thisVue.generarCita.servicios_id = thisVue.servicioSeleccionado;
-            console.log(thisVue.generarCita);
             axios.post(thisVue.path_url + '/api/citas/agendarCita', thisVue.generarCita)
                 .then((res) => {
                     thisVue.procesoCita = false;
                 })
                 .catch((error) => {
+                    this.errors = JSON.parse(
+                        JSON.stringify(error.response.data.errors)
+                    );
+                    thisVue.bandera = true;
+                    // console.log(error);
+                    // const myAlert = document.getElementById('myAlert');
+                    // myAlert.classList.add("show")
+
+
 
                 });
         },
@@ -354,10 +388,7 @@ export default {
                     });
                 })
                 .catch(error => {
-                    this.errors = JSON.parse(
-                        JSON.stringify(error.response.data.errors)
-                    );
-                    console.log(this.errors);
+
                 });
         },
 
@@ -367,7 +398,7 @@ export default {
 
         getEspecialistas() {
             const thisVue = this;
-
+            thisVue.especialistas = [];
             let nombre = '';
             var meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
             let numeroMes = (thisVue.fechaCita.substring(5, 7))
@@ -382,17 +413,41 @@ export default {
 
             thisVue.fechaCompleta = thisVue.fechaCita.substring(8, 10) + ' de ' + thisVue.mesActual + ' del ' + thisVue.fechaCita.substring(0, 4);
 
-            let obj = {
-                fecha: thisVue.fechaCita,
-            };
-            axios.post(thisVue.path_url + '/api/citas/getEspecialistas', obj)
-                .then((res) => {
-                    thisVue.especialistas = res.data;
+            if (thisVue.contador < 2) {
+                let obj = {
+                    fecha: thisVue.fechaCita,
+                };
+                axios.post(thisVue.path_url + '/api/citas/getEspecialistas', obj)
+                    .then((res) => {
+                        thisVue.especialistas = res.data;
+                        //thisVue.nuevaLista = res.data;
+                    })
+                    .catch((error) => {
 
-                })
-                .catch((error) => {
+                    });
+            } else {
+                console.log('entramos al segundo buscador');
+                let obj = {
+                    especialista: this.nuevaLista,
+                    fecha: thisVue.fechaCita,
 
-                });
+                };
+
+                axios.post(thisVue.path_url + '/api/citas/getEspecialistasFiltro', obj)
+                    .then((res) => {
+                        //thisVue.especialistas = res.data;
+                        res.data.forEach(element => {
+                            thisVue.especialistas.push(element[0])
+                        });
+                        //thisVue.nuevaLista = res.data;
+                        //thisVue.bandera = true;
+                        console.log(thisVue.especialistas)
+                    })
+                    .catch((error) => {
+
+                    });
+            }
+
 
         },
 
@@ -407,8 +462,14 @@ export default {
         let year = date.getFullYear();
         if (month < 10) {
             this.fechaCita = (`${year}-0${month}-${day}`)
+            if (day < 10) {
+                this.fechaCita = (`${year}-0${month}-0${day}`)
+            }
         } else {
             this.fechaCita = (`${year}-${month}-${day}`)
+            if (day < 10) {
+                this.fechaCita = (`${year}-0${month}-0${day}`)
+            }
         }
         this.getEspecialistas();
         this.obtenerServicios();

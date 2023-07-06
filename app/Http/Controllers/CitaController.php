@@ -7,6 +7,7 @@ use App\Models\Especialista;
 use App\Models\Foto;
 use App\Models\Prospecto;
 use App\Models\Agenda;
+use App\Http\Requests\CitaRequest;
 
 
 use App\Models\Servicio;
@@ -15,13 +16,45 @@ use Illuminate\Http\Request;
 
 class CitaController extends Controller
 {
+    public function getEspecialistasFiltro(Request $request)
+    {
+        $nuevaLista = [];
+        foreach ($request['especialista'] as $valor) {
+            $fecha = $request['fecha'];
+
+            $especialistas = Especialista::where('id', $valor['id'])
+                ->with('foto')
+                ->with([
+                    'horario_mañana' => function ($query) use ($fecha) {
+                        $query->whereDate('fecha', '>=', Carbon::today());
+                        $query->whereDate('fecha', $fecha);
+                    },
+                    'horario_tarde' => function ($query) use ($fecha) {
+                        $query->whereDate('fecha', '>=', Carbon::today());
+                        $query->whereDate('fecha', $fecha);
+                    }
+
+                ])
+                ->withCount([
+                    'horario_tarde as contador_tarde' => function ($query) use ($fecha) {
+                        $query->whereDate('fecha', '>=', Carbon::today());
+                        $query->whereDate('fecha', $fecha);
+                    }
+                ])->withCount([
+                        'horario_mañana as contador_mañana' => function ($query) use ($fecha) {
+                            $query->whereDate('fecha', '>=', Carbon::today());
+                            $query->whereDate('fecha', $fecha);
+                        }
+                    ])
+                ->where('estatus', 'Activo')
+                ->get();
+            array_push($nuevaLista, $especialistas);
+        }
+        return $nuevaLista;
+    }
     public function getEspecialistas(Request $request)
     {
         $fecha = $request['fecha'];
-        $infoReal = [];
-        $servicios_nombre = [];
-        $infoReal = [];
-        $guardarInfo = [];
         $especialistas = Especialista::with('foto')
             ->with([
                 'horario_mañana' => function ($query) use ($fecha) {
@@ -47,31 +80,13 @@ class CitaController extends Controller
                 ])
             ->where('estatus', 'Activo')
             ->get();
-        
 
-        foreach ($especialistas as $especialista) {
-
-            $servicios_nombre = [];
-            $servicios = explode(',', $especialista['servicio_id']);
-            foreach ($servicios as $servicio) {
-                $servicioInfo = Servicio::where('id', $servicio)
-                    ->where('estatus', 'Activo')
-                    ->first();
-                array_push($servicios_nombre, $servicioInfo['text_html']);
-
-            }
-            $infoReal = [
-                'especialista' => $especialista,
-                'especialidad' => implode(", ", $servicios_nombre)
-            ];
-
-            array_push($guardarInfo, $infoReal);
-        }
-        return response()->json($guardarInfo, 200);
+        return response()->json($especialistas, 200);
 
     }
-    public function agendarCita(Request $request)
+    public function agendarCita(CitaRequest $request)
     {
+
         $prospecto = new Prospecto();
         //$servicio_id = implode(', ', $request['registro']);
         //$prospecto->especialista_id = $request['especialista'];
@@ -94,7 +109,9 @@ class CitaController extends Controller
         $agendar->proceso = 'Apartada';
         $agendar->save();
 
-        return response()->json($agendar, 200);
+        return [
+            'nombre.required' => 'es necessadfaf',
+        ];
 
     }
     public function obtenerHorario()

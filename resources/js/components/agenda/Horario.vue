@@ -1,7 +1,7 @@
 <template>
     <div class="card">
         <div class="card-body">
-            <h3>Crear Horario</h3>
+            <h3>Horario</h3>
             <br>
 
             <div v-if="editarHorario == true" style="text-align: end;">
