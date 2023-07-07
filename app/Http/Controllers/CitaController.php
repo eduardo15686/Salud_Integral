@@ -90,7 +90,12 @@ class CitaController extends Controller
         $prospecto = new Prospecto();
         //$servicio_id = implode(', ', $request['registro']);
         //$prospecto->especialista_id = $request['especialista'];
-        $prospecto->servicios_id = $request['servicios_id'];
+        if ($request['servicios_id'] == 0) {
+            $prospecto->servicios_id = null;
+        } else {
+            $prospecto->servicios_id = $request['servicios_id'];
+        }
+
         $prospecto->nombre = $request['nombre'];
         $prospecto->correo = $request['correo'];
         $prospecto->celular = $request['celular'];

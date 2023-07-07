@@ -586,12 +586,12 @@ export default {
         },
         horaApartada(item) {
             const thisVue = this;
-            
+
             thisVue.agendarProspecto = item;
             thisVue.agendarProspecto.hora = thisVue.agendarProspecto.hora.substring(0, 5);
             thisVue.infoProspecto = item.prospecto;
-            thisVue.nombreEspecialidad = item.prospecto.servicios.alt_html;
-            console.log(thisVue.nombreEspecialidad);
+            //thisVue.nombreEspecialidad = item.prospecto.servicios.alt_html;
+            console.log(item.prospecto);
             $("#modalHoraApartada").modal("show");
         },
         horaDisponible(item) {

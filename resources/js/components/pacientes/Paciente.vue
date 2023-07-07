@@ -343,6 +343,11 @@ export default {
 
 
         },
+        clearData() {
+            thisVue.infoPaciente = {
+
+            };
+        },
         async getPacientes() {
             const thisVue = this;
             let llenarOptions = [];
@@ -371,6 +376,7 @@ export default {
                         'success'
                     );
                     thisVue.getPacientes();
+                    thisVue.guardarInfoPaciente = {};
                     $("#modalNuevoPaciente").modal("hide");
                 })
 
@@ -391,6 +397,7 @@ export default {
                         'success'
                     );
                     thisVue.getPacientes();
+                    thisVue.infoPaciente = {};
                     $("#modalEditarPaciente").modal("hide");
 
                 })
