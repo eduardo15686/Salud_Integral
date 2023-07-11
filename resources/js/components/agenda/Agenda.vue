@@ -707,13 +707,24 @@ export default {
             };
             axios.post(thisVue.path_url + '/api/agendas/generarAgenda', obj)
                 .then((res) => {
-                    this.$swal(
-                        'Agenda Generada',
-                        'Del ' + thisVue.mesInicialEstablecido + ' al ' + thisVue.mesFinalEstablecido,
-                        'success'
+                    if (res.data == 'vacio') {
+                        this.$swal(
+                            'Horario',
+                            'Asegurate de tener un horario cargado antes de crear una agenda',
+                            'error'
 
-                    );
-                    thisVue.verAgenda();
+                        );
+                        thisVue.verAgenda();
+                    } else {
+                        this.$swal(
+                            'Agenda Generada',
+                            'Del ' + thisVue.mesInicialEstablecido + ' al ' + thisVue.mesFinalEstablecido,
+                            'success'
+
+                        );
+                        thisVue.verAgenda();
+                    }
+
 
                 })
                 .catch((error) => {

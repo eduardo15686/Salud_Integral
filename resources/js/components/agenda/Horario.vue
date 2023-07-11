@@ -187,13 +187,13 @@ export default {
         },
 
         generarHorarioModificado() {
-            document.getElementById("0").click();
-            document.getElementById("1").click();
-            document.getElementById("2").click();
-            document.getElementById("3").click();
-            document.getElementById("4").click();
-            document.getElementById("5").click();
-            document.getElementById("6").click();
+            document.getElementById("Lunes").click();
+            document.getElementById("Martes").click();
+            document.getElementById("Miercoles").click();
+            document.getElementById("Jueves").click();
+            document.getElementById("Viernes").click();
+            document.getElementById("Sabado").click();
+            document.getElementById("Domingo").click();
         },
 
         modificarHorario(item) {
@@ -297,7 +297,15 @@ export default {
                         thisVue.editarHorario = true;
                     };
                     thisVue.editarDias = res.data[0];
+                    thisVue.editarDias[0].dia = 'Lunes';
+                    thisVue.editarDias[1].dia = 'Martes';
+                    thisVue.editarDias[2].dia = 'Miercoles';
+                    thisVue.editarDias[3].dia = 'Jueves';
+                    thisVue.editarDias[4].dia = 'Viernes';
+                    thisVue.editarDias[5].dia = 'Sabado';
+                    thisVue.editarDias[6].dia = 'Domingo';
                     thisVue.tiempoConsultaEditar = res.data[0][0].tiempo;
+                    console.log(thisVue.editarDias);
                 })
                 .catch((error) => {
 

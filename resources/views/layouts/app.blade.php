@@ -100,11 +100,28 @@
                                 <i class="ti ti-menu-2"></i>
                             </a>
                         </li>
-                        <li class="nav-item">
+                        <!-- <li class="nav-item">
                             <a class="nav-link nav-icon-hover" href="javascript:void(0)">
                                 <i class="ti ti-bell-ringing"></i>
-                                <div class="notification bg-primary rounded-circle"></div>
+                                <div class="notification bg-primary rounded-circle">
+                                    
+                                </div>
                             </a>
+                        </li> -->
+                        <li  class="nav-item">
+                            <div class="dropdown">
+                            <a class="nav-link nav-icon-hover dropdown" href="javascript:void(0)" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="ti ti-bell-ringing"></i>
+                                <div class="notification bg-primary rounded-circle">
+                                    
+                                </div>
+                            </a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#">Action</a></li>
+                                    <li><a class="dropdown-item" href="#">Another action</a></li>
+                                    <li><a class="dropdown-item" href="#">Something else here</a></li>
+                                </ul>
+                                </div>
                         </li>
                     </ul>
                     <div class="navbar-collapse justify-content-end px-0" id="navbarNav">
@@ -113,7 +130,15 @@
                             <span class="d-none d-md-block ps-2">{{ Auth::user()->name }}</span>
                             <li class="nav-item dropdown">
                                 <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="drop2" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <img src="" alt="" width="35" height="35" class="rounded-circle">
+                                <?php 
+                                use App\Models\Especialista;
+                                $especialista = Especialista::where('user_id', Auth::user()->id)
+                                ->where('estatus', 'Activo')
+                                ->first();
+                                $imagenReal =  substr($especialista['foto']['imagen_path'],6);
+                                echo '<img src="storage/'. $imagenReal. '" alt="" width="35" height="35" class="rounded-circle">';
+                                ?>
+                                
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up" aria-labelledby="drop2">
                                     <div class="message-body">
