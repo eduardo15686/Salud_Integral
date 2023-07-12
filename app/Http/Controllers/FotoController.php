@@ -31,15 +31,25 @@ class FotoController extends Controller
         $foto->user_id = Auth::user()->id;
         if ($request->hasfile("imagen")) {
             $imagen = $request->file("imagen");
-            // $nombreimagen = Str::slug($request->imagen) . "." . $imagen->guessExtension();
-            // $ruta = public_path("img/fotos/");
-            // $imagen->move($ruta, $nombreimagen);
-            // $foto->imagen_path = $nombreimagen;
             $nombreimagen = Str::slug($request->imagen) . "." . $imagen->guessExtension();
             $imagen = $request->file("imagen")->store('public/imagenes');
             $foto->imagen_path = $imagen;
         }
         $foto->save();
+    }
+
+    public function editarFoto(Request $request)
+    {
+        if ($request->hasfile("imagen")) {
+            $imagen = $request->file("imagen");
+            //$nombreimagen = Str::slug($request->imagen) . "." . $imagen->guessExtension();
+            $imagen = $request->file("imagen")->store('public/imagenes');
+            $foto = Foto::where('user_id', Auth::user()->id)->update(['imagen_path' => $imagen]);
+            return $request;
+        }else{
+            echo 'no tiene foto';
+            
+        }
     }
 
     /**

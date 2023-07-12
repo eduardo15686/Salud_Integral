@@ -19857,10 +19857,11 @@ fieldset:disabled .btn {
 .notification {
     content: "";
     position: absolute;
-    top: 22px;
-    right: 9px;
-    width: 8px;
-    height: 8px
+    top: 10px;
+    right: -5px;
+    width: 26px;
+    height: 20px;
+    
 }
 
 @media (max-width:991.98px) {
@@ -20165,3 +20166,4 @@ ul {
 .timeline-widget .timeline-item .timeline-badge.badge-primary {
     border: 2px solid #a1b6a7
 }
+

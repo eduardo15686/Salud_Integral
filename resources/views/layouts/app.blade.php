@@ -101,12 +101,35 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link nav-icon-hover" href="javascript:void(0)">
+                            <a class="nav-link nav-icon-hover" data-bs-toggle="dropdown" aria-expanded="false" href="javascript:void(0)">
                                 <i class="ti ti-bell-ringing"></i>
-                                <div class="notification bg-primary rounded-circle">
-                                    
+                                <div class="notification rounded-circle" style="text-align:center; background-color: #FA5757">
+                                <?php
+                                 use App\Models\Agenda;
+                                 $especialista = Agenda::where('especialista_id', Auth::user()->id)
+                                 ->where('estatus', 'Activo')
+                                 ->where('proceso', 'Apartada')
+                                 ->count();
+                                    echo '<p style="font-size: 13px; margin-top: -25px; margin-left:5px; color: white;"><b>'.$especialista.'</b></p>'
+                                ?>
+                               
                                 </div>
                             </a>
+                            <ul class="dropdown-menu">
+                            <?php
+                                use App\Models\Prospecto;
+                                $prospecto = [];
+                                 $especialista = Agenda::where('especialista_id', Auth::user()->id)
+                                 ->where('estatus', 'Activo')
+                                 ->where('proceso', 'Apartada')
+                                 ->get();
+                                 foreach ($especialista as $info){
+                                    $prospecto = Prospecto::find($info['prospecto_id']);
+                                    echo ' <li><a class="dropdown-item">'. $prospecto['nombre'].' / ' .$info['fecha']. ' / ' .substr($info['hora'],0,5) . '</a></li>';
+                                 }
+                                    
+                                ?>
+                            </ul>
                         </li>
                     </ul>
                     <div class="navbar-collapse justify-content-end px-0" id="navbarNav">
@@ -124,6 +147,7 @@
                                     echo '<img src="../assets/images/logos/perfil.png" alt="" width="35" height="35" class="rounded-circle">';
                                 }else{
                                     $imagenReal =  substr($especialista['foto']['imagen_path'],6);
+                                    
                                     echo '<img src="storage/'. $imagenReal. '" alt="" width="35" height="35" class="rounded-circle">';
                                 }
                                

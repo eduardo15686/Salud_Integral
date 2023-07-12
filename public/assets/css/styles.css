@@ -12516,7 +12516,7 @@ fieldset:disabled .btn {
 }
 
 .rounded-circle {
-    border-radius: 50% !important
+    border-radius: 100% !important
 }
 
 .rounded-pill {
@@ -20044,8 +20044,8 @@ fieldset:disabled .btn {
     position: absolute;
     top: 22px;
     right: 9px;
-    width: 8px;
-    height: 8px
+    width: 15px;
+    height: 15px
 }
 
 .notify-badge {
@@ -20451,3 +20451,4 @@ ul {
 .timeline-widget .timeline-item .timeline-badge.badge-primary {
     border: 2px solid #a1b6a7
 }
+

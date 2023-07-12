@@ -34,6 +34,7 @@ Route::middleware('auth:sanctum')->prefix('/especialista')->group(function () {
     Route::get('/obtenerLinkFoto', [FotoController::class, 'obtenerLinkFoto']);
     // Route::get('/obtenerFoto', [FotoController::class, 'obtenerFoto']);
     Route::post('/updateFoto', [FotoController::class, 'updateFoto']);
+    Route::post('/editarFoto', [FotoController::class, 'editarFoto']);
     Route::get('/getInfoEspecialista', [EspecialistaController::class, 'getInfoEspecialista']);
     Route::post('/guardarEspecialista', [EspecialistaController::class, 'guardarEspecialista']);
     Route::post('/editarEspecialista', [EspecialistaController::class, 'editarEspecialista']);

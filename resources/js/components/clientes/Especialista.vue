@@ -74,7 +74,7 @@
                 <div class="col-md-6"
                     style=" display: flex; justify-content: center; align-items: center; flex-direction: column;">
                     <img id="imagenPerfil" :src="imagenPerfil" style="width: 70%;" />
-                    <p>Foto de Perfil</p>
+                    <p> Editar foto de Perfil</p>
 
                 </div>
             </div>
@@ -445,7 +445,17 @@ export default {
 
         async editarInfoEspecialista() {
             const thisVue = this;
+            let formData = new FormData();
+
+            formData.append("imagen", thisVue.product.imagen);
             thisVue.infoEspecialista.nuevoServicio = thisVue.serviciosSeleccionados;
+            await axios
+                .post(
+                    thisVue.path_url + "/api/especialista/editarFoto",
+                    formData
+                ).then((res) => {
+                }).catch((error) => { });
+
             await axios
                 .post(
                     thisVue.path_url + "/api/especialista/editarEspecialista",
@@ -462,6 +472,8 @@ export default {
                 })
 
                 .catch((error) => { });
+
+
         },
 
         async guardarInfoEspecialista() {

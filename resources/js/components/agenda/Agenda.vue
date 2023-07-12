@@ -550,8 +550,8 @@ export default {
             axios.post(thisVue.path_url + '/api/expedientes/guardarExpediente', thisVue.infoHistorial)
                 .then((res) => {
                     this.$swal(
-                        'Prospecto Agendado',
-                        'Nombre: ',
+                        'Expediente Guardado',
+                        'El expediente se guardo de manera correcta, encontraras la información en "Pacientes"',
                         'success'
 
                     );
