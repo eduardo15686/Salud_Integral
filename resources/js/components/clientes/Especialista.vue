@@ -74,7 +74,7 @@
                 <div class="col-md-6"
                     style=" display: flex; justify-content: center; align-items: center; flex-direction: column;">
                     <img id="imagenPerfil" :src="imagenPerfil" style="width: 70%;" />
-                    <p> Editar foto de Perfil</p>
+                    <p>Foto de Perfil</p>
 
                 </div>
             </div>

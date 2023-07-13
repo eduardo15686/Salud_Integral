@@ -103,6 +103,7 @@
                         <li class="nav-item">
                             <a class="nav-link nav-icon-hover" data-bs-toggle="dropdown" aria-expanded="false" href="javascript:void(0)">
                                 <i class="ti ti-bell-ringing"></i>
+                                
                                 <div class="notification rounded-circle" style="text-align:center; background-color: #FA5757">
                                 <?php
                                  use App\Models\Agenda;
@@ -110,9 +111,9 @@
                                  ->where('estatus', 'Activo')
                                  ->where('proceso', 'Apartada')
                                  ->count();
+                                 if($especialista != 0)
                                     echo '<p style="font-size: 13px; margin-top: -25px; margin-left:5px; color: white;"><b>'.$especialista.'</b></p>'
-                                ?>
-                               
+                                ?>                            
                                 </div>
                             </a>
                             <ul class="dropdown-menu">

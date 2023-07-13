@@ -380,6 +380,55 @@
                 </div>
             </div><!-- End Modal Agendada-->
 
+            <!-- Modal Agendada EDITAR-->
+            <div class="modal fade" id="modalHoraAgendadaEditar" tabindex="-1"
+                aria-labelledby="modalHoraAgendadaEditarLabel" aria-hidden="true" data-bs-backdrop="static"
+                data-bs-keyboard="false">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header" style="background-color: #fcb29f;">
+                            <h4 class="modal-title" id="modalHoraAgendadaEditar">Hora Agendada</h4>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row" style="text-align: center; margin-bottom: 20px;">
+                                <h4><b>{{ infoPaciente.nombre }}</b></h4>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p><b>Fecha:</b> {{ agendarProspecto.fecha }}</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p><b>Hora:</b> {{ agendarProspecto.hora }}</p>
+                                </div>
+                            </div>
+
+                            <br>
+                            <div style="text-align: center;">
+                                <h5 style="font-size: large;">Historial Clínico</h5>
+                            </div>
+                            <div class="row">
+                                <div class="mb-3">
+                                    <label for="exampleFormControlInput1" class="form-label">Tareas Asignadas</label>
+                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="2"
+                                        placeholder="Tareas asignadas al paciente esta sesión"
+                                        v-model="infoExpediente.tareas"></textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="exampleFormControlTextarea1" class="form-label">Observaciones</label>
+                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
+                                        placeholder="Observaciones de la sesión"
+                                        v-model="infoExpediente.observaciones"></textarea>
+                                </div>
+                            </div>
+
+                        </div>
+                        <button type="button" class="btn btn-success" @click="editarExpediente()">Editar
+                            Expediente</button>
+                    </div>
+                </div>
+            </div><!-- End Modal Agendada EDITAR-->
+
             <!-- Modal Especial-->
             <div class="modal fade" id="modalHoraEspecial" tabindex="-1" aria-labelledby="modalHoraEspecialLabel"
                 aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
@@ -531,6 +580,7 @@ export default {
             horas: [],
             horaConsulta: '',
             nombreEspecialidad: '',
+            infoExpediente: [],
 
         }
     },
@@ -574,9 +624,22 @@ export default {
         },
         horaAgendada(item) {
             const thisVue = this;
+            thisVue.agendarProspecto = item;
+            thisVue.agendarProspecto.hora = thisVue.agendarProspecto.hora.substring(0, 5);
             thisVue.infoPaciente = item.paciente;
             thisVue.infoPacienteHistorial = item;
-            $("#modalHoraAgendada").modal("show");
+
+            axios.post(thisVue.path_url + '/api/expedientes/verificarExpediente', item)
+                .then((res) => {
+                    if (res.data.length != 0) {
+                        thisVue.infoExpediente = res.data[0];
+                        $("#modalHoraAgendadaEditar").modal("show");
+                    } else {
+                        $("#modalHoraAgendada").modal("show");
+                    }
+                })
+                .catch((error) => {
+                });
         },
         horaEspecial(item) {
             const thisVue = this;
@@ -586,7 +649,6 @@ export default {
         },
         horaApartada(item) {
             const thisVue = this;
-
             thisVue.agendarProspecto = item;
             thisVue.agendarProspecto.hora = thisVue.agendarProspecto.hora.substring(0, 5);
             thisVue.infoProspecto = item.prospecto;
@@ -657,6 +719,23 @@ export default {
                     thisVue.agendarProspecto = {};
                     thisVue.infoPaciente = {};
 
+                })
+                .catch((error) => {
+                });
+        },
+
+        editarExpediente() {
+            const thisVue = this;
+            axios.post(thisVue.path_url + '/api/expedientes/editarExpediente', thisVue.infoExpediente)
+                .then((res) => {
+                    this.$swal(
+                        'Expediente Editado',
+                        'El expediente se edito de manera correcta, encontraras la información en "Pacientes"',
+                        'success'
+
+                    );
+                    thisVue.verAgenda();
+                    $("#modalHoraAgendadaEditar").modal("hide");
                 })
                 .catch((error) => {
                 });

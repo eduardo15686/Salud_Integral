@@ -96,6 +96,8 @@ Route::middleware('auth:sanctum')->prefix('/perfiles')->group(function () {
 
 Route::middleware('auth:sanctum')->prefix('/expedientes')->group(function () {
     Route::post('/guardarExpediente', [ExpedienteController::class, 'guardarExpediente']);
+    Route::post('/verificarExpediente', [ExpedienteController::class, 'verificarExpediente']);
+    Route::post('/editarExpediente', [ExpedienteController::class, 'editarExpediente']);
     Route::get('/getExpedientes/{id}', [ExpedienteController::class, 'getExpedientes']);
 
 });
