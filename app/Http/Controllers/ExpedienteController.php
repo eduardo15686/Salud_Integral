@@ -13,16 +13,14 @@ class ExpedienteController extends Controller
      */
     public function guardarExpediente(Request $request)
     {
-
-
-        // $expediente = new Expediente;
-        // $expediente->paciente_id = $request['paciente_id'];
-        // $expediente->agenda_id = $request['agenda_id'];
-        // $expediente->fecha = $request['fecha'];
-        // $expediente->tareas = $request['tareas'];
-        // $expediente->observaciones = $request['observaciones'];
-        // $expediente->estatus = 'Activo';
-        // $expediente->save();
+        $expediente = new Expediente;
+        $expediente->paciente_id = $request['paciente_id'];
+        $expediente->agenda_id = $request['agenda_id'];
+        $expediente->fecha = $request['fecha'];
+        $expediente->tareas = $request['tareas'];
+        $expediente->observaciones = $request['observaciones'];
+        $expediente->estatus = 'Activo';
+        $expediente->save();
     }
 
     public function getExpedientes($id)

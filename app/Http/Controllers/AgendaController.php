@@ -263,6 +263,17 @@ class AgendaController extends Controller
 
     public function agendarHoraEspecial(Request $request)
     {
+        $primerhora = $request['fecha'] . ' ' . $request['hora'];
+        $NuevaFecha = date('H:i', strtotime($primerhora));
+        $NuevaFecha = strtotime('+' . $request['tiempo'] . 'minute', strtotime($NuevaFecha));
+        $NuevaFecha = date('H:i', $NuevaFecha);
+
+        $agenda = Agenda::where('estatus', 'Activo')
+            ->where('hora', '>=', $request['hora'])
+            ->where('hora', '<', $NuevaFecha)
+            ->whereDate('fecha', $request['fecha'])
+            ->update(['estatus' => 'Inactivo']);
+
         $fecha = new Agenda();
         $fecha->especialista_id = Auth::user()->id;
         $fecha->prospecto_id = 0;

@@ -581,7 +581,6 @@ export default {
             horaConsulta: '',
             nombreEspecialidad: '',
             infoExpediente: [],
-
         }
     },
     methods: {
@@ -594,6 +593,7 @@ export default {
         },
         guardarHistorialClinico() {
             const thisVue = this;
+            thisVue.infoExpediente = [];
             thisVue.infoHistorial.paciente_id = thisVue.infoPacienteHistorial.paciente.id;
             thisVue.infoHistorial.agenda_id = thisVue.infoPacienteHistorial.id;
             thisVue.infoHistorial.fecha = thisVue.infoPacienteHistorial.fecha;
@@ -643,6 +643,8 @@ export default {
         },
         horaEspecial(item) {
             const thisVue = this;
+            thisVue.agendarProspecto = item;
+            thisVue.agendarProspecto.hora = thisVue.agendarProspecto.hora.substring(0, 5);
             thisVue.infoPaciente = item.paciente;
             thisVue.infoHorario = item;
             $("#modalHoraEspecial").modal("show");
