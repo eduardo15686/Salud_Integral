@@ -121,6 +121,7 @@ class AgendaController extends Controller
         $res = ($dias);
 
         $lunes = Agenda::orderBy('hora', 'asc')
+            ->where('especialista_id', Auth::user()->id)
             ->where('estatus', 'Activo')
             ->where('fecha', date("Y-m-d", strtotime($res[0])))
             ->with([
@@ -131,36 +132,42 @@ class AgendaController extends Controller
             ->with('paciente')
             ->get();
         $martes = Agenda::orderBy('hora', 'asc')
+            ->where('especialista_id', Auth::user()->id)
             ->where('estatus', 'Activo')
             ->where('fecha', date("Y-m-d", strtotime($res[1])))
             ->with('prospecto')
             ->with('paciente')
             ->get();
         $miercoles = Agenda::orderBy('hora', 'asc')
+            ->where('especialista_id', Auth::user()->id)
             ->where('estatus', 'Activo')
             ->where('fecha', date("Y-m-d", strtotime($res[2])))
             ->with('prospecto')
             ->with('paciente')
             ->get();
         $jueves = Agenda::orderBy('hora', 'asc')
+            ->where('especialista_id', Auth::user()->id)
             ->where('estatus', 'Activo')
             ->where('fecha', date("Y-m-d", strtotime($res[3])))
             ->with('prospecto')
             ->with('paciente')
             ->get();
         $viernes = Agenda::orderBy('hora', 'asc')
+            ->where('especialista_id', Auth::user()->id)
             ->where('estatus', 'Activo')
             ->where('fecha', date("Y-m-d", strtotime($res[4])))
             ->with('prospecto')
             ->with('paciente')
             ->get();
         $sabado = Agenda::orderBy('hora', 'asc')
+            ->where('especialista_id', Auth::user()->id)
             ->where('estatus', 'Activo')
             ->where('fecha', date("Y-m-d", strtotime($res[5])))
             ->with('prospecto')
             ->with('paciente')
             ->get();
         $domingo = Agenda::orderBy('hora', 'asc')
+            ->where('especialista_id', Auth::user()->id)
             ->where('estatus', 'Activo')
             ->where('fecha', date("Y-m-d", strtotime($res[6])))
             ->with('prospecto')
