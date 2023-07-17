@@ -144,7 +144,7 @@
                                 $especialista = Especialista::where('user_id', Auth::user()->id)
                                 ->where('estatus', 'Activo')
                                 ->first();
-                                if(empty($especialista)){
+                                if(empty($especialista['foto'])){
                                     echo '<img src="../assets/images/logos/perfil.png" alt="" width="35" height="35" class="rounded-circle">';
                                 }else{
                                     $imagenReal =  substr($especialista['foto']['imagen_path'],6);
@@ -152,8 +152,7 @@
                                     echo '<img src="storage/'. $imagenReal. '" alt="" width="35" height="35" class="rounded-circle">';
                                 }
                                
-                                ?>
-                                
+                                ?>                               
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up" aria-labelledby="drop2">
                                     <div class="message-body">
