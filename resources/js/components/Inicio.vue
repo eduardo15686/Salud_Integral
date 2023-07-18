@@ -61,7 +61,11 @@
                         <div v-for="(item, index) in especialistas" class="card">
                             <div class="row">
                                 <div class="col-md-8">
-                                    <div style="margin-left: 10px;">
+                                    <div v-if="item.foto == null" style="margin-left: 10px;">
+                                        <img :src="path_url + 'assets/images/logos/perfil.png'"
+                                            style="height: 60px; width: 60px; background-repeat: no-repeat; background-position: 50%; border-radius: 50%; background-size: 100% auto;">
+                                    </div>
+                                    <div v-else>
                                         <img :src="path_url + 'storage/' + (item.foto.imagen_path).substring(6)"
                                             style="height: 60px; width: 60px; background-repeat: no-repeat; background-position: 50%; border-radius: 50%; background-size: 100% auto;">
                                     </div>

@@ -46,15 +46,15 @@ Route::get('/contraseña', function () {
 })->name('especialista')->middleware('auth')->middleware('Permisos:1-1');
 
 
-Route::get('/usuarios/administrar', function () {
+Route::get('/usuarios-administrar', function () {
     return view('panels.usuarios.administrar');
 })->name('administrar')->middleware('auth')->middleware('Permisos:1-5');
 
-Route::get('/usuarios/perfilador', function () {
+Route::get('/usuarios-perfilador', function () {
     return view('panels.usuarios.perfilador');
 })->name('perfilador')->middleware('auth')->middleware('Permisos:1-6');
 
-Route::get('/usuarios/servicios', function () {
+Route::get('/usuarios-servicios', function () {
     return view('panels.usuarios.servicios');
 })->name('servicios')->middleware('auth')->middleware('Permisos:1-10');
 

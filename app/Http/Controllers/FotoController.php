@@ -40,16 +40,33 @@ class FotoController extends Controller
 
     public function editarFoto(Request $request)
     {
-        if ($request->hasfile("imagen")) {
-            $imagen = $request->file("imagen");
-            //$nombreimagen = Str::slug($request->imagen) . "." . $imagen->guessExtension();
-            $imagen = $request->file("imagen")->store('public/imagenes');
-            $foto = Foto::where('user_id', Auth::user()->id)->update(['imagen_path' => $imagen]);
-            return $request;
-        }else{
-            echo 'no tiene foto';
-            
+
+        $foto = Foto::where('user_id', Auth::user()->id)
+            ->first();
+
+        if (empty($foto)) {
+            $foto = new Foto();
+            $foto->user_id = Auth::user()->id;
+            if ($request->hasfile("imagen")) {
+                $imagen = $request->file("imagen");
+                $nombreimagen = Str::slug($request->imagen) . "." . $imagen->guessExtension();
+                $imagen = $request->file("imagen")->store('public/imagenes');
+                $foto->imagen_path = $imagen;
+            }
+            $foto->save();
+        } else {
+            if ($request->hasfile("imagen")) {
+                $imagen = $request->file("imagen");
+                //$nombreimagen = Str::slug($request->imagen) . "." . $imagen->guessExtension();
+                $imagen = $request->file("imagen")->store('public/imagenes');
+                Foto::where('user_id', Auth::user()->id)->update(['imagen_path' => $imagen]);
+                return $request;
+            } else {
+                echo 'no tiene foto';
+            }
         }
+
+
     }
 
     /**

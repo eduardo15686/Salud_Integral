@@ -507,8 +507,8 @@
               <div class="testimonial-wrap">
                 <div class="testimonial-item">
                 <?php 
-                 if(empty($especialista['foto'])){
-                   echo '<img src="../assets/images/logos/perfil.png" alt="" width="35" height="35" class="rounded-circle">';
+                 if(empty($especialista['especialista']['foto'])){
+                   echo '<img src="assets/images/logos/perfil.png" alt="" style="height: 100px; width: 100px;" class="rounded-circle">';
                  }else{
                   $imagenReal =  substr($especialista['especialista']['foto']['imagen_path'],6);
                   echo '<img src="storage/'. $imagenReal.'" style="height: 100px; width: 100px; background-repeat: no-repeat; background-position: 50%; border-radius: 50%; background-size: 100% auto;">';
