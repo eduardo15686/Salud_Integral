@@ -58,6 +58,7 @@ Route::middleware('auth:sanctum')->prefix('/agendas')->group(function () {
     Route::post('/agendarPaciente', [AgendaController::class, 'agendarPaciente']);
     Route::post('/habilitarHora', [AgendaController::class, 'habilitarHora']);
     Route::post('/agendarHoraEspecial', [AgendaController::class, 'agendarHoraEspecial']);
+    Route::post('/cancelarCita', [AgendaController::class, 'cancelarCita']);
 });
 
 Route::middleware('auth:sanctum')->prefix('/horario')->group(function () {

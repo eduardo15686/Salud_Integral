@@ -296,4 +296,11 @@ class AgendaController extends Controller
 
     }
 
+    public function cancelarCita(Request $request)
+    {
+        $agendar = Agenda::find($request['id']);
+        $agendar->paciente_id = 0;
+        $agendar->proceso = 'Disponible';
+        $agendar->save();
+    }
 }

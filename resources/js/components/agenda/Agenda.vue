@@ -374,8 +374,13 @@
                             </div>
 
                         </div>
-                        <button type="button" class="btn btn-success" @click="guardarHistorialClinico()">Guardar
-                            Información</button>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-success" @click="guardarHistorialClinico()">Guardar
+                                Información</button>
+                            <button type="button" class="btn btn-danger" @click="openModalCancelarCita()">Cancelar
+                                Cita</button>
+                        </div>
+
                     </div>
                 </div>
             </div><!-- End Modal Agendada-->
@@ -423,8 +428,12 @@
                             </div>
 
                         </div>
-                        <button type="button" class="btn btn-success" @click="editarExpediente()">Editar
-                            Expediente</button>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-success" @click="editarExpediente()">Editar
+                                Expediente</button>
+                            <button type="button" class="btn btn-danger" @click="openModalCancelarCita()">Cancelar
+                                Cita</button>
+                        </div>
                     </div>
                 </div>
             </div><!-- End Modal Agendada EDITAR-->
@@ -454,11 +463,92 @@
                                 <!-- <p><b>Nombre del Paciente:</b> {{ infoPaciente.nombre }}</p> -->
                                 <p><b>Tiempo de Consulta:</b> {{ infoHorario.tiempo }} minutos</p>
                             </div>
+                            <br>
+                            <div style="text-align: center;">
+                                <h5 style="font-size: large;">Historial Clínico</h5>
+                            </div>
+                            <div class="row">
+                                <div class="mb-3">
+                                    <label for="exampleFormControlInput1" class="form-label">Tareas Asignadas</label>
+                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="2"
+                                        placeholder="Tareas asignadas al paciente esta sesión"
+                                        v-model="infoHistorial.tareas"></textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="exampleFormControlTextarea1" class="form-label">Observaciones</label>
+                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
+                                        placeholder="Observaciones de la sesión"
+                                        v-model="infoHistorial.observaciones"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-success" @click="guardarHistorialClinico()">Guardar
+                                Información</button>
+                            <button type="button" class="btn btn-danger" @click="openModalCancelarCita()">Cancelar
+                                Cita</button>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- End Modal Especial-->
+
+            <!-- Modal Especial Editar-->
+            <div class="modal fade" id="modalHoraEspecialEditada" tabindex="-1"
+                aria-labelledby="modalHoraEspecialEditadaLabel" aria-hidden="true" data-bs-backdrop="static"
+                data-bs-keyboard="false">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header" style="background-color: #dec7e9;">
+                            <h4 class="modal-title" id="modalHoraEspecialEditada">Horario Especial</h4>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row" style="text-align: center; margin-bottom: 20px;">
+                                <h4><b>{{ infoPaciente.nombre }}</b></h4>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p><b>Fecha:</b> {{ agendarProspecto.fecha }}</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p><b>Hora:</b> {{ agendarProspecto.hora }}</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <!-- <p><b>Nombre del Paciente:</b> {{ infoPaciente.nombre }}</p> -->
+                                <p><b>Tiempo de Consulta:</b> {{ infoHorario.tiempo }} minutos</p>
+                            </div>
+                            <br>
+                            <div style="text-align: center;">
+                                <h5 style="font-size: large;">Historial Clínico</h5>
+                            </div>
+                            <div class="row">
+                                <div class="mb-3">
+                                    <label for="exampleFormControlInput1" class="form-label">Tareas Asignadas</label>
+                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="2"
+                                        placeholder="Tareas asignadas al paciente esta sesión"
+                                        v-model="infoExpediente.tareas"></textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="exampleFormControlTextarea1" class="form-label">Observaciones</label>
+                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
+                                        placeholder="Observaciones de la sesión"
+                                        v-model="infoExpediente.observaciones"></textarea>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-success" @click="editarExpediente()">Editar
+                                Expediente</button>
+                            <button type="button" class="btn btn-danger" @click="openModalCancelarCita()">Cancelar
+                                Cita</button>
                         </div>
 
                     </div>
                 </div>
-            </div><!-- End Modal Especial-->
+            </div><!-- End Modal Especial Editar-->
+
 
             <!-- Modal Inhabilitada-->
             <div class="modal fade" id="modalHoraInhabilitada" tabindex="-1" aria-labelledby="modalHoraInhabilitadaLabel"
@@ -539,6 +629,43 @@
                     </div>
                 </div>
             </div><!--End Modal Horario Especial-->
+
+            <!-- Modal Agendada-->
+            <div class="modal fade" id="modalCancelarCita" tabindex="-1" aria-labelledby="modalCancelarCitaLabel"
+                aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header" style="background-color: #fcb29f;">
+                            <h4 class="modal-title" id="modalCancelarCita">Cancelar Cita</h4>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row" style="text-align: center; margin-bottom: 20px;">
+                                <h4><b>{{ infoPaciente.nombre }}</b></h4>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p><b>Fecha:</b> {{ agendarProspecto.fecha }}</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p><b>Hora:</b> {{ agendarProspecto.hora }}</p>
+                                </div>
+                            </div>
+
+                            <br>
+
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-success">Cerrar</button>
+                            <button type="button" class="btn btn-danger" @click="cancelarCita()">Cancelar
+                                Cita</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div><!-- End Modal Agendada-->
+
         </div>
     </div>
 </template>
@@ -588,6 +715,38 @@ export default {
         disparador(funcion, obj = null,) {
             this[funcion](obj);
         },
+
+        openModalCancelarCita() {
+            $("#modalCancelarCita").modal("show");
+        },
+
+        cancelarCita() {
+            const thisVue = this;
+            let obj = {
+                id: thisVue.agendarProspecto.id,
+                paciente_id: thisVue.infoPaciente.id
+            }
+            axios.post(thisVue.path_url + '/api/agendas/cancelarCita', obj)
+                .then((res) => {
+                    thisVue.verAgenda();
+                    this.$swal(
+                        'Cancelada',
+                        'La cita se cancelo de manera exitosa',
+                        'success'
+
+                    );
+                    $("#modalHoraAgendada").modal("hide");
+                    $("#modalHoraEspecial").modal("hide");
+                    $("#modalHoraEspecialEditada").modal("hide");
+                    $("#modalHoraAgendadaEditar").modal("hide");
+                    $("#modalCancelarCita").modal("hide");
+                    thisVue.agendarProspecto = {};
+                    thisVue.infoPaciente = {};
+
+                })
+                .catch((error) => {
+                });
+        },
         openModalEspecial() {
             $("#modalHorarioEspecial").modal("show");
         },
@@ -607,6 +766,7 @@ export default {
                     );
                     thisVue.verAgenda();
                     $("#modalHoraAgendada").modal("hide");
+                    $("#modalHoraEspecial").modal("hide");
                 })
                 .catch((error) => {
                 });
@@ -646,8 +806,18 @@ export default {
             thisVue.agendarProspecto = item;
             thisVue.agendarProspecto.hora = thisVue.agendarProspecto.hora.substring(0, 5);
             thisVue.infoPaciente = item.paciente;
-            thisVue.infoHorario = item;
-            $("#modalHoraEspecial").modal("show");
+            thisVue.infoPacienteHistorial = item;
+            axios.post(thisVue.path_url + '/api/expedientes/verificarExpediente', item)
+                .then((res) => {
+                    if (res.data.length != 0) {
+                        thisVue.infoExpediente = res.data[0];
+                        $("#modalHoraEspecialEditada").modal("show");
+                    } else {
+                        $("#modalHoraEspecial").modal("show");
+                    }
+                })
+                .catch((error) => {
+                });
         },
         horaApartada(item) {
             const thisVue = this;
