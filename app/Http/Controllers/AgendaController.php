@@ -18,6 +18,7 @@ use App\Mail\ConfirmarCitaProspecto;
 
 class AgendaController extends Controller
 {
+
     public function generarAgenda(Request $request)
     {
         $primerhora = '';
@@ -106,6 +107,172 @@ class AgendaController extends Controller
 
     }
 
+    public function generarAgendaId(Request $request)
+    {
+        $primerhora = '';
+        $segundahora = '';
+        $primerhora_vesp = '';
+        $segundahora_vesp = '';
+
+        $fecha = new DateTime(Carbon::today());
+        $semana = $fecha->format('W');
+        $a = $fecha->format('Y');
+        $sem = $semana + ($request['contador']);
+        $enero = mktime(1, 1, 1, 1, 1, $a);
+        $mos = (11 - date('w', $enero)) % 7 - 3;
+        $inicios = strtotime(($sem - 1) . ' weeks ' . $mos . ' days', $enero);
+        for ($x = 0; $x <= 6; $x++) {
+            $dias[] = date('d-m-Y', strtotime("+ $x day", $inicios));
+        }
+        $res = ($dias);
+        $horario = Horario::orderBy('dia', 'asc')
+            ->where('especialista_id', $request['id'])
+            ->where('estatus', 'Activo')
+            ->get();
+
+        if (empty($horario[0]) && empty($horario[1]) && empty($horario[2]) && empty($horario[3]) && empty($horario[4]) && empty($horario[5]) && empty($horario[6])) {
+            return 'vacio';
+        } else {
+            for ($j = 0; $j <= 6; $j++) {
+                $primerhora = $res[$j] . ' ' . $horario[$j]['inicio_mat'];
+                $segundahora = $res[$j] . ' ' . $horario[$j]['final_mat'];
+                $minutos = (strtotime($primerhora) - strtotime($segundahora)) / 60;
+                $minutos = abs($minutos);
+                $minutos = floor($minutos);
+
+                $numeroConsultas = $minutos / $horario[$j]['tiempo'];
+                $NuevaFecha = date('H:i', strtotime($primerhora));
+
+                if (floor($numeroConsultas) != 0) {
+                    for ($i = 0; $i < floor($numeroConsultas); $i++) {
+                        $fecha = new Agenda();
+                        $fecha->especialista_id = $request['id'];
+                        $fecha->prospecto_id = 0;
+                        $fecha->paciente_id = 0;
+                        $fecha->tiempo = $horario[$j]['tiempo'];
+                        $fecha->fecha = date("Y-m-d", strtotime($res[$j]));
+                        $fecha->hora = $NuevaFecha;
+                        $fecha->proceso = 'Disponible';
+                        $fecha->estatus = 'Activo';
+                        $fecha->created_by = Auth::user()->id;
+                        $fecha->updated_by = Auth::user()->id;
+                        $fecha->save();
+                        $NuevaFecha = strtotime('+' . $horario[$j]['tiempo'] . 'minute', strtotime($NuevaFecha));
+                        $NuevaFecha = date('H:i', $NuevaFecha);
+                    }
+                }
+            }
+            for ($j = 0; $j <= 6; $j++) {
+                $primerhora_vesp = $res[$j] . ' ' . $horario[$j]['inicio_vesp'];
+                $segundahora_vesp = $res[$j] . ' ' . $horario[$j]['final_vesp'];
+                $minutos = (strtotime($primerhora_vesp) - strtotime($segundahora_vesp)) / 60;
+                $minutos = abs($minutos);
+                $minutos = floor($minutos);
+
+                $numeroConsultas = $minutos / $horario[$j]['tiempo'];
+                $NuevaFecha = date('H:i', strtotime($primerhora_vesp));
+
+                if (floor($numeroConsultas) != 0) {
+                    for ($i = 0; $i < floor($numeroConsultas); $i++) {
+                        $fecha = new Agenda();
+                        $fecha->especialista_id = $request['id'];
+                        $fecha->prospecto_id = 0;
+                        $fecha->paciente_id = 0;
+                        $fecha->tiempo = $horario[$j]['tiempo'];
+                        $fecha->fecha = date("Y-m-d", strtotime($res[$j]));
+                        $fecha->hora = $NuevaFecha;
+                        $fecha->proceso = 'Disponible';
+                        $fecha->estatus = 'Activo';
+                        $fecha->created_by = Auth::user()->id;
+                        $fecha->updated_by = Auth::user()->id;
+                        $fecha->save();
+                        $NuevaFecha = strtotime('+' . $horario[$j]['tiempo'] . 'minute', strtotime($NuevaFecha));
+                        $NuevaFecha = date('H:i', $NuevaFecha);
+                    }
+                }
+            }
+        }
+    }
+
+    public function getEspecialistas(Request $request)
+    {
+        $especialista = User::where('estatus', 'Activo')
+            ->where('perfil_id', 2)
+            ->where('clinica_id', Auth::user()->clinica_id)
+            ->get();
+        return response()->json($especialista, 200);
+    }
+
+    public function verAgendaId(Request $request)
+    {
+        $fecha = new DateTime(Carbon::today());
+        $semana = $fecha->format('W');
+        $a = $fecha->format('Y');
+        $sem = $semana + ($request['contador']);
+        $enero = mktime(1, 1, 1, 1, 1, $a);
+        $mos = (11 - date('w', $enero)) % 7 - 3;
+        $inicios = strtotime(($sem - 1) . ' weeks ' . $mos . ' days', $enero);
+        for ($x = 0; $x <= 6; $x++) {
+            $dias[] = date('d-m-Y', strtotime("+ $x day", $inicios));
+        }
+        $res = ($dias);
+
+        $lunes = Agenda::orderBy('hora', 'asc')
+            ->where('especialista_id', $request['id'])
+            ->where('estatus', 'Activo')
+            ->where('fecha', date("Y-m-d", strtotime($res[0])))
+            ->with([
+                'prospecto' => function ($query) {
+                    $query->with('servicios');
+                }
+            ])
+            ->with('paciente')
+            ->get();
+        $martes = Agenda::orderBy('hora', 'asc')
+            ->where('especialista_id', $request['id'])
+            ->where('estatus', 'Activo')
+            ->where('fecha', date("Y-m-d", strtotime($res[1])))
+            ->with('prospecto')
+            ->with('paciente')
+            ->get();
+        $miercoles = Agenda::orderBy('hora', 'asc')
+            ->where('especialista_id', $request['id'])
+            ->where('estatus', 'Activo')
+            ->where('fecha', date("Y-m-d", strtotime($res[2])))
+            ->with('prospecto')
+            ->with('paciente')
+            ->get();
+        $jueves = Agenda::orderBy('hora', 'asc')
+            ->where('especialista_id', $request['id'])
+            ->where('estatus', 'Activo')
+            ->where('fecha', date("Y-m-d", strtotime($res[3])))
+            ->with('prospecto')
+            ->with('paciente')
+            ->get();
+        $viernes = Agenda::orderBy('hora', 'asc')
+            ->where('especialista_id', $request['id'])
+            ->where('estatus', 'Activo')
+            ->where('fecha', date("Y-m-d", strtotime($res[4])))
+            ->with('prospecto')
+            ->with('paciente')
+            ->get();
+        $sabado = Agenda::orderBy('hora', 'asc')
+            ->where('especialista_id', $request['id'])
+            ->where('estatus', 'Activo')
+            ->where('fecha', date("Y-m-d", strtotime($res[5])))
+            ->with('prospecto')
+            ->with('paciente')
+            ->get();
+        $domingo = Agenda::orderBy('hora', 'asc')
+            ->where('especialista_id', $request['id'])
+            ->where('estatus', 'Activo')
+            ->where('fecha', date("Y-m-d", strtotime($res[6])))
+            ->with('prospecto')
+            ->with('paciente')
+            ->get();
+        return response()->json([$lunes, $martes, $miercoles, $jueves, $viernes, $sabado, $domingo, $res], 200);
+    }
+
     public function verAgenda(Request $request)
     {
         $fecha = new DateTime(Carbon::today());
@@ -178,42 +345,42 @@ class AgendaController extends Controller
     }
     public function aceptarProspecto(Request $request)
     {
-        $prospecto = Prospecto::find($request['prospecto']['id']);
-        $prospecto->proceso = 'Aceptada';
-        $prospecto->save();
+        // $prospecto = Prospecto::find($request['prospecto']['id']);
+        // $prospecto->proceso = 'Aceptada';
+        // $prospecto->save();
 
-        $paciente = new Paciente;
-        $paciente->especialista_id = Auth::user()->id;
-        $paciente->nombre = $request['prospecto']['nombre'];
-        $paciente->correo = $request['prospecto']['correo'];
-        $paciente->celular = $request['prospecto']['celular'];
-        $paciente->sexo = $request['prospecto']['sexo'];
-        $paciente->estatus = 'Activo';
-        $paciente->save();
+        // $paciente = new Paciente;
+        // $paciente->especialista_id = Auth::user()->id;
+        // $paciente->nombre = $request['prospecto']['nombre'];
+        // $paciente->correo = $request['prospecto']['correo'];
+        // $paciente->celular = $request['prospecto']['celular'];
+        // $paciente->sexo = $request['prospecto']['sexo'];
+        // $paciente->estatus = 'Activo';
+        // $paciente->save();
 
-        $agendar = Agenda::find($request['id']);
-        $agendar->paciente_id = $paciente['id'];
-        $agendar->proceso = 'Agendada';
-        $agendar->save();
+        // $agendar = Agenda::find($request['id']);
+        // $agendar->paciente_id = $paciente['id'];
+        // $agendar->proceso = 'Agendada';
+        // $agendar->save();
 
-        $especialista = Especialista::where('user_id', Auth::user()->id)->get();
+        //$especialista = Especialista::where('user_id', Auth::user()->id)->get();
 
-        $pacienteInfo['nombre'] = $request['prospecto']['nombre'];
-        $pacienteInfo['especialista'] = $especialista[0]['titulo'] . ' ' . $especialista[0]['nombre']
-            . ' ' . $especialista[0]['apellido_pat'] . ' ' . $especialista[0]['apellido_mat'];
-        $pacienteInfo['fecha'] = $agendar['fecha'];
-        $pacienteInfo['hora'] = $agendar['hora'];
-        $pacienteInfo['modalidad'] = $prospecto['modalidad'];
-        $pacienteInfo['precio_consulta'] = $especialista[0]['precio_consulta'];
+        $pacienteInfo['nombre'] = 'Eduardo';
+        $pacienteInfo['especialista'] = 'isw' . ' ' . 'Juan'
+            . ' ' . 'rivas' . ' ' . 'rivas';
+        $pacienteInfo['fecha'] = '10/12/2025';
+        $pacienteInfo['hora'] = '10:00';
+        $pacienteInfo['modalidad'] = 'Presencial';
+        $pacienteInfo['precio_consulta'] = '500';
 
 
         // $files = [public_path('principal/assets/img/logo.png')];
         // Mail::to('eduardo15686@gmail.com')->send(new ConfirmarCitaProspecto($especialista));
         Mail::send('mails.aceptar_cita', $pacienteInfo, function ($message) use ($request) {
-            $message->to($request['prospecto']['correo'])
-                ->subject('Cita Confirmada "Salud Integral"');
+            $message->to('eduardo15686@gmail.com')
+                ->subject('Cita Confirmada "Agenda2"');
         });
-        return $especialista;
+        //return $especialista;
     }
 
     public function rechazarProspecto(Request $request)
@@ -231,8 +398,42 @@ class AgendaController extends Controller
 
         Mail::send('mails.rechazar_cita', $paciente, function ($message) use ($request) {
             $message->to($request['prospecto']['correo'])
-                ->subject('Cita En Espera "Salud Integral"');
+                ->subject('Cita En Espera "Agenda2"');
         });
+
+        // $params = array(
+        //     'token' => 'eoj0b9508hiyd5te',
+        //     'to' => '+526181839836',
+        //     'body' => 'La API de WhatsApp en UltraMsg.com funciona bien'
+        // );
+        // $curl = curl_init();
+        // curl_setopt_array($curl, array(
+        //     CURLOPT_URL => "https://api.ultramsg.com/instance57120/messages/chat",
+        //     CURLOPT_RETURNTRANSFER => true,
+        //     CURLOPT_ENCODING => "",
+        //     CURLOPT_MAXREDIRS => 10,
+        //     CURLOPT_TIMEOUT => 30,
+        //     CURLOPT_SSL_VERIFYHOST => 0,
+        //     CURLOPT_SSL_VERIFYPEER => 0,
+        //     CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        //     CURLOPT_CUSTOMREQUEST => "POST",
+        //     CURLOPT_POSTFIELDS => http_build_query($params),
+        //     CURLOPT_HTTPHEADER => array(
+        //         "content-type: application/x-www-form-urlencoded"
+        //     ),
+        // )
+        // );
+
+        // $response = curl_exec($curl);
+        // $err = curl_error($curl);
+
+        // curl_close($curl);
+
+        // if ($err) {
+        //     echo "cURL Error #:" . $err;
+        // } else {
+        //     echo $response;
+        // }
     }
 
     public function inhabilitarHora(Request $request)
@@ -258,11 +459,21 @@ class AgendaController extends Controller
         return response()->json($paciente, 200);
     }
 
+    public function getPacientesId($id)
+    {
+        $paciente = Paciente::where('especialista_id', $id)
+            ->where('estatus', 'Activo')
+            ->get();
+
+        return response()->json($paciente, 200);
+    }
+
     public function agendarPaciente(Request $request)
     {
         $agendar = Agenda::find($request['id']);
         $agendar->paciente_id = $request['paciente_id'];
         $agendar->proceso = 'Agendada';
+        $agendar->recordatorio = 'No Enviado';
         $agendar->save();
 
         // return response()->json($paciente, 200);
@@ -289,6 +500,7 @@ class AgendaController extends Controller
         $fecha->fecha = $request['fecha'];
         $fecha->hora = $request['hora'];
         $fecha->proceso = 'Especial';
+        $fecha->recordatorio = 'No Enviado';
         $fecha->estatus = 'Activo';
         $fecha->created_by = Auth::user()->id;
         $fecha->updated_by = Auth::user()->id;
@@ -302,5 +514,38 @@ class AgendaController extends Controller
         $agendar->paciente_id = 0;
         $agendar->proceso = 'Disponible';
         $agendar->save();
+
+
+    }
+    public function eliminarAgenda(Request $request)
+    {
+        foreach ($request['lunes'] as $key => $lunes) {
+            Agenda::find($lunes['id'])
+                ->delete();
+        }
+        foreach ($request['martes'] as $key => $lunes) {
+            Agenda::find($lunes['id'])
+                ->delete();
+        }
+        foreach ($request['miercoles'] as $key => $lunes) {
+            Agenda::find($lunes['id'])
+                ->delete();
+        }
+        foreach ($request['jueves'] as $key => $lunes) {
+            Agenda::find($lunes['id'])
+                ->delete();
+        }
+        foreach ($request['viernes'] as $key => $lunes) {
+            Agenda::find($lunes['id'])
+                ->delete();
+        }
+        foreach ($request['sabado'] as $key => $lunes) {
+            Agenda::find($lunes['id'])
+                ->delete();
+        }
+        foreach ($request['domingo'] as $key => $lunes) {
+            Agenda::find($lunes['id'])
+                ->delete();
+        }
     }
 }

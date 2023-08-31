@@ -14,6 +14,7 @@ use App\Http\Controllers\PerfilController;
 use App\Http\Controllers\AgendaController;
 use App\Http\Controllers\HorarioController;
 use App\Http\Controllers\PacienteController;
+use App\Http\Controllers\ArchivoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -50,15 +51,24 @@ Route::middleware('auth:sanctum')->prefix('/usuarios')->group(function () {
 
 Route::middleware('auth:sanctum')->prefix('/agendas')->group(function () {
     Route::post('/generarAgenda', [AgendaController::class, 'generarAgenda']);
+    Route::post('/eliminarAgenda', [AgendaController::class, 'eliminarAgenda']);
     Route::post('/verAgenda', [AgendaController::class, 'verAgenda']);
+    Route::get('/getPacientes', [AgendaController::class, 'getPacientes']);
+
     Route::post('/aceptarProspecto', [AgendaController::class, 'aceptarProspecto']);
     Route::post('/rechazarProspecto', [AgendaController::class, 'rechazarProspecto']);
     Route::post('/inhabilitarHora', [AgendaController::class, 'inhabilitarHora']);
-    Route::get('/getPacientes', [AgendaController::class, 'getPacientes']);
     Route::post('/agendarPaciente', [AgendaController::class, 'agendarPaciente']);
     Route::post('/habilitarHora', [AgendaController::class, 'habilitarHora']);
     Route::post('/agendarHoraEspecial', [AgendaController::class, 'agendarHoraEspecial']);
     Route::post('/cancelarCita', [AgendaController::class, 'cancelarCita']);
+
+    //agendas
+    Route::get('/getEspecialistas', [AgendaController::class, 'getEspecialistas']);
+    Route::post('/verAgendaId', [AgendaController::class, 'verAgendaId']);
+    Route::post('/generarAgendaId', [AgendaController::class, 'generarAgendaId']);
+    
+    Route::post('/whatsapp', [AgendaController::class, 'whatsapp']);
 });
 
 Route::middleware('auth:sanctum')->prefix('/horario')->group(function () {
@@ -79,6 +89,12 @@ Route::middleware('auth:sanctum')->prefix('/pacientes')->group(function () {
     Route::post('/eliminarPaciente', [PacienteController::class, 'eliminarPaciente']);
 
 });
+
+Route::middleware('auth:sanctum')->prefix('/archivos')->group(function () {
+    Route::post('/updateArchivo', [ArchivoController::class, 'updateArchivo']);
+    Route::post('/getArchivos', [ArchivoController::class, 'getArchivos']);
+});
+
 
 
 Route::middleware('auth:sanctum')->prefix('/servicios')->group(function () {

@@ -15,6 +15,7 @@
                 <div class="col-md-5" style="text-align: start;">
                     <!-- <button type="button" class="btn btn-primary" style="margin: 5px;" @click="openModalEspecial()">Agregar
                         Horario Especial</button> -->
+                    <!-- <button type="button" class="btn btn-primary" style="margin: 5px;" @click="whatsapp()">WhatsApp</button> -->
                 </div>
                 <div class="col-md-7">
                     <button type="button" class="btn btn-success" style="margin: 5px;" disabled>Disponible</button>
@@ -34,22 +35,26 @@
                 <div v-else class="col-md-7"></div>
             </div> -->
             <br>
-            <div class="row">
+            <!-- <div class="row">
                 <div class="col-md-2"></div>
                 <div class="col-md-1">
-                    <!-- <button class='btn btn-outline-dark' @click="disminuirContador()"><i
-                            class="ti ti-arrow-left"></i></button> -->
+                    <button class='btn btn-outline-dark' @click="disminuirContador()"><i
+                            class="ti ti-arrow-left"></i></button>
                 </div>
                 <div v-if="btngenerarAgenda == true" class="col-md-7" style="text-align: center;">
-                    <!-- <button type="button" class="btn btn-success" style="margin: 5px;" @click="generarAgenda()">Generar
-                        Agenda</button> -->
+                    <button type="button" class="btn btn-success" style="margin: 5px;" @click="generarAgenda()">Generar
+                        Agenda</button>
                 </div>
-                <div v-else class="col-md-7"></div>
+                <div v-else class="col-md-7" style="text-align: center;">
+                    <button type="button" class="btn btn-danger" style="margin: 5px;"
+                        @click="modalEliminarAgenda()">Eliminar
+                        Agenda</button>
+                </div>
                 <div class="col-md-1">
-                    <!-- <button class='btn btn-outline-dark' @click="aumentarContador()"><i
-                            class="ti ti-arrow-right"></i></button> -->
+                    <button class='btn btn-outline-dark' @click="aumentarContador()"><i
+                            class="ti ti-arrow-right"></i></button>
                 </div>
-            </div>
+            </div> -->
 
             <div v-if="btngenerarAgenda == false" class="row">
                 <div class="col-md-3"></div>
@@ -332,8 +337,8 @@
                 </div>
             </div><!-- End Modal Disponible-->
 
-            <!-- Modal Agendada-->
-            <div class="modal fade" id="modalHoraAgendada" tabindex="-1" aria-labelledby="modalHoraAgendadaLabel"
+             <!-- Modal Agendada-->
+             <div class="modal fade modal-lg" id="modalHoraAgendada" tabindex="-1" aria-labelledby="modalHoraAgendadaLabel"
                 aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -372,7 +377,43 @@
                                         v-model="infoHistorial.observaciones"></textarea>
                                 </div>
                             </div>
-
+                            <div class="col-md-12" style="text-align: center;">
+                                <label for="formFileSm" class="form-label">Agregar Imagenes/Documentos</label>
+                                <div v-for="(item, index) in listaCondiones" :key="index"
+                                    style="display: flex; padding-bottom: 10px;">
+                                    <div class="col-md-5" style="display: flex;margin-right: 10px;">
+                                        <input class="form-control form-control" id="formFileSm" type="file"
+                                            @change="seleccionarArchivo" />
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-floating">
+                                            <input type="email" class="form-control" id="floatingInput" placeholder="Nombre"
+                                                style="height: 43px;" v-model="nombreArchivo">
+                                            <label for="floatingInput">Nombre del Archivo</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-1" v-if="(listaCondiones.length - 1) == index">
+                                        <div class="form-floating form-floating"
+                                            style="display: flex;justify-content: center;flex-flow: column;align-items: center;">
+                                            <button title="Agregar fila" @click="AlterListCondicionTab('+')"
+                                                style="padding-top: 0px; padding-bottom: 0px;width: 70%;border: 0;    margin-bottom: 5px;"
+                                                type="button" class="btn btn-success  btn-sm">
+                                                <i class="fas fa-plus-circle"></i>
+                                            </button>
+                                            <button title="Borrar fila" @click="AlterListCondicionTab('-')"
+                                                style="padding-top: 0px; padding-bottom: 0px;width: 70%;border: 0;"
+                                                type="button" class="btn btn-danger  btn-sm">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <button type="button" class="btn btn-primary" :id="index"
+                                            @click="guardarArchivo(index)">Guardar
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <button type="button" class="btn btn-success" @click="guardarHistorialClinico()">Guardar
                             Información</button>
@@ -423,8 +464,12 @@
                             </div>
 
                         </div>
-                        <button type="button" class="btn btn-success" @click="editarExpediente()">Editar
-                            Expediente</button>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-success" @click="editarExpediente()">Editar
+                                Expediente</button>
+                            <!-- <button type="button" class="btn btn-danger" @click="openModalCancelarCita()">Cancelar
+                                Cita</button> -->
+                        </div>
                     </div>
                 </div>
             </div><!-- End Modal Agendada EDITAR-->
@@ -454,11 +499,92 @@
                                 <!-- <p><b>Nombre del Paciente:</b> {{ infoPaciente.nombre }}</p> -->
                                 <p><b>Tiempo de Consulta:</b> {{ infoHorario.tiempo }} minutos</p>
                             </div>
+                            <br>
+                            <div style="text-align: center;">
+                                <h5 style="font-size: large;">Historial Clínico</h5>
+                            </div>
+                            <div class="row">
+                                <div class="mb-3">
+                                    <label for="exampleFormControlInput1" class="form-label">Tareas Asignadas</label>
+                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="2"
+                                        placeholder="Tareas asignadas al paciente esta sesión"
+                                        v-model="infoHistorial.tareas"></textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="exampleFormControlTextarea1" class="form-label">Observaciones</label>
+                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
+                                        placeholder="Observaciones de la sesión"
+                                        v-model="infoHistorial.observaciones"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-success" @click="guardarHistorialClinico()">Guardar
+                                Información</button>
+                            <button type="button" class="btn btn-danger" @click="openModalCancelarCita()">Cancelar
+                                Cita</button>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- End Modal Especial-->
+
+            <!-- Modal Especial Editar-->
+            <div class="modal fade" id="modalHoraEspecialEditada" tabindex="-1"
+                aria-labelledby="modalHoraEspecialEditadaLabel" aria-hidden="true" data-bs-backdrop="static"
+                data-bs-keyboard="false">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header" style="background-color: #dec7e9;">
+                            <h4 class="modal-title" id="modalHoraEspecialEditada">Horario Especial</h4>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row" style="text-align: center; margin-bottom: 20px;">
+                                <h4><b>{{ infoPaciente.nombre }}</b></h4>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p><b>Fecha:</b> {{ agendarProspecto.fecha }}</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p><b>Hora:</b> {{ agendarProspecto.hora }}</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <!-- <p><b>Nombre del Paciente:</b> {{ infoPaciente.nombre }}</p> -->
+                                <p><b>Tiempo de Consulta:</b> {{ infoHorario.tiempo }} minutos</p>
+                            </div>
+                            <br>
+                            <div style="text-align: center;">
+                                <h5 style="font-size: large;">Historial Clínico</h5>
+                            </div>
+                            <div class="row">
+                                <div class="mb-3">
+                                    <label for="exampleFormControlInput1" class="form-label">Tareas Asignadas</label>
+                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="2"
+                                        placeholder="Tareas asignadas al paciente esta sesión"
+                                        v-model="infoExpediente.tareas"></textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="exampleFormControlTextarea1" class="form-label">Observaciones</label>
+                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
+                                        placeholder="Observaciones de la sesión"
+                                        v-model="infoExpediente.observaciones"></textarea>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-success" @click="editarExpediente()">Editar
+                                Expediente</button>
+                            <!-- <button type="button" class="btn btn-danger" @click="openModalCancelarCita()">Cancelar
+                                Cita</button> -->
                         </div>
 
                     </div>
                 </div>
-            </div><!-- End Modal Especial-->
+            </div><!-- End Modal Especial Editar-->
+
 
             <!-- Modal Inhabilitada-->
             <div class="modal fade" id="modalHoraInhabilitada" tabindex="-1" aria-labelledby="modalHoraInhabilitadaLabel"
@@ -539,6 +665,68 @@
                     </div>
                 </div>
             </div><!--End Modal Horario Especial-->
+
+            <!-- Modal Agendada-->
+            <div class="modal fade" id="modalCancelarCita" tabindex="-1" aria-labelledby="modalCancelarCitaLabel"
+                aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header" style="background-color: #fcb29f;">
+                            <h4 class="modal-title" id="modalCancelarCita">Cancelar Cita</h4>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row" style="text-align: center; margin-bottom: 20px;">
+                                <h4><b>{{ infoPaciente.nombre }}</b></h4>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p><b>Fecha:</b> {{ agendarProspecto.fecha }}</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p><b>Hora:</b> {{ agendarProspecto.hora }}</p>
+                                </div>
+                            </div>
+
+                            <br>
+
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-success">Cerrar</button>
+                            <button type="button" class="btn btn-danger" @click="cancelarCita()">Cancelar
+                                Cita</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div><!-- End Modal Agendada-->
+
+            <!-- Modal Eliminar-->
+            <div class="modal fade" id="modalEliminarAgenda" tabindex="-1" aria-labelledby="modalEliminarAgendaLabel"
+                aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header" style="background-color: #fcb29f;">
+                            <h4 class="modal-title" id="modalEliminarAgenda">Eliminar agenda de la semana</h4>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p>¿Seguro que desea eliminar la agenda de esta semana?<br>(<b>{{ mesInicialEstablecido }}</b>
+                                al <b>{{ mesFinalEstablecido }}</b>)</p>
+                            <br>
+                            <p style="font-size: small;">Al aceptar se eliminarán las citas que se hayan cargado
+                            </p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-success">Cerrar</button>
+                            <button type="button" class="btn btn-danger" @click="eliminarAgenda()">Eliminar
+                                Agenda</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div><!-- End Modal Eliminar-->
         </div>
     </div>
 </template>
@@ -581,12 +769,96 @@ export default {
             horaConsulta: '',
             nombreEspecialidad: '',
             infoExpediente: [],
+            listaCondiones: [
+                {
+                    idCondicion: '',
+                },
+            ],
+            product: {
+                imagen: "",
+            },
+            nombreArchivo: '',
         }
     },
     methods: {
 
         disparador(funcion, obj = null,) {
             this[funcion](obj);
+        },
+
+        seleccionarArchivo(e) {
+            const thisVue = this;
+            thisVue.product = {
+                imagen: "",
+            };
+            let file = e.target.files[0];
+            thisVue.product.imagen = file;
+            thisVue.nombreArchivo = thisVue.product.imagen.name;
+        },
+
+
+        async guardarArchivo(index) {
+            const thisVue = this;
+            let formData = new FormData();
+            formData.append("imagen", thisVue.product.imagen);
+            formData.append("paciente_id", thisVue.infoPacienteHistorial.paciente.id);
+            formData.append("agenda_id", thisVue.infoPacienteHistorial.id);
+            formData.append("nombre", thisVue.nombreArchivo);
+            formData.append("fecha", thisVue.infoPacienteHistorial.fecha);
+            if (thisVue.product.imagen == '') {
+                this.$swal(
+                    'Archvios',
+                    'Asegurate de seleccionar un archivo antes de guardar',
+                    'warning'
+
+                );
+            } else {
+                document.getElementById(index).disabled = true;
+            }
+            await axios
+                .post(
+                    thisVue.path_url + "/api/archivos/updateArchivo",
+                    formData
+                ).then((res) => {
+
+                }).catch((error) => { });
+        },
+
+
+
+        AlterListCondicionTab(sign) {
+            if (sign == '+') {
+                this.listaCondiones.push({ idCondicion: '' });
+            } else if (sign == '-') {
+                (this.listaCondiones.length > 1) && (this.listaCondiones.pop());
+            }
+        },
+
+        cancelarCita() {
+            const thisVue = this;
+            let obj = {
+                id: thisVue.agendarProspecto.id,
+                paciente_id: thisVue.infoPaciente.id
+            }
+            axios.post(thisVue.path_url + '/api/agendas/cancelarCita', obj)
+                .then((res) => {
+                    thisVue.verAgenda();
+                    this.$swal(
+                        'Cancelada',
+                        'La cita se cancelo de manera exitosa',
+                        'success'
+                    );
+                    $("#modalHoraAgendada").modal("hide");
+                    $("#modalHoraEspecial").modal("hide");
+                    $("#modalHoraEspecialEditada").modal("hide");
+                    $("#modalHoraAgendadaEditar").modal("hide");
+                    $("#modalCancelarCita").modal("hide");
+                    thisVue.agendarProspecto = {};
+                    thisVue.infoPaciente = {};
+
+                })
+                .catch((error) => {
+                });
         },
         openModalEspecial() {
             $("#modalHorarioEspecial").modal("show");
@@ -607,6 +879,7 @@ export default {
                     );
                     thisVue.verAgenda();
                     $("#modalHoraAgendada").modal("hide");
+                    $("#modalHoraEspecial").modal("hide");
                 })
                 .catch((error) => {
                 });
@@ -641,11 +914,50 @@ export default {
                 .catch((error) => {
                 });
         },
+
+        async guardarArchivo(index) {
+            const thisVue = this;
+            let formData = new FormData();
+            formData.append("imagen", thisVue.product.imagen);
+            formData.append("paciente_id", thisVue.infoPacienteHistorial.paciente.id);
+            formData.append("agenda_id", thisVue.infoPacienteHistorial.id);
+            formData.append("nombre", thisVue.nombreArchivo);
+            formData.append("fecha", thisVue.infoPacienteHistorial.fecha);
+            if (thisVue.product.imagen == '') {
+                this.$swal(
+                    'Archvios',
+                    'Asegurate de seleccionar un archivo antes de guardar',
+                    'warning'
+
+                );
+            } else {
+                document.getElementById(index).disabled = true;
+            }
+            await axios
+                .post(
+                    thisVue.path_url + "/api/archivos/updateArchivo",
+                    formData
+                ).then((res) => {
+
+                }).catch((error) => { });
+        },
         horaEspecial(item) {
             const thisVue = this;
+            thisVue.agendarProspecto = item;
+            thisVue.agendarProspecto.hora = thisVue.agendarProspecto.hora.substring(0, 5);
             thisVue.infoPaciente = item.paciente;
-            thisVue.infoHorario = item;
-            $("#modalHoraEspecial").modal("show");
+            thisVue.infoPacienteHistorial = item;
+            axios.post(thisVue.path_url + '/api/expedientes/verificarExpediente', item)
+                .then((res) => {
+                    if (res.data.length != 0) {
+                        thisVue.infoExpediente = res.data[0];
+                        $("#modalHoraEspecialEditada").modal("show");
+                    } else {
+                        $("#modalHoraEspecial").modal("show");
+                    }
+                })
+                .catch((error) => {
+                });
         },
         horaApartada(item) {
             const thisVue = this;
@@ -779,6 +1091,36 @@ export default {
                 });
 
         },
+        modalEliminarAgenda() {
+            $("#modalEliminarAgenda").modal("show");
+
+        },
+        eliminarAgenda() {
+            const thisVue = this;
+            let obj = {
+                lunes: thisVue.recorrerLunes,
+                martes: thisVue.recorrerMartes,
+                miercoles: thisVue.recorrerMiercoles,
+                jueves: thisVue.recorrerJueves,
+                viernes: thisVue.recorrerViernes,
+                sabado: thisVue.recorrerSabado,
+                domingo: thisVue.recorrerDomingo,
+            };
+            axios.post(thisVue.path_url + '/api/agendas/eliminarAgenda', obj)
+                .then((res) => {
+                    this.$swal(
+                        'Agenda',
+                        'Se elimino la Agenda de la semana',
+                        'success'
+
+                    );
+                    thisVue.verAgenda();
+                    $("#modalEliminarAgenda").modal("hide");
+                })
+                .catch((error) => {
+
+                });
+        },
         generarAgenda() {
             const thisVue = this;
             let obj = {
@@ -884,6 +1226,15 @@ export default {
 
                 });
         },
+        // whatsapp() {
+        //     const thisVue = this;
+        //     axios.post(thisVue.path_url + '/api/agendas/whatsapp', thisVue.infoPaciente)
+        //         .then((res) => {
+        //             thisVue.horas = res.data;
+        //         })
+        //         .catch((error) => {
+        //         });
+        // }
     },
     async mounted() {
         let date = new Date();
