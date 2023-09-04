@@ -33,10 +33,29 @@ class PacienteController extends Controller
     {
         $paciente = Paciente::where('especialista_id', Auth::user()->id)
             ->where('estatus', 'Activo')
-            ->get();
+            ->paginate(10);
 
+        $no_paciente = Paciente::where('especialista_id', Auth::user()->id)
+            ->where('estatus', 'Activo')
+            ->count();
 
-        return response()->json($paciente, 200);
+        return response()->json([$paciente, $no_paciente], 200);
+    }
+
+    public function getPacientesBusqueda(Request $request)
+    {
+        $data = $request->all();
+        $busqueda = $data['filtro'];
+        $pacientes = Paciente::where('estatus', 'Activo')
+            ->where(function ($query) use ($busqueda) {
+                $query->where('pacientes.nombre', 'like', "%$busqueda%");
+            })->paginate(10);
+
+        $no_pacientes = Paciente::where('estatus', 'Activo')
+            ->where(function ($query) use ($busqueda) {
+                $query->where('pacientes.nombre', 'like', "%$busqueda%");
+            })->count();
+            return response()->json([$pacientes, $no_pacientes], 200);
     }
 
     public function getPaciente($id)

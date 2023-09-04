@@ -7,17 +7,22 @@
                 </div>
             </div>
             <div class="row row_margin">
+                <div class="col-auto me-auto col-md-4">
+                    <input class="form-control" v-model="busquedaPaciente" type="search" placeholder="Buscar por Nombre"
+                        aria-label="Search" @input="getPacientes">
+                </div>
+            </div>
+            <div class="row row_margin">
                 <div class="col-md-12">
                     <div v-for="icon in opcionesboton" class="col-auto">
-                        <button type="button" class="btn btn-success float-end mb-2 ms-2"
+                        <button type="button" class="btn btn-success float-end mb-2 ms-2" style="background-color: #00bef5;"
                             @click.capture="disparador(icon.function)">
                             <i :class="icon.class + ' pointer me-2'" aria-hidden="true"></i>{{ icon.text_html }}
                         </button>
                     </div>
                 </div>
             </div>
-            <div class="row">
-
+            <div class="table-responsive">
                 <table class="table table-striped col-md-12">
                     <thead>
                         <tr>
@@ -29,7 +34,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="(item, index) in pacientes">
+                        <tr v-for="(item, index) in pacientes.data">
                             <th scope="row">{{ index + 1 }}</th>
                             <td>{{ item.nombre }}</td>
                             <td>{{ item.celular }}</td>
@@ -42,6 +47,7 @@
                     </tbody>
                 </table>
             </div>
+            <pagination v-model="page" :records="no_pacientes" :per-page="10" @paginate="getPacientes" />
 
             <!-- Modal Nuevo Paciente-->
             <div class="modal fade" id="modalNuevoPaciente" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
@@ -92,6 +98,20 @@
                                         <option value="Masculino">Masculino</option>
                                         <option value="Femenino">Femenino</option>
                                         <option value="Otro">Otro</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-md-12" style="text-align: center;">
+                                    <label>¿Desea agregar recordatorios para el paciente?</label>
+                                    <select class="form-select" aria-label="Default select example"
+                                        v-model="guardarInfoPaciente.recordatorio">
+                                        <option value="No">No</option>
+                                        <option value="Por la manana-WhatsApp">Por la mañana-WhatsApp</option>
+                                        <option value="Por la manana-Correo">Por la mañana-Correo</option>
+                                        <option value="Una hora antes-WhatsApp">Una hora antes-WhatsApp</option>
+                                        <option value="Una hora antes-Correo">Una hora antes-Correo</option>
                                     </select>
                                 </div>
                             </div>
@@ -154,6 +174,20 @@
                                         <option value="Masculino">Masculino</option>
                                         <option value="Femenino">Femenino</option>
                                         <option value="Otro">Otro</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-md-12" style="text-align: center;">
+                                    <label>¿Desea agregar recordatorios para el paciente?</label>
+                                    <select class="form-select" aria-label="Default select example"
+                                        v-model="infoPaciente.recordatorio">
+                                        <option value="No">No</option>
+                                        <option value="Por la manana-WhatsApp">Por la mañana - WhatsApp</option>
+                                        <option value="Por la manana-Correo">Por la mañana - Correo</option>
+                                        <option value="Una hora antes-WhatsApp">Una hora antes - WhatsApp</option>
+                                        <option value="Una hora antes-Correo">Una hora antes - Correo</option>
                                     </select>
                                 </div>
                             </div>
@@ -250,12 +284,23 @@
                                     <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2"
                                         style="height: 100px" v-model="observaciones.tareas" disabled></textarea>
                                 </div>
-                                <p>{{ }}</p>
                             </div>
                             <div>
                                 <h5>Observaciones</h5>
                                 <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2"
                                     style="height: 100px" v-model="observaciones.observaciones" disabled></textarea>
+                            </div>
+                            <br>
+                            <div class="row" v-for="(item, index) in archivos" :key="index">
+                                <div class="col-md-4">
+                                    <h5>{{ item.nombre }}:</h5>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <a :href="'../storage/' + item.ruta.substring(7)" target="_blank"
+                                        class="btn btn-success btn-sm  w-100 mt-1"><i class="fas fa-eye me-2"></i>Ver
+                                        Archivo</a>
+                                </div>
                             </div>
                         </div>
                         <!-- <button type="button" class="btn btn-danger" @click="eliminarPaciente()">Cerrar</button> -->
@@ -273,7 +318,9 @@
 </template>
 
 <script>
+import Pagination from 'v-pagination-3';
 export default {
+
     props: ['opciones', 'opcionesboton'],
 
     data() {
@@ -283,11 +330,14 @@ export default {
 
             guardarInfoPaciente: {},
             edad: [],
-            pacientes: [],
+            pacientes: {},
             infoPaciente: {},
             expedientes: [],
             observaciones: {},
-
+            archivos: {},
+            page: 1,
+            no_pacientes: 0,
+            busquedaPaciente: ''
         }
 
     },
@@ -295,15 +345,29 @@ export default {
         disparador(funcion, obj = null,) {
             this[funcion](obj);
         },
-
+        limpiarBusqueda() {
+            this.busquedaPaciente = '';
+            this.getPacientes;
+        },
         openModalPacienteNuevo() {
             $("#modalNuevoPaciente").modal("show");
         },
 
-        infoExpediente(item) {
-            console.log(item);
+        async infoExpediente(item) {
+            const thisVue = this;
             this.observaciones.tareas = item.tareas;
             this.observaciones.observaciones = item.observaciones;
+
+            await axios
+                .post(
+                    thisVue.path_url + "/api/archivos/getArchivos", item
+                )
+                .then((res) => {
+                    thisVue.archivos = res.data;
+                })
+
+                .catch((error) => { });
+
             $("#modalInfoExpediente").modal("show");
 
         },
@@ -334,7 +398,6 @@ export default {
             axios.get(thisVue.path_url + '/api/expedientes/getExpedientes/' + item.id)
                 .then((res) => {
                     thisVue.expedientes = res.data;
-                    console.log(thisVue.expedientes);
                 })
 
                 .catch((error) => {
@@ -350,17 +413,28 @@ export default {
         },
         async getPacientes() {
             const thisVue = this;
-            let llenarOptions = [];
-            await axios.get(thisVue.path_url + `/api/pacientes/getPacientes`)
-                .then(res => {
-                    thisVue.pacientes = res.data;
-                })
-                .catch(error => {
-                    this.errors = JSON.parse(
-                        JSON.stringify(error.response.data.errors)
-                    );
-                    console.log(this.errors);
-                });
+            if (thisVue.busquedaPaciente == '') {
+                await axios.get(thisVue.path_url + `/api/pacientes/getPacientes?page=${this.page}`)
+                    .then(res => {
+                        thisVue.pacientes = res.data[0];
+                        thisVue.no_pacientes = res.data[1];
+                    })
+                    .catch(error => {
+                        this.errors = JSON.parse(
+                            JSON.stringify(error.response.data.errors)
+                        );
+                    });
+            } else {
+                await axios.post(thisVue.path_url + '/api/pacientes/getPacientesBusqueda?page=' + this.page, { 'filtro': thisVue.busquedaPaciente })
+                    .then(res => {
+                        thisVue.pacientes = res.data[0];
+                        thisVue.no_pacientes = res.data[1];
+                    })
+                    .catch(e => {
+                        thisVue.errors.push(e)
+                    });
+            }
+
         },
         async guardarPaciente() {
             const thisVue = this;
@@ -384,7 +458,6 @@ export default {
         },
         async editarPaciente() {
             const thisVue = this;
-            console.log(thisVue.infoPaciente);
             await axios
                 .post(
                     thisVue.path_url + "/api/pacientes/editarPaciente",
@@ -407,7 +480,6 @@ export default {
 
         async eliminarPaciente() {
             const thisVue = this;
-            console.log(thisVue.infoPaciente);
             await axios
                 .post(
                     thisVue.path_url + "/api/pacientes/eliminarPaciente",

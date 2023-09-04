@@ -337,8 +337,8 @@
                 </div>
             </div><!-- End Modal Disponible-->
 
-             <!-- Modal Agendada-->
-             <div class="modal fade modal-lg" id="modalHoraAgendada" tabindex="-1" aria-labelledby="modalHoraAgendadaLabel"
+            <!-- Modal Agendada-->
+            <div class="modal fade modal-lg" id="modalHoraAgendada" tabindex="-1" aria-labelledby="modalHoraAgendadaLabel"
                 aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -415,9 +415,15 @@
                                 </div>
                             </div>
                         </div>
-                        <button type="button" class="btn btn-success" @click="guardarHistorialClinico()">Guardar
-                            Información</button>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-success" @click="guardarHistorialClinico()">Guardar
+                                Información</button>
+                            <button type="button" class="btn btn-danger" @click="openModalCancelarCita()">Cancelar
+                                Cita</button>
+                        </div>
+
                     </div>
+
                 </div>
             </div><!-- End Modal Agendada-->
 
@@ -475,7 +481,7 @@
             </div><!-- End Modal Agendada EDITAR-->
 
             <!-- Modal Especial-->
-            <div class="modal fade" id="modalHoraEspecial" tabindex="-1" aria-labelledby="modalHoraEspecialLabel"
+            <div class="modal fade modal-lg" id="modalHoraEspecial" tabindex="-1" aria-labelledby="modalHoraEspecialLabel"
                 aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -515,6 +521,43 @@
                                     <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
                                         placeholder="Observaciones de la sesión"
                                         v-model="infoHistorial.observaciones"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-12" style="text-align: center;">
+                                <label for="formFileSm" class="form-label">Agregar Imagenes/Documentos</label>
+                                <div v-for="(item, index) in listaCondiones" :key="index"
+                                    style="display: flex; padding-bottom: 10px;">
+                                    <div class="col-md-5" style="display: flex;margin-right: 10px;">
+                                        <input class="form-control form-control" id="formFileSm" type="file"
+                                            @change="seleccionarArchivo" />
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-floating">
+                                            <input type="email" class="form-control" id="floatingInput" placeholder="Nombre"
+                                                style="height: 43px;" v-model="nombreArchivo">
+                                            <label for="floatingInput">Nombre del Archivo</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-1" v-if="(listaCondiones.length - 1) == index">
+                                        <div class="form-floating form-floating"
+                                            style="display: flex;justify-content: center;flex-flow: column;align-items: center;">
+                                            <button title="Agregar fila" @click="AlterListCondicionTab('+')"
+                                                style="padding-top: 0px; padding-bottom: 0px;width: 70%;border: 0;    margin-bottom: 5px;"
+                                                type="button" class="btn btn-success  btn-sm">
+                                                <i class="fas fa-plus-circle"></i>
+                                            </button>
+                                            <button title="Borrar fila" @click="AlterListCondicionTab('-')"
+                                                style="padding-top: 0px; padding-bottom: 0px;width: 70%;border: 0;"
+                                                type="button" class="btn btn-danger  btn-sm">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <button type="button" class="btn btn-primary" :id="index"
+                                            @click="guardarArchivo(index)">Guardar
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -727,6 +770,41 @@
                     </div>
                 </div>
             </div><!-- End Modal Eliminar-->
+
+            <div class="modal fade" id="modalCancelarCita" tabindex="-1" aria-labelledby="modalCancelarCitaLabel"
+                aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header" style="background-color: #fcb29f;">
+                            <h4 class="modal-title" id="modalCancelarCita">Cancelar Cita</h4>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row" style="text-align: center; margin-bottom: 20px;">
+                                <h4><b>{{ infoPaciente.nombre }}</b></h4>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p><b>Fecha:</b> {{ agendarProspecto.fecha }}</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p><b>Hora:</b> {{ agendarProspecto.hora }}</p>
+                                </div>
+                            </div>
+
+                            <br>
+
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-success">Cerrar</button>
+                            <button type="button" class="btn btn-danger" @click="cancelarCita()">Cancelar
+                                Cita</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div><!-- End Modal Agendada-->
         </div>
     </div>
 </template>
@@ -796,6 +874,10 @@ export default {
             thisVue.nombreArchivo = thisVue.product.imagen.name;
         },
 
+        openModalCancelarCita() {
+            $("#modalCancelarCita").modal("show");
+        },
+
 
         async guardarArchivo(index) {
             const thisVue = this;
@@ -820,7 +902,13 @@ export default {
                     thisVue.path_url + "/api/archivos/updateArchivo",
                     formData
                 ).then((res) => {
+                    this.$swal(
+                        'Archivo',
+                        'Archivo Guardado Con Éxito',
+                        'success'
 
+                    );
+                    console.log('se guardo con exito');
                 }).catch((error) => { });
         },
 
@@ -897,6 +985,8 @@ export default {
         },
         horaAgendada(item) {
             const thisVue = this;
+            thisVue.infoHistorial.observaciones = '';
+            thisVue.infoHistorial.tareas = '';
             thisVue.agendarProspecto = item;
             thisVue.agendarProspecto.hora = thisVue.agendarProspecto.hora.substring(0, 5);
             thisVue.infoPaciente = item.paciente;
@@ -915,34 +1005,10 @@ export default {
                 });
         },
 
-        async guardarArchivo(index) {
-            const thisVue = this;
-            let formData = new FormData();
-            formData.append("imagen", thisVue.product.imagen);
-            formData.append("paciente_id", thisVue.infoPacienteHistorial.paciente.id);
-            formData.append("agenda_id", thisVue.infoPacienteHistorial.id);
-            formData.append("nombre", thisVue.nombreArchivo);
-            formData.append("fecha", thisVue.infoPacienteHistorial.fecha);
-            if (thisVue.product.imagen == '') {
-                this.$swal(
-                    'Archvios',
-                    'Asegurate de seleccionar un archivo antes de guardar',
-                    'warning'
-
-                );
-            } else {
-                document.getElementById(index).disabled = true;
-            }
-            await axios
-                .post(
-                    thisVue.path_url + "/api/archivos/updateArchivo",
-                    formData
-                ).then((res) => {
-
-                }).catch((error) => { });
-        },
         horaEspecial(item) {
             const thisVue = this;
+            thisVue.infoHistorial.observaciones = '';
+            thisVue.infoHistorial.tareas = '';
             thisVue.agendarProspecto = item;
             thisVue.agendarProspecto.hora = thisVue.agendarProspecto.hora.substring(0, 5);
             thisVue.infoPaciente = item.paciente;
