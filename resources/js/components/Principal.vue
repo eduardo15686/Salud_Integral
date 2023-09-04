@@ -3,7 +3,7 @@
         <div class="card-body">
             <div class="row">
                 <div class="col-md-3">
-                    <h3>Agenda</h3>
+                    <h3>Agenda </h3>
                 </div>
                 <div class="col-md-6" style="text-align: center;">
                     <h4><b>{{ mesInicialEstablecido }}</b> al <b>{{ mesFinalEstablecido }}</b></h4>
