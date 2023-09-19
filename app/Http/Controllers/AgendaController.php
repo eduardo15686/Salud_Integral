@@ -54,21 +54,36 @@ class AgendaController extends Controller
 
                 $numeroConsultas = $minutos / $horario[$j]['tiempo'];
                 $NuevaFecha = date('H:i', strtotime($primerhora));
+                $FechaAnterior = date('H:i', strtotime('+' . $horario[$j]['tiempo'] . 'minute', strtotime($NuevaFecha)));
 
+                $pruebas = Agenda::where('estatus', 'Activo')
+                    // ->where('hora', '<', $FechaAnterior)
+                    // ->where('hora', '>=', $NuevaFecha)
+                    ->where('cita_previa', 'Si')
+                    ->whereDate('fecha', date("Y-m-d", strtotime($res[$j])))
+                    // ->update(['estatus' => 'Inactivo'])
+                    ->get();
+                    
+                echo $pruebas;
                 if (floor($numeroConsultas) != 0) {
                     for ($i = 0; $i < floor($numeroConsultas); $i++) {
-                        $fecha = new Agenda();
-                        $fecha->especialista_id = Auth::user()->id;
-                        $fecha->prospecto_id = 0;
-                        $fecha->paciente_id = 0;
-                        $fecha->tiempo = $horario[$j]['tiempo'];
-                        $fecha->fecha = date("Y-m-d", strtotime($res[$j]));
-                        $fecha->hora = $NuevaFecha;
-                        $fecha->proceso = 'Disponible';
-                        $fecha->estatus = 'Activo';
-                        $fecha->created_by = Auth::user()->id;
-                        $fecha->updated_by = Auth::user()->id;
-                        $fecha->save();
+                        if (!isset($pruebas[0])) {
+                            $fecha = new Agenda();
+                            $fecha->especialista_id = Auth::user()->id;
+                            $fecha->prospecto_id = 0;
+                            $fecha->paciente_id = 0;
+                            $fecha->tiempo = $horario[$j]['tiempo'];
+                            $fecha->fecha = date("Y-m-d", strtotime($res[$j]));
+                            $fecha->hora = $NuevaFecha;
+                            $fecha->proceso = 'Disponible';
+                            $fecha->cita_previa = 'No';
+                            $fecha->estatus = 'Activo';
+                            $fecha->created_by = Auth::user()->id;
+                            $fecha->updated_by = Auth::user()->id;
+                            $fecha->save();
+                        } else {
+
+                        }
                         $NuevaFecha = strtotime('+' . $horario[$j]['tiempo'] . 'minute', strtotime($NuevaFecha));
                         $NuevaFecha = date('H:i', $NuevaFecha);
                     }
@@ -94,6 +109,7 @@ class AgendaController extends Controller
                         $fecha->fecha = date("Y-m-d", strtotime($res[$j]));
                         $fecha->hora = $NuevaFecha;
                         $fecha->proceso = 'Disponible';
+                        $fecha->cita_previa = 'No';
                         $fecha->estatus = 'Activo';
                         $fecha->created_by = Auth::user()->id;
                         $fecha->updated_by = Auth::user()->id;
@@ -340,31 +356,46 @@ class AgendaController extends Controller
             ->with('prospecto')
             ->with('paciente')
             ->get();
-        return response()->json([$lunes, $martes, $miercoles, $jueves, $viernes, $sabado, $domingo, $res], 200);
 
+        $count = Agenda::where('estatus', 'Activo')
+            ->where('cita_previa', 'No')
+            ->where('fecha', '<=', date("Y-m-d", strtotime($res[6])))
+            ->where('fecha', '>=', date("Y-m-d", strtotime($res[0])))
+            ->count();
+        return response()->json([$lunes, $martes, $miercoles, $jueves, $viernes, $sabado, $domingo, $res, $count], 200);
     }
+
+    public function agendarProximaCita(Request $request)
+    {
+        $primerhora = $request['fecha'] . ' ' . $request['hora'];
+        $NuevaFecha = date('H:i', strtotime($primerhora));
+        $NuevaFecha = strtotime('+' . $request['tiempo'] . 'minute', strtotime($NuevaFecha));
+        $NuevaFecha = date('H:i', $NuevaFecha);
+
+        Agenda::where('estatus', 'Activo')
+            ->where('hora', '>=', $request['hora'])
+            ->where('hora', '<', $NuevaFecha)
+            ->whereDate('fecha', $request['fecha'])
+            ->update(['estatus' => 'Inactivo']);
+
+        $fecha = new Agenda();
+        $fecha->especialista_id = Auth::user()->id;
+        $fecha->prospecto_id = 0;
+        $fecha->paciente_id = $request['paciente_id'];
+        $fecha->tiempo = $request['tiempo'];
+        $fecha->fecha = $request['fecha'];
+        $fecha->hora = $request['hora'];
+        $fecha->proceso = 'Agendada';
+        $fecha->recordatorio = 'No Enviado';
+        $fecha->cita_previa = 'Si';
+        $fecha->estatus = 'Activo';
+        $fecha->created_by = Auth::user()->id;
+        $fecha->updated_by = Auth::user()->id;
+        $fecha->save();
+    }
+
     public function aceptarProspecto(Request $request)
     {
-        // $prospecto = Prospecto::find($request['prospecto']['id']);
-        // $prospecto->proceso = 'Aceptada';
-        // $prospecto->save();
-
-        // $paciente = new Paciente;
-        // $paciente->especialista_id = Auth::user()->id;
-        // $paciente->nombre = $request['prospecto']['nombre'];
-        // $paciente->correo = $request['prospecto']['correo'];
-        // $paciente->celular = $request['prospecto']['celular'];
-        // $paciente->sexo = $request['prospecto']['sexo'];
-        // $paciente->estatus = 'Activo';
-        // $paciente->save();
-
-        // $agendar = Agenda::find($request['id']);
-        // $agendar->paciente_id = $paciente['id'];
-        // $agendar->proceso = 'Agendada';
-        // $agendar->save();
-
-        //$especialista = Especialista::where('user_id', Auth::user()->id)->get();
-
         $pacienteInfo['nombre'] = 'Eduardo';
         $pacienteInfo['especialista'] = 'isw' . ' ' . 'Juan'
             . ' ' . 'rivas' . ' ' . 'rivas';
@@ -372,15 +403,10 @@ class AgendaController extends Controller
         $pacienteInfo['hora'] = '10:00';
         $pacienteInfo['modalidad'] = 'Presencial';
         $pacienteInfo['precio_consulta'] = '500';
-
-
-        // $files = [public_path('principal/assets/img/logo.png')];
-        // Mail::to('eduardo15686@gmail.com')->send(new ConfirmarCitaProspecto($especialista));
         Mail::send('mails.aceptar_cita', $pacienteInfo, function ($message) use ($request) {
             $message->to('eduardo15686@gmail.com')
                 ->subject('Cita Confirmada "Agenda2"');
         });
-        //return $especialista;
     }
 
     public function rechazarProspecto(Request $request)
@@ -400,40 +426,6 @@ class AgendaController extends Controller
             $message->to($request['prospecto']['correo'])
                 ->subject('Cita En Espera "Agenda2"');
         });
-
-        // $params = array(
-        //     'token' => 'eoj0b9508hiyd5te',
-        //     'to' => '+526181839836',
-        //     'body' => 'La API de WhatsApp en UltraMsg.com funciona bien'
-        // );
-        // $curl = curl_init();
-        // curl_setopt_array($curl, array(
-        //     CURLOPT_URL => "https://api.ultramsg.com/instance57120/messages/chat",
-        //     CURLOPT_RETURNTRANSFER => true,
-        //     CURLOPT_ENCODING => "",
-        //     CURLOPT_MAXREDIRS => 10,
-        //     CURLOPT_TIMEOUT => 30,
-        //     CURLOPT_SSL_VERIFYHOST => 0,
-        //     CURLOPT_SSL_VERIFYPEER => 0,
-        //     CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-        //     CURLOPT_CUSTOMREQUEST => "POST",
-        //     CURLOPT_POSTFIELDS => http_build_query($params),
-        //     CURLOPT_HTTPHEADER => array(
-        //         "content-type: application/x-www-form-urlencoded"
-        //     ),
-        // )
-        // );
-
-        // $response = curl_exec($curl);
-        // $err = curl_error($curl);
-
-        // curl_close($curl);
-
-        // if ($err) {
-        //     echo "cURL Error #:" . $err;
-        // } else {
-        //     echo $response;
-        // }
     }
 
     public function inhabilitarHora(Request $request)

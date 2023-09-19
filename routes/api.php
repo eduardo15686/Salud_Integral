@@ -1,6 +1,7 @@
 <?php
 
 
+use App\Http\Controllers\ArchivoEnvioController;
 use App\Http\Controllers\ExpedienteController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -54,13 +55,13 @@ Route::middleware('auth:sanctum')->prefix('/agendas')->group(function () {
     Route::post('/eliminarAgenda', [AgendaController::class, 'eliminarAgenda']);
     Route::post('/verAgenda', [AgendaController::class, 'verAgenda']);
     Route::get('/getPacientes', [AgendaController::class, 'getPacientes']);
-
     Route::post('/aceptarProspecto', [AgendaController::class, 'aceptarProspecto']);
     Route::post('/rechazarProspecto', [AgendaController::class, 'rechazarProspecto']);
     Route::post('/inhabilitarHora', [AgendaController::class, 'inhabilitarHora']);
     Route::post('/agendarPaciente', [AgendaController::class, 'agendarPaciente']);
     Route::post('/habilitarHora', [AgendaController::class, 'habilitarHora']);
     Route::post('/agendarHoraEspecial', [AgendaController::class, 'agendarHoraEspecial']);
+    Route::post('/agendarProximaCita', [AgendaController::class, 'agendarProximaCita']);
     Route::post('/cancelarCita', [AgendaController::class, 'cancelarCita']);
 
     //agendas
@@ -96,7 +97,10 @@ Route::middleware('auth:sanctum')->prefix('/archivos')->group(function () {
     Route::post('/getArchivos', [ArchivoController::class, 'getArchivos']);
 });
 
-
+Route::middleware('auth:sanctum')->prefix('/envios')->group(function () {
+    Route::post('/updateArchivo', [ArchivoEnvioController::class, 'updateArchivo']);
+    Route::get('/getArchivos', [ArchivoEnvioController::class, 'getArchivos']);
+});
 
 Route::middleware('auth:sanctum')->prefix('/servicios')->group(function () {
     Route::get('/getServicios', [ServicioController::class, 'getServicios']);

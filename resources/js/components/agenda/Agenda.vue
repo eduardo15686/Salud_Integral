@@ -55,8 +55,7 @@
                             class="ti ti-arrow-right"></i></button>
                 </div>
             </div>
-
-            <div v-if="btngenerarAgenda == false" class="row">
+            <div class="row">
                 <div class="col-md-3"></div>
 
                 <div class="col-md-1" style="text-align: center;">
@@ -208,7 +207,6 @@
                 </div>
             </div>
 
-            <div v-else class="row"></div>
 
             <!-- Modal Aparatada-->
             <div class="modal fade" id="modalHoraApartada" tabindex="-1" aria-labelledby="modalHoraApartadaLabel"
@@ -347,83 +345,181 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <div class="row" style="text-align: center; margin-bottom: 20px;">
-                                <h4><b>{{ infoPaciente.nombre }}</b></h4>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <p><b>Fecha:</b> {{ agendarProspecto.fecha }}</p>
-                                </div>
-                                <div class="col-md-6">
-                                    <p><b>Hora:</b> {{ agendarProspecto.hora }}</p>
-                                </div>
-                            </div>
+                            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link active" id="home-tab" data-bs-toggle="tab"
+                                        data-bs-target="#home-tab-pane" type="button" role="tab"
+                                        aria-controls="home-tab-pane" aria-selected="true">Paciente</button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="profile-tab" data-bs-toggle="tab"
+                                        data-bs-target="#profile-tab-pane" type="button" role="tab"
+                                        aria-controls="profile-tab-pane" aria-selected="false">Próxima Cita</button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="profile-tab" data-bs-toggle="tab"
+                                        data-bs-target="#documentos" type="button" role="tab" aria-controls="documentos"
+                                        aria-selected="false">Enviar Documento</button>
+                                </li>
+                            </ul>
+                            <div class="tab-content" id="myTabContent">
+                                <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel"
+                                    aria-labelledby="home-tab" tabindex="0">
+                                    <div class="row" style="text-align: center; margin-bottom: 20px;">
+                                        <h4><b>{{ infoPaciente.nombre }}</b></h4>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <p><b>Fecha:</b> {{ agendarProspecto.fecha }}</p>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p><b>Hora:</b> {{ agendarProspecto.hora }}</p>
+                                        </div>
+                                    </div>
 
-                            <br>
-                            <div style="text-align: center;">
-                                <h5 style="font-size: large;">Historial Clínico</h5>
-                            </div>
-                            <div class="row">
-                                <div class="mb-3">
-                                    <label for="exampleFormControlInput1" class="form-label">Tareas Asignadas</label>
-                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="2"
-                                        placeholder="Tareas asignadas al paciente esta sesión"
-                                        v-model="infoHistorial.tareas"></textarea>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="exampleFormControlTextarea1" class="form-label">Observaciones</label>
-                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
-                                        placeholder="Observaciones de la sesión"
-                                        v-model="infoHistorial.observaciones"></textarea>
-                                </div>
-                            </div>
-                            <div class="col-md-12" style="text-align: center;">
-                                <label for="formFileSm" class="form-label">Agregar Imagenes/Documentos</label>
-                                <div v-for="(item, index) in listaCondiones" :key="index"
-                                    style="display: flex; padding-bottom: 10px;">
-                                    <div class="col-md-5" style="display: flex;margin-right: 10px;">
-                                        <input class="form-control form-control" id="formFileSm" type="file"
-                                            @change="seleccionarArchivo" />
+                                    <br>
+                                    <div style="text-align: center;">
+                                        <h5 style="font-size: large;">Historial Clínico</h5>
                                     </div>
-                                    <div class="col-md-4">
-                                        <div class="form-floating">
-                                            <input type="email" class="form-control" id="floatingInput" placeholder="Nombre"
-                                                style="height: 43px;" v-model="nombreArchivo">
-                                            <label for="floatingInput">Nombre del Archivo</label>
+                                    <div class="row">
+                                        <div class="mb-3">
+                                            <label for="exampleFormControlInput1" class="form-label">Tareas
+                                                Asignadas</label>
+                                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="2"
+                                                placeholder="Tareas asignadas al paciente esta sesión"
+                                                v-model="infoHistorial.tareas"></textarea>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="exampleFormControlTextarea1"
+                                                class="form-label">Observaciones</label>
+                                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
+                                                placeholder="Observaciones de la sesión"
+                                                v-model="infoHistorial.observaciones"></textarea>
                                         </div>
                                     </div>
-                                    <div class="col-md-1" v-if="(listaCondiones.length - 1) == index">
-                                        <div class="form-floating form-floating"
-                                            style="display: flex;justify-content: center;flex-flow: column;align-items: center;">
-                                            <button title="Agregar fila" @click="AlterListCondicionTab('+')"
-                                                style="padding-top: 0px; padding-bottom: 0px;width: 70%;border: 0;    margin-bottom: 5px;"
-                                                type="button" class="btn btn-success  btn-sm">
-                                                <i class="fas fa-plus-circle"></i>
-                                            </button>
-                                            <button title="Borrar fila" @click="AlterListCondicionTab('-')"
-                                                style="padding-top: 0px; padding-bottom: 0px;width: 70%;border: 0;"
-                                                type="button" class="btn btn-danger  btn-sm">
-                                                <i class="fas fa-trash"></i>
+                                    <div class="col-md-12" style="text-align: center;">
+                                        <label for="formFileSm" class="form-label">Agregar Imagenes/Documentos</label>
+                                        <div v-for="(item, index) in listaCondiones" :key="index"
+                                            style="display: flex; padding-bottom: 10px;">
+                                            <div class="col-md-5" style="display: flex;margin-right: 10px;">
+                                                <input class="form-control form-control" id="formFileSm" type="file"
+                                                    @change="seleccionarArchivo" />
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-floating">
+                                                    <input type="email" class="form-control" id="floatingInput"
+                                                        placeholder="Nombre" style="height: 43px;" v-model="nombreArchivo">
+                                                    <label for="floatingInput">Nombre del Archivo</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-1" v-if="(listaCondiones.length - 1) == index">
+                                                <div class="form-floating form-floating"
+                                                    style="display: flex;justify-content: center;flex-flow: column;align-items: center;">
+                                                    <button title="Agregar fila" @click="AlterListCondicionTab('+')"
+                                                        style="padding-top: 0px; padding-bottom: 0px;width: 70%;border: 0;    margin-bottom: 5px;"
+                                                        type="button" class="btn btn-success  btn-sm">
+                                                        <i class="fas fa-plus-circle"></i>
+                                                    </button>
+                                                    <button title="Borrar fila" @click="AlterListCondicionTab('-')"
+                                                        style="padding-top: 0px; padding-bottom: 0px;width: 70%;border: 0;"
+                                                        type="button" class="btn btn-danger  btn-sm">
+                                                        <i class="fas fa-trash"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <button type="button" class="btn btn-primary" :id="index"
+                                                    @click="guardarArchivo(index)">Guardar
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div style="text-align: end;">
+                                        <button type="button" class="btn btn-success"
+                                            @click="guardarHistorialClinico()">Guardar
+                                            Información</button>
+                                    </div>
+
+                                </div>
+                                <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel"
+                                    aria-labelledby="profile-tab" tabindex="0">
+                                    <br>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <p>Fecha de la próxima cita</p>
+                                            <div style="margin-bottom: 20px;">
+                                                <input id="startDate" class="form-control" type="date"
+                                                    v-model="fechaProximaCita" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <p>Hora de la consulta</p>
+                                            <select class="form-select" aria-label="Default select example"
+                                                v-model="horaProximaCita">
+                                                <option v-for="(item, index) in horas" :value="item">{{ item }}
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-4" style="text-align: end;">
+                                            <button type="button" class="btn btn-primary" @click="proximaCita">Generar
+                                                Cita</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="documentos" role="tabpanel" aria-labelledby="profile-tab"
+                                    tabindex="0">
+                                    <br>
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                            <div class="form-floating">
+                                                <select class="form-select" id="floatingSelect"
+                                                    aria-label="Floating label select example">
+                                                    <option v-for="(item, index) in archivosEspecialista">{{ item.nombre }}
+                                                    </option>
+
+                                                </select>
+                                                <label for="floatingSelect">Seleccionar Archivo</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4" style="text-align: end;">
+                                            <button type="button" class="btn btn-primary" @click="mostrarDivArchivos">Nuevo
+                                                Archivo</button>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div v-show="mostrarArchivo" class="row">
+                                        <div class="col-md-6">
+                                            <input class="form-control form-control" id="formFileSm" type="file"
+                                                @change="seleccionarArchivoEnvio" />
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-floating">
+                                                <input type="email" class="form-control" id="floatingInput"
+                                                    placeholder="Nombre" style="height: 43px;" v-model="nombreArchivoEnvio">
+                                                <label for="floatingInput">Nombre del Archivo</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <button type="button" class="btn btn-primary" id="archivoEnvio"
+                                                @click="guardarArchivoEnvio(index)">Guardar
                                             </button>
                                         </div>
                                     </div>
-                                    <div class="col-md-2">
-                                        <button type="button" class="btn btn-primary" :id="index"
-                                            @click="guardarArchivo(index)">Guardar
-                                        </button>
+                                    <br>
+                                    <div class="row" style="text-align: end;">
+                                        <div class="col-md-6"></div>
+                                        <div class="col-md-3">
+                                            <button type="button" class="btn btn-success">Enviar por WhatsApp</button>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <button type="button" class="btn btn-success">Enviar por Correo</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-success" @click="guardarHistorialClinico()">Guardar
-                                Información</button>
-                            <button type="button" class="btn btn-danger" @click="openModalCancelarCita()">Cancelar
-                                Cita</button>
-                        </div>
-
                     </div>
-
                 </div>
             </div><!-- End Modal Agendada-->
 
@@ -438,6 +534,7 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
+
                             <div class="row" style="text-align: center; margin-bottom: 20px;">
                                 <h4><b>{{ infoPaciente.nombre }}</b></h4>
                             </div>
@@ -481,7 +578,7 @@
             </div><!-- End Modal Agendada EDITAR-->
 
             <!-- Modal Especial-->
-            <div class="modal fade modal-lg" id="modalHoraEspecial" tabindex="-1" aria-labelledby="modalHoraEspecialLabel"
+            <div class="modal fade" id="modalHoraEspecial" tabindex="-1" aria-labelledby="modalHoraEspecialLabel"
                 aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -521,43 +618,6 @@
                                     <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
                                         placeholder="Observaciones de la sesión"
                                         v-model="infoHistorial.observaciones"></textarea>
-                                </div>
-                            </div>
-                            <div class="col-md-12" style="text-align: center;">
-                                <label for="formFileSm" class="form-label">Agregar Imagenes/Documentos</label>
-                                <div v-for="(item, index) in listaCondiones" :key="index"
-                                    style="display: flex; padding-bottom: 10px;">
-                                    <div class="col-md-5" style="display: flex;margin-right: 10px;">
-                                        <input class="form-control form-control" id="formFileSm" type="file"
-                                            @change="seleccionarArchivo" />
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-floating">
-                                            <input type="email" class="form-control" id="floatingInput" placeholder="Nombre"
-                                                style="height: 43px;" v-model="nombreArchivo">
-                                            <label for="floatingInput">Nombre del Archivo</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-1" v-if="(listaCondiones.length - 1) == index">
-                                        <div class="form-floating form-floating"
-                                            style="display: flex;justify-content: center;flex-flow: column;align-items: center;">
-                                            <button title="Agregar fila" @click="AlterListCondicionTab('+')"
-                                                style="padding-top: 0px; padding-bottom: 0px;width: 70%;border: 0;    margin-bottom: 5px;"
-                                                type="button" class="btn btn-success  btn-sm">
-                                                <i class="fas fa-plus-circle"></i>
-                                            </button>
-                                            <button title="Borrar fila" @click="AlterListCondicionTab('-')"
-                                                style="padding-top: 0px; padding-bottom: 0px;width: 70%;border: 0;"
-                                                type="button" class="btn btn-danger  btn-sm">
-                                                <i class="fas fa-trash"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <button type="button" class="btn btn-primary" :id="index"
-                                            @click="guardarArchivo(index)">Guardar
-                                        </button>
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -770,41 +830,6 @@
                     </div>
                 </div>
             </div><!-- End Modal Eliminar-->
-
-            <div class="modal fade" id="modalCancelarCita" tabindex="-1" aria-labelledby="modalCancelarCitaLabel"
-                aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header" style="background-color: #fcb29f;">
-                            <h4 class="modal-title" id="modalCancelarCita">Cancelar Cita</h4>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="row" style="text-align: center; margin-bottom: 20px;">
-                                <h4><b>{{ infoPaciente.nombre }}</b></h4>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <p><b>Fecha:</b> {{ agendarProspecto.fecha }}</p>
-                                </div>
-                                <div class="col-md-6">
-                                    <p><b>Hora:</b> {{ agendarProspecto.hora }}</p>
-                                </div>
-                            </div>
-
-                            <br>
-
-
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-success">Cerrar</button>
-                            <button type="button" class="btn btn-danger" @click="cancelarCita()">Cancelar
-                                Cita</button>
-                        </div>
-
-                    </div>
-                </div>
-            </div><!-- End Modal Agendada-->
         </div>
     </div>
 </template>
@@ -839,10 +864,12 @@ export default {
             infoHistorial: {},
             infoPacienteHistorial: {},
             infoHorario: {},
+            horaProximaCita: '',
             idPaciente: 0,
             agendarProspecto: {},
             pacientes: {},
             fechaCita: this.day,
+            fechaProximaCita: this.day,
             horas: [],
             horaConsulta: '',
             nombreEspecialidad: '',
@@ -855,7 +882,13 @@ export default {
             product: {
                 imagen: "",
             },
+            product2: {
+                imagen: "",
+            },
             nombreArchivo: '',
+            nombreArchivoEnvio: '',
+            mostrarArchivo: false,
+            archivosEspecialista: {},
         }
     },
     methods: {
@@ -864,6 +897,9 @@ export default {
             this[funcion](obj);
         },
 
+        mostrarDivArchivos() {
+            this.mostrarArchivo = true;
+        },
         seleccionarArchivo(e) {
             const thisVue = this;
             thisVue.product = {
@@ -873,12 +909,35 @@ export default {
             thisVue.product.imagen = file;
             thisVue.nombreArchivo = thisVue.product.imagen.name;
         },
-
-        openModalCancelarCita() {
-            $("#modalCancelarCita").modal("show");
+        seleccionarArchivoEnvio(e) {
+            const thisVue = this;
+            thisVue.product2 = {
+                imagen: "",
+            };
+            let file = e.target.files[0];
+            thisVue.product2.imagen = file;
+            thisVue.nombreArchivoEnvio = thisVue.product2.imagen.name;
         },
 
-
+        async proximaCita() {
+            const thisVue = this;
+            let obj = {
+                paciente_id: thisVue.infoPaciente.id,
+                hora: thisVue.horaProximaCita,
+                fecha: thisVue.fechaProximaCita,
+                tiempo: thisVue.infoPacienteHistorial.tiempo
+            }
+            axios.post(thisVue.path_url + '/api/agendas/agendarProximaCita', obj)
+                .then((res) => {
+                    this.$swal(
+                        'Próximo Cita',
+                        'Cita generada con éxito.',
+                        'success'
+                    );
+                })
+                .catch((error) => {
+                });
+        },
         async guardarArchivo(index) {
             const thisVue = this;
             let formData = new FormData();
@@ -902,18 +961,50 @@ export default {
                     thisVue.path_url + "/api/archivos/updateArchivo",
                     formData
                 ).then((res) => {
-                    this.$swal(
-                        'Archivo',
-                        'Archivo Guardado Con Éxito',
-                        'success'
 
-                    );
-                    console.log('se guardo con exito');
                 }).catch((error) => { });
         },
 
+        async guardarArchivoEnvio(index) {
+            const thisVue = this;
+            let formData = new FormData();
+            formData.append("imagen", thisVue.product2.imagen);
+            formData.append("nombre", thisVue.nombreArchivoEnvio);
+            if (thisVue.product2.imagen == '') {
+                this.$swal(
+                    'Archivos',
+                    'Asegurate de seleccionar un archivo antes de guardar',
+                    'warning'
+                );
+            } else {
+                //document.getElementById(index).disabled = true;
+                await axios.post(thisVue.path_url + "/api/envios/updateArchivo", formData
+                ).then((res) => {
+                    thisVue.mostrarArchivo = false;
+                    this.$swal(
+                        'Archivos',
+                        'Archivo guardado de manera correcta',
+                        'success'
+                    );
+                }).catch((error) => { });
+            }
 
+        },
 
+        async getArchivos() {
+            const thisVue = this;
+            await axios
+                .get(
+                    thisVue.path_url + "/api/envios/getArchivos"
+                )
+                .then((res) => {
+                    console.log(res.data);
+                    thisVue.archivosEspecialista = res.data;
+                })
+
+                .catch((error) => { })
+
+        },
         AlterListCondicionTab(sign) {
             if (sign == '+') {
                 this.listaCondiones.push({ idCondicion: '' });
@@ -985,8 +1076,6 @@ export default {
         },
         horaAgendada(item) {
             const thisVue = this;
-            thisVue.infoHistorial.observaciones = '';
-            thisVue.infoHistorial.tareas = '';
             thisVue.agendarProspecto = item;
             thisVue.agendarProspecto.hora = thisVue.agendarProspecto.hora.substring(0, 5);
             thisVue.infoPaciente = item.paciente;
@@ -1005,10 +1094,34 @@ export default {
                 });
         },
 
+        async guardarArchivo(index) {
+            const thisVue = this;
+            let formData = new FormData();
+            formData.append("imagen", thisVue.product.imagen);
+            formData.append("paciente_id", thisVue.infoPacienteHistorial.paciente.id);
+            formData.append("agenda_id", thisVue.infoPacienteHistorial.id);
+            formData.append("nombre", thisVue.nombreArchivo);
+            formData.append("fecha", thisVue.infoPacienteHistorial.fecha);
+            if (thisVue.product.imagen == '') {
+                this.$swal(
+                    'Archvios',
+                    'Asegurate de seleccionar un archivo antes de guardar',
+                    'warning'
+
+                );
+            } else {
+                document.getElementById(index).disabled = true;
+            }
+            await axios
+                .post(
+                    thisVue.path_url + "/api/archivos/updateArchivo",
+                    formData
+                ).then((res) => {
+
+                }).catch((error) => { });
+        },
         horaEspecial(item) {
             const thisVue = this;
-            thisVue.infoHistorial.observaciones = '';
-            thisVue.infoHistorial.tareas = '';
             thisVue.agendarProspecto = item;
             thisVue.agendarProspecto.hora = thisVue.agendarProspecto.hora.substring(0, 5);
             thisVue.infoPaciente = item.paciente;
@@ -1031,7 +1144,7 @@ export default {
             thisVue.agendarProspecto.hora = thisVue.agendarProspecto.hora.substring(0, 5);
             thisVue.infoProspecto = item.prospecto;
             //thisVue.nombreEspecialidad = item.prospecto.servicios.alt_html;
-            console.log(item.prospecto);
+            //console.log(item.prospecto);
             $("#modalHoraApartada").modal("show");
         },
         horaDisponible(item) {
@@ -1234,9 +1347,8 @@ export default {
                     thisVue.recorrerSabado = res.data[5];
                     thisVue.recorrerDomingo = res.data[6];
                     thisVue.fechas = res.data[7];
-
-                    if (res.data[0].length != 0 || res.data[1].length != 0 || res.data[2].length != 0
-                        || res.data[3].length != 0 || res.data[4].length != 0 || res.data[5].length != 0 || res.data[6].length != 0) {
+                    console.log(res.data[8]);
+                    if (res.data[8] != 0) {
                         thisVue.btngenerarAgenda = false;
                     }
 
@@ -1292,16 +1404,34 @@ export default {
 
                 });
         },
-        // whatsapp() {
-        //     const thisVue = this;
-        //     axios.post(thisVue.path_url + '/api/agendas/whatsapp', thisVue.infoPaciente)
-        //         .then((res) => {
-        //             thisVue.horas = res.data;
-        //         })
-        //         .catch((error) => {
+        whatsapp() {
+            var myHeaders = new Headers();
+            myHeaders.append("Content-Type", "application/json");
+            myHeaders.append("Authorization", "Bearer EAACHT52FUeUBO5pZBLapfd78UGZBfUgVDanF6OgeV6ef0fvrUxBHkIYOGARuncWSznTk2VeydnxMZCjyxkHbFsELoNhWPEBvXXGC7umHoLDGiEDgKuNBV6gAFrMIkLpZC0RRAGKQkNgIqsgE46dkMx5ZCDo8Wn6cUpxK3ZAhCu5EMmXuYZBcxu4gZAnArZCQWjtK0k95ZCeSivuTHo7h8Un3cbRXYwHIJ6ODqolhEZD");
 
-        //         });
-        // }
+            var raw = JSON.stringify({
+                "messaging_product": "whatsapp",
+                "recipient_type": "individual",
+                "to": "526181839836",
+                "type": "document",
+                "document": {
+                    "link": "http://financieratest.duckdns.org/storage/clientes/21ac66362457a220d29c3373ea302b67/archivos_firmas/C1D43S9IKbVxSufCclsu5qF9z3dobBvan2XBSmRY.pdf",
+                    "caption": "Anexo A como esuhda jhsbdhsak hfkjsahf kshfkasjfn bufabskfsa nejbfjsbf jbgfajf"
+                }
+            });
+
+            var requestOptions = {
+                method: 'POST',
+                headers: myHeaders,
+                body: raw,
+                redirect: 'follow'
+            };
+
+            fetch("https://graph.facebook.com/v17.0/125273537336410/messages", requestOptions)
+                .then(response => response.text())
+                .then(result => console.log(result))
+                .catch(error => console.log('error', error));
+        }
     },
     async mounted() {
         let date = new Date();
@@ -1309,6 +1439,7 @@ export default {
         this.getPacientes();
         this.verAgenda();
         this.getHoras();
+        this.getArchivos();
     }
 }
 </script>
