@@ -396,6 +396,24 @@ class AgendaController extends Controller
 
     public function aceptarProspecto(Request $request)
     {
+        $prospecto = Prospecto::find($request['prospecto']['id']);
+        $prospecto->proceso = 'Aceptada';
+        $prospecto->save();
+
+        $paciente = new Paciente;
+        $paciente->especialista_id = Auth::user()->id;
+        $paciente->nombre = $request['prospecto']['nombre'];
+        $paciente->correo = $request['prospecto']['correo'];
+        $paciente->celular = $request['prospecto']['celular'];
+        $paciente->sexo = $request['prospecto']['sexo'];
+        $paciente->estatus = 'Activo';
+        $paciente->save();
+
+        $agendar = Agenda::find($request['id']);
+        $agendar->paciente_id = $paciente['id'];
+        $agendar->proceso = 'Agendada';
+        $agendar->save();
+
         $pacienteInfo['nombre'] = 'Eduardo';
         $pacienteInfo['especialista'] = 'isw' . ' ' . 'Juan'
             . ' ' . 'rivas' . ' ' . 'rivas';

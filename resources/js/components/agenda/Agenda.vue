@@ -435,7 +435,10 @@
                                         </div>
                                     </div>
                                     <br>
-                                    <div style="text-align: end;">
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-danger"
+                                            @click="openModalCancelarCita()">Cancelar
+                                            Cita</button>
                                         <button type="button" class="btn btn-success"
                                             @click="guardarHistorialClinico()">Guardar
                                             Información</button>
@@ -622,10 +625,10 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-success" @click="guardarHistorialClinico()">Guardar
-                                Información</button>
                             <button type="button" class="btn btn-danger" @click="openModalCancelarCita()">Cancelar
                                 Cita</button>
+                            <button type="button" class="btn btn-success" @click="guardarHistorialClinico()">Guardar
+                                Información</button>
                         </div>
                     </div>
                 </div>
@@ -895,6 +898,10 @@ export default {
 
         disparador(funcion, obj = null,) {
             this[funcion](obj);
+        },
+
+        openModalCancelarCita() {
+            $("#modalCancelarCita").modal("show");
         },
 
         mostrarDivArchivos() {
