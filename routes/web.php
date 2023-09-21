@@ -29,7 +29,8 @@ Route::get('/', [EspecialistaController::class, 'index']);
 Route::get('/finalizar', function () {
     return view('finalizado'); })->name('finalizar');
 
-
+    Route::get('/politicas', function () {
+        return view('politicas'); })->name('politicas');
 
 
 Auth::routes();
