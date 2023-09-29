@@ -287,7 +287,7 @@
                                     <div class="form-floating mb-3">
                                         <money3 type="text" class="form-control" id="floatingInput"
                                             v-model="infoEspecialista.precio_consulta" v-bind="config"></money3>
-                                        <label for="floatingInput">Solicitud de anticipo</label>
+                                        <label for="floatingInput">Precio de consulta</label>
                                     </div>
                                 </div>
                                 <div class="form-floating col-md-6">

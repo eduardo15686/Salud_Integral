@@ -49,7 +49,7 @@ class EspecialistaController extends Controller
             array_push($guardarInfo, $infoReal);
         }
 
-        
+
         //return response()->json($guardarInfo, 200);
         // 
         // $especialistas = Especialista::with('foto')
@@ -109,7 +109,7 @@ class EspecialistaController extends Controller
         $especialista->celular = $request['celular'];
         $especialista->correo = $request['correo'];
         $especialista->deposito = $request['deposito'];
-        $especialista->precio_consulta = $request['cuota'];
+        $especialista->precio_consulta = $request['precio_consulta'];
         $especialista->servicio_id = $servicio_id;
         $especialista->descripcion = $request['descripcion'];
         $especialista->slug = '';
@@ -158,6 +158,7 @@ class EspecialistaController extends Controller
 
     public function editarEspecialista(Request $request)
     {
+        
         $servicio_id = implode(', ', $request['nuevoServicio']);
         $especialista = Especialista::find($request['id']);
         $especialista->nombre = $request['nombre'];
@@ -167,7 +168,7 @@ class EspecialistaController extends Controller
         $especialista->celular = $request['celular'];
         $especialista->correo = $request['correo'];
         $especialista->deposito = $request['deposito'];
-        $especialista->precio_consulta = $request['cuota'];
+        $especialista->precio_consulta = $request['precio_consulta'];
         $especialista->servicio_id = $servicio_id;
         $especialista->descripcion = $request['descripcion'];
         $especialista->slug = '';

@@ -63,7 +63,7 @@ class AgendaController extends Controller
                     ->whereDate('fecha', date("Y-m-d", strtotime($res[$j])))
                     // ->update(['estatus' => 'Inactivo'])
                     ->get();
-                    
+
                 echo $pruebas;
                 if (floor($numeroConsultas) != 0) {
                     for ($i = 0; $i < floor($numeroConsultas); $i++) {
@@ -414,17 +414,22 @@ class AgendaController extends Controller
         $agendar->proceso = 'Agendada';
         $agendar->save();
 
-        $pacienteInfo['nombre'] = 'Eduardo';
-        $pacienteInfo['especialista'] = 'isw' . ' ' . 'Juan'
-            . ' ' . 'rivas' . ' ' . 'rivas';
-        $pacienteInfo['fecha'] = '10/12/2025';
-        $pacienteInfo['hora'] = '10:00';
-        $pacienteInfo['modalidad'] = 'Presencial';
-        $pacienteInfo['precio_consulta'] = '500';
-        Mail::send('mails.aceptar_cita', $pacienteInfo, function ($message) use ($request) {
-            $message->to('eduardo15686@gmail.com')
+        $especialista = Especialista::where('user_id', Auth::user()->id)
+            ->first();
+
+        $pacienteInfo['nombre'] = $paciente['nombre'];
+        $pacienteInfo['especialista'] = $especialista['titulo'] . ' ' . $especialista['nombre']
+            . ' ' . $especialista['apellido_pat'] . ' ' . $especialista['apellido_mat'];
+        $pacienteInfo['fecha'] = $agendar['fecha'];
+        $pacienteInfo['hora'] = $agendar['hora'];
+        $pacienteInfo['modalidad'] = $prospecto['modalidad'];
+        $pacienteInfo['precio_consulta'] = $especialista['precio_consulta'];
+
+        Mail::send('mails.aceptar_cita', $pacienteInfo, function ($message) use ($paciente) {
+            $message->to($paciente['correo'])
                 ->subject('Cita Confirmada "Agenda2"');
         });
+
     }
 
     public function rechazarProspecto(Request $request)

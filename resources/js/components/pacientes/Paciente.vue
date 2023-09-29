@@ -69,7 +69,7 @@
                             <br>
                             <div class="row">
                                 <div class="form-floating col-md-6">
-                                    <input type="text" class="form-control" v-mask="'###-#######'" maxlength="11"
+                                    <input type="text" class="form-control" v-mask="'#############'" maxlength="13"
                                         id="floatingCel" placeholder="Celular Ej. (618-1234567)" v-model="guardarInfoPaciente.celular
                                             " required name="celular" />
                                     <label for="floatingCel">Celular Ej. (618-1234567)</label>
@@ -145,7 +145,7 @@
                             <br>
                             <div class="row">
                                 <div class="form-floating col-md-6">
-                                    <input type="text" class="form-control" v-mask="'###-#######'" maxlength="11"
+                                    <input type="text" class="form-control" v-mask="'#############'" maxlength="13"
                                         id="floatingCel" placeholder="Celular Ej. (618-1234567)" v-model="infoPaciente.celular
                                             " required name="celular" />
                                     <label for="floatingCel">Celular Ej. (618-1234567)</label>

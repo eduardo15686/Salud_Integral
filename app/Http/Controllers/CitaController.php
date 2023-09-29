@@ -84,12 +84,10 @@ class CitaController extends Controller
         return response()->json($especialistas, 200);
 
     }
-    public function agendarCita(CitaRequest $request)
+    public function agendarCita(Request $request)
     {
 
         $prospecto = new Prospecto();
-        //$servicio_id = implode(', ', $request['registro']);
-        //$prospecto->especialista_id = $request['especialista'];
         if ($request['servicios_id'] == 0) {
             $prospecto->servicios_id = null;
         } else {
@@ -114,9 +112,51 @@ class CitaController extends Controller
         $agendar->proceso = 'Apartada';
         $agendar->save();
 
-        return [
-            'nombre.required' => 'es necessadfaf',
-        ];
+        $especialista = Especialista::where('user_id', $agendar['especialista_id'])
+            ->where('estatus', 'Activo')
+            ->first();
+
+        $especialista['celular'] = str_replace("-", "", $especialista['celular']);
+        // return $especialista;
+        $message = 'Solicitud de cita.\n\nNombre: ' . $request['nombre'] .
+            '\nFecha: ' . $agendar['fecha'] .
+            '\nHora: ' . $agendar['hora'];
+
+        $params = array(
+            'token' => 'j9yrhy3r3l9f33ma',
+            'to' => $especialista['celular'],
+            'body' => $message
+        );
+        $curl = curl_init();
+        curl_setopt_array(
+            $curl,
+            array(
+                CURLOPT_URL => "https://api.ultramsg.com/instance62942/messages/chat",
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => "",
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 30,
+                CURLOPT_SSL_VERIFYHOST => 0,
+                CURLOPT_SSL_VERIFYPEER => 0,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => "POST",
+                CURLOPT_POSTFIELDS => http_build_query($params),
+                CURLOPT_HTTPHEADER => array(
+                    "content-type: application/x-www-form-urlencoded"
+                ),
+            )
+        );
+
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+
+        curl_close($curl);
+
+        if ($err) {
+            echo "cURL Error #:" . $err;
+        } else {
+            echo $response;
+        }
 
     }
     public function obtenerHorario()

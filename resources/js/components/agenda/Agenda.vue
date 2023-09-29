@@ -860,8 +860,8 @@ export default {
             fechas: {},
             tiempoConsulta: [],
             getTiempoConsulta: 0,
-            mesInicialEstablecido: 0,
-            mesFinalEstablecido: 0,
+            mesInicialEstablecido: '',
+            mesFinalEstablecido: '',
             infoProspecto: {},
             infoPaciente: {},
             infoHistorial: {},
@@ -1368,13 +1368,13 @@ export default {
                     if (mesActualInicial[1] <= 9) {
                         thisVue.mesInicialEstablecido = mesActualInicial[0] + ' de ' + meses[mesActualInicial[1].substring(1, 2) - 1] + ' del ' + mesActualInicial[2];
                     } else {
-                        thisVue.mesInicialEstablecido = mesActualInicial[0] + ' de ' + meses[mesActualInicial[1] - 1] + 'del' + mesActualInicial[2];
+                        thisVue.mesInicialEstablecido = mesActualInicial[0] + ' de ' + meses[mesActualInicial[1] - 1] + ' del ' + mesActualInicial[2];
                     }
 
                     if (mesActualFinal[1] <= 9) {
                         thisVue.mesFinalEstablecido = mesActualFinal[0] + ' de ' + meses[mesActualFinal[1].substring(1, 2) - 1] + ' del ' + mesActualFinal[2];
                     } else {
-                        thisVue.mesFinalEstablecido = mesActualFinal[0] + ' de ' + meses[mesActualFinal[1] - 1] + 'del' + mesActualFinal[2];
+                        thisVue.mesFinalEstablecido = mesActualFinal[0] + ' de ' + meses[mesActualFinal[1] - 1] + ' del ' + mesActualFinal[2];
                     }
                 })
 
