@@ -477,8 +477,9 @@
                                         <div class="col-md-8">
                                             <div class="form-floating">
                                                 <select class="form-select" id="floatingSelect"
-                                                    aria-label="Floating label select example">
-                                                    <option v-for="(item, index) in archivosEspecialista">{{ item.nombre }}
+                                                    aria-label="Floating label select example" v-model="envioArchivo">
+                                                    <option v-for="(item, index) in archivosEspecialista"
+                                                        :value="item.ruta">{{ item.nombre }}
                                                     </option>
 
                                                 </select>
@@ -513,7 +514,8 @@
                                     <div class="row" style="text-align: end;">
                                         <div class="col-md-6"></div>
                                         <div class="col-md-3">
-                                            <button type="button" class="btn btn-success">Enviar por WhatsApp</button>
+                                            <button type="button" class="btn btn-success" @click="enviarArchivoWhats">Enviar
+                                                por WhatsApp</button>
                                         </div>
                                         <div class="col-md-3">
                                             <button type="button" class="btn btn-success">Enviar por Correo</button>
@@ -892,6 +894,7 @@ export default {
             nombreArchivoEnvio: '',
             mostrarArchivo: false,
             archivosEspecialista: {},
+            envioArchivo: '',
         }
     },
     methods: {
@@ -906,6 +909,12 @@ export default {
 
         mostrarDivArchivos() {
             this.mostrarArchivo = true;
+        },
+
+        enviarArchivoWhats() {
+            const thisVue = this;
+            console.log(window.location.hostname + '/storage' + this.envioArchivo.substring(6)); // "M"
+            //console.log(this.envioArchivo);
         },
         seleccionarArchivo(e) {
             const thisVue = this;
