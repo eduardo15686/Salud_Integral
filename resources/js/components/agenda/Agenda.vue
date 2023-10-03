@@ -927,7 +927,7 @@ export default {
                     "token": "j9yrhy3r3l9f33ma",
                     "to": 6181839836,
                     "filename": this.envioArchivo.nombre,
-                    "document": rutaArchivo,
+                    "document": "http://" + rutaArchivo,
                     "caption": "document caption"
                 }
             }
