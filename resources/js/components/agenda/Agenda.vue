@@ -916,7 +916,7 @@ export default {
             let ruta = this.envioArchivo.ruta;
             let rutaArchivo = window.location.hostname + '/storage' + ruta.substring(6); // "M"
             // console.log(this.envioArchivo.nombre);
-            console.log(rutaArchivo);
+            console.log('http://' + rutaArchivo);
             var settings = {
                 "async": true,
                 "crossDomain": true,
