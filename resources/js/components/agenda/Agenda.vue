@@ -926,7 +926,7 @@ export default {
                     "token": "j9yrhy3r3l9f33ma",
                     "to": 6181839836,
                     "filename": this.envioArchivo.nombre,
-                    "document": window.location.hostname + '/storage' + ruta.substring(6),
+                    "document": 'http://saludintegraltest.duckdns.org/storage/envios/0JHfcFDRCKhX5zYHv2xJcDayXiL9RrlWnbYHhMKW.pdf',
                     "caption": "document caption"
                 }
             }
@@ -934,7 +934,7 @@ export default {
             $.ajax(settings).done(function (response) {
                 console.log(response);
             });
-            console.log(this.envioArchivo);
+            //console.log(this.envioArchivo);
         },
         seleccionarArchivo(e) {
             const thisVue = this;
