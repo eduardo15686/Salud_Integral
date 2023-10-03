@@ -478,8 +478,8 @@
                                             <div class="form-floating">
                                                 <select class="form-select" id="floatingSelect"
                                                     aria-label="Floating label select example" v-model="envioArchivo">
-                                                    <option v-for="(item, index) in archivosEspecialista"
-                                                        :value="item.ruta">{{ item.nombre }}
+                                                    <option v-for="(item, index) in archivosEspecialista" :value="item">{{
+                                                        item.nombre }}
                                                     </option>
 
                                                 </select>
@@ -894,7 +894,7 @@ export default {
             nombreArchivoEnvio: '',
             mostrarArchivo: false,
             archivosEspecialista: {},
-            envioArchivo: '',
+            envioArchivo: {},
         }
     },
     methods: {
@@ -913,7 +913,26 @@ export default {
 
         enviarArchivoWhats() {
             const thisVue = this;
-            console.log(window.location.hostname + '/storage' + this.envioArchivo.substring(6)); // "M"
+            // console.log(window.location.hostname + '/storage' + this.envioArchivo.ruta.substring(6)); // "M"
+            // console.log(this.envioArchivo.nombre);
+            var settings = {
+                "async": true,
+                "crossDomain": true,
+                "url": "https://api.ultramsg.com/instance62942/messages/document",
+                "method": "POST",
+                "headers": {},
+                "data": {
+                    "token": "j9yrhy3r3l9f33ma",
+                    "to": 6181839836,
+                    "filename": this.envioArchivo.nombre,
+                    "document": window.location.hostname + '/storage' + this.envioArchivo.substring(6),
+                    "caption": "document caption"
+                }
+            }
+
+            $.ajax(settings).done(function (response) {
+                console.log(response);
+            });
             //console.log(this.envioArchivo);
         },
         seleccionarArchivo(e) {
@@ -992,6 +1011,7 @@ export default {
                     'Asegurate de seleccionar un archivo antes de guardar',
                     'warning'
                 );
+
             } else {
                 //document.getElementById(index).disabled = true;
                 await axios.post(thisVue.path_url + "/api/envios/updateArchivo", formData
@@ -1002,6 +1022,7 @@ export default {
                         'Archivo guardado de manera correcta',
                         'success'
                     );
+                    thisVue.getArchivos();
                 }).catch((error) => { });
             }
 
@@ -1014,7 +1035,7 @@ export default {
                     thisVue.path_url + "/api/envios/getArchivos"
                 )
                 .then((res) => {
-                    
+
                     thisVue.archivosEspecialista = res.data;
                 })
 
