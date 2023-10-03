@@ -926,7 +926,7 @@ export default {
                     "token": "j9yrhy3r3l9f33ma",
                     "to": 6181839836,
                     "filename": this.envioArchivo.nombre,
-                    "document": 'http://saludintegraltest.duckdns.org/storage/envios/0JHfcFDRCKhX5zYHv2xJcDayXiL9RrlWnbYHhMKW.pdf',
+                    "document": "http://saludintegraltest.duckdns.org/storage/envios/0JHfcFDRCKhX5zYHv2xJcDayXiL9RrlWnbYHhMKW.pdf",
                     "caption": "document caption"
                 }
             }
