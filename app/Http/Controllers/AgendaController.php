@@ -358,10 +358,12 @@ class AgendaController extends Controller
             ->get();
 
         $count = Agenda::where('estatus', 'Activo')
+            ->where('especialista_id', Auth::user()->id)
             ->where('cita_previa', 'No')
             ->where('fecha', '<=', date("Y-m-d", strtotime($res[6])))
             ->where('fecha', '>=', date("Y-m-d", strtotime($res[0])))
             ->count();
+
         return response()->json([$lunes, $martes, $miercoles, $jueves, $viernes, $sabado, $domingo, $res, $count], 200);
     }
 

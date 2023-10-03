@@ -1014,7 +1014,7 @@ export default {
                     thisVue.path_url + "/api/envios/getArchivos"
                 )
                 .then((res) => {
-                    console.log(res.data);
+                    
                     thisVue.archivosEspecialista = res.data;
                 })
 
@@ -1363,7 +1363,7 @@ export default {
                     thisVue.recorrerSabado = res.data[5];
                     thisVue.recorrerDomingo = res.data[6];
                     thisVue.fechas = res.data[7];
-                    console.log(res.data[8]);
+                    //console.log(res.data[8]);
                     if (res.data[8] != 0) {
                         thisVue.btngenerarAgenda = false;
                     }
