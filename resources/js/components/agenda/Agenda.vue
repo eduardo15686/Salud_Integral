@@ -914,7 +914,7 @@ export default {
         enviarArchivoWhats() {
             const thisVue = this;
             let ruta = this.envioArchivo.ruta;
-            // console.log(window.location.hostname + '/storage' + ruta.substring(6)); // "M"
+            let rutaArchivo = window.location.hostname + '/storage' + ruta.substring(6); // "M"
             // console.log(this.envioArchivo.nombre);
             var settings = {
                 "async": true,
@@ -926,7 +926,7 @@ export default {
                     "token": "j9yrhy3r3l9f33ma",
                     "to": 6181839836,
                     "filename": this.envioArchivo.nombre,
-                    "document": "http://saludintegraltest.duckdns.org/storage/envios/0JHfcFDRCKhX5zYHv2xJcDayXiL9RrlWnbYHhMKW.pdf",
+                    "document": rutaArchivo,
                     "caption": "document caption"
                 }
             }
