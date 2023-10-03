@@ -913,7 +913,8 @@ export default {
 
         enviarArchivoWhats() {
             const thisVue = this;
-            // console.log(window.location.hostname + '/storage' + this.envioArchivo.ruta.substring(6)); // "M"
+            let ruta = this.envioArchivo.ruta;
+            // console.log(window.location.hostname + '/storage' + ruta.substring(6)); // "M"
             // console.log(this.envioArchivo.nombre);
             var settings = {
                 "async": true,
@@ -925,7 +926,7 @@ export default {
                     "token": "j9yrhy3r3l9f33ma",
                     "to": 6181839836,
                     "filename": this.envioArchivo.nombre,
-                    "document": window.location.hostname + '/storage' + this.envioArchivo.substring(6),
+                    "document": window.location.hostname + '/storage' + ruta.substring(6),
                     "caption": "document caption"
                 }
             }
@@ -933,7 +934,7 @@ export default {
             $.ajax(settings).done(function (response) {
                 console.log(response);
             });
-            //console.log(this.envioArchivo);
+            console.log(this.envioArchivo);
         },
         seleccionarArchivo(e) {
             const thisVue = this;
