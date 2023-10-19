@@ -1,7 +1,9 @@
 <template>
     <div class="row">
 
-        <div class="col-md-3"></div>
+        <div class="col-md-3">
+
+        </div>
         <div v-if="procesoCita == true" class="col-md-6">
 
             <div class="card" style="background-color: azure; text-align: left;">
@@ -14,7 +16,8 @@
                                 <h5 style="padding: 25px">Vamos a crear tu cita personal y asignarte el mejor psicólogo
                                     acorde a tus necesidades. En solo unos sencillos pasos...</h5>
                                 <div>
-                                    <img src="principal/assets/img/registro.png" width="150" height="150">
+                                    <img src="http://saludintegraltest.duckdns.org/principal/assets/img/registro.png"
+                                        width="150" height="150">
                                     <p style="padding: 25px">Agradeciendo que llene el formulario de manera correcta para
                                         ofrecerle el mejor servicio que se merece.</p>
 
@@ -58,27 +61,27 @@
                             </div>
                         </div>
 
-                        <div v-for="(item, index) in especialistas" class="card">
+                        <div class="card">
                             <div class="row">
                                 <div class="col-md-8">
-                                    <div v-if="item.foto == null" style="margin-left: 10px;">
+                                    <!-- <div v-if="item.foto == null" style="margin-left: 10px;">
                                         <img :src="path_url + 'assets/images/logos/perfil.png'"
                                             style="height: 60px; width: 60px; background-repeat: no-repeat; background-position: 50%; border-radius: 50%; background-size: 100% auto;">
                                     </div>
                                     <div v-else>
                                         <img :src="path_url + 'storage/' + (item.foto.imagen_path).substring(6)"
                                             style="height: 60px; width: 60px; background-repeat: no-repeat; background-position: 50%; border-radius: 50%; background-size: 100% auto;">
-                                    </div>
+                                    </div> -->
                                     <div class="card-body" style="margin-left: 10px;">
-                                        <h4 class="card-title">{{ item.titulo }} {{ item.nombre }}
-                                            {{ item.apellido_pat }}
-                                            {{ item.apellido_mat }}</h4>
+                                        <h4 class="card-title">{{ especialista.titulo }} {{ especialista.nombre }}
+                                            {{ especialista.apellido_pat }}
+                                            {{ especialista.apellido_mat }}</h4>
                                         <!-- <h5>{{ item.especialidad }}</h5> -->
-                                        <p class="card-text">{{ item.descripcion }}</p>
+                                        <p class="card-text">{{ especialista.descripcion }}</p>
                                     </div>
                                 </div>
 
-                                <div v-if="item.contador_mañana != 0 || item.contador_tarde != 0" class="row col-md-4"
+                                <!-- <div v-if="item.contador_mañana != 0 || item.contador_tarde != 0" class="row col-md-4"
                                     style="text-align: center;">
                                     <div class="col-md-6">
                                         <div v-for="(horas, index) in item.horario_mañana" style="padding-bottom: 5px;">
@@ -96,7 +99,7 @@
                                 <div v-else class="row col-md-4" style="text-align: center;">
                                     <i class="fa-regular fa-calendar-xmark"></i>
                                     <p>Este calendario ya tiene todas sus horas cubiertas</p>
-                                </div>
+                                </div> -->
 
                             </div>
 
@@ -213,9 +216,9 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row" style="text-align: center;">
+                        <!-- <div class="row" style="text-align: center;">
                             <p><b>¿Qué buscas solucionar con la terapia?</b></p>
-                        </div>
+                        </div> -->
                     </TabContent>
                     <TabContent title="Datos de Contacto" icon="fa-regular fa-address-book">
                         <div class="row">
@@ -283,6 +286,8 @@
 import Multiselect from '@vueform/multiselect'
 import { FormWizard, TabContent } from "vue3-form-wizard";
 import "vue3-form-wizard/dist/style.css";
+
+
 export default {
     components: {
         FormWizard,
@@ -291,10 +296,11 @@ export default {
     },
     data() {
         return {
+
             path_url: window.vue_url,
             options: [],
             servicioSeleccionado: 0,
-            especialistas: [],
+            especialista: {},
             generarCita: {},
             nuevoHorario: [],
             fechaCita: 0,
@@ -308,7 +314,6 @@ export default {
         }
     },
     methods: {
-
         obtenerHora(horas) {
             this.generarCita.hora_cita = horas.id;
         },
@@ -317,46 +322,11 @@ export default {
             const thisVue = this;
             this.contador = this.contador + 1;
             // if (this.contador == 2) {
-            if (this.nuevaLista.length == 0) {
-                this.nuevaLista = this.especialistas;
-                //console.log(this.nuevaLista, 'entramos a sigueinte');
-            }
+            // if (this.nuevaLista.length == 0) {
+            //     this.nuevaLista = this.especialistas;
+            //     //console.log(this.nuevaLista, 'entramos a sigueinte');
             // }
-        },
-
-        getNuevaLista() {
-            const thisVue = this;
-            this.nuevaLista = [];
-            console.log(this.nuevaLista);
-            this.especialistas.forEach(especialidades => {
-                if (especialidades.servicio_id.includes(this.servicioSeleccionado)) {
-                    console.log('coinciden las especialidades con ', especialidades.id);
-                    this.nuevaLista.push(especialidades);
-                    thisVue.especialistas = [];
-                    let obj = {
-                        especialista: this.nuevaLista,
-                        fecha: thisVue.fechaCita,
-
-                    };
-                    axios.post(thisVue.path_url + '/api/citas/getEspecialistasFiltro', obj)
-                        .then((res) => {
-                            res.data.forEach(element => {
-                                thisVue.especialistas.push(element[0])
-                            });
-                        })
-                        .catch((error) => {
-
-                        });
-                }
-            });
-            if (this.nuevaLista.length == 0) {
-                this.$swal(
-                    'Terapeutas no econtrados',
-                    'No encontramos terapeuta con las especificaciones buscadas, te sugerimos ingresar una breve descripción del problema que buscas solucionar y a continuación selecciona al terapeuta de tu preferencia.',
-                    'warning'
-                );
-            }
-            //this.servicioSeleccionado = 0;
+            // }
         },
 
         onComplete() {
@@ -371,92 +341,31 @@ export default {
                         JSON.stringify(error.response.data.errors)
                     );
                     thisVue.bandera = true;
-                    // console.log(error);
-                    // const myAlert = document.getElementById('myAlert');
-                    // myAlert.classList.add("show")
+
                 });
         },
 
-        async obtenerServicios() {
+        obtenerCita() {
             const thisVue = this;
-            await axios.get(thisVue.path_url + `/api/citas/getSubCategorias`)
-                .then(res => {
-                    res.data.forEach(element => {
-                        thisVue.options.push({
-                            value: element.id,
-                            label: element.text_html,
-                        });
-                    });
+            var URLactual = window.location;
+            
+            console.log(URLactual.href.split('/'));
+
+            //editor
+            axios.get(thisVue.path_url + '/api/citas/agendarCitaId')
+                .then((res) => {
+
                 })
-                .catch(error => {
+                .catch((error) => {
 
                 });
-        },
-
-        cambiosEspecialidad() {
-            //console.log(this.serviciosSeleccionados);
-        },
-
-        getEspecialistas() {
-            const thisVue = this;
-            thisVue.especialistas = [];
-            let nombre = '';
-            var meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
-            let numeroMes = (thisVue.fechaCita.substring(5, 7))
-
-            if (numeroMes <= 9) {
-                nombre = thisVue.fechaCita.substring(6, 7)
-                thisVue.mesActual = (meses[nombre - 1]);
-            } else {
-                nombre = thisVue.fechaCita.substring(5, 7)
-                thisVue.mesActual = (meses[nombre - 1]);
-            }
-
-            thisVue.fechaCompleta = thisVue.fechaCita.substring(8, 10) + ' de ' + thisVue.mesActual + ' del ' + thisVue.fechaCita.substring(0, 4);
-
-            if (thisVue.contador < 2) {
-                let obj = {
-                    fecha: thisVue.fechaCita,
-                };
-                axios.post(thisVue.path_url + '/api/citas/getEspecialistas', obj)
-                    .then((res) => {
-                        thisVue.especialistas = res.data;
-                        //thisVue.nuevaLista = res.data;
-                    })
-                    .catch((error) => {
-
-                    });
-            } else {
-                console.log('entramos al segundo buscador');
-                let obj = {
-                    especialista: this.nuevaLista,
-                    fecha: thisVue.fechaCita,
-
-                };
-
-                axios.post(thisVue.path_url + '/api/citas/getEspecialistasFiltro', obj)
-                    .then((res) => {
-                        //thisVue.especialistas = res.data;
-                        res.data.forEach(element => {
-                            thisVue.especialistas.push(element[0])
-                        });
-                        //thisVue.nuevaLista = res.data;
-                        //thisVue.bandera = true;
-                        console.log(thisVue.especialistas)
-                    })
-                    .catch((error) => {
-
-                    });
-            }
-
-
-        },
+        }
 
     },
 
-
-
     async mounted() {
+        this.obtenerCita();
+
         let date = new Date();
         let day = date.getDate();
         let month = date.getMonth() + 1;
@@ -472,8 +381,6 @@ export default {
                 this.fechaCita = (`${year}-0${month}-0${day}`)
             }
         }
-        this.getEspecialistas();
-        this.obtenerServicios();
     }
 }
 </script>

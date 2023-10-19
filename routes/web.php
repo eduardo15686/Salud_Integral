@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CitaController;
 use App\Http\Controllers\EspecialistaController;
 use Illuminate\Support\Facades\Route;
 
@@ -27,10 +28,18 @@ Route::get('/', [EspecialistaController::class, 'index']);
 // Route::get('/cita', [EspecialistaController::class, 'cita']);
 // Route::post('/cita', [EspecialistaController::class, 'filtrar'])->name('filtrar');
 Route::get('/finalizar', function () {
-    return view('finalizado'); })->name('finalizar');
+    return view('finalizado');
+})->name('finalizar');
 
-    Route::get('/politicas', function () {
-        return view('politicas'); })->name('politicas');
+Route::get('/politicas', function () {
+    return view('politicas');
+})->name('politicas');
+
+
+Route::get('/cita/{id}', [CitaController::class, 'about'])->name('about');
+
+
+
 
 
 Auth::routes();
@@ -72,6 +81,10 @@ Route::get('/agenda', function () {
 Route::get('/cita', function () {
     return view('panels.inicio');
 })->name('citas');
+
+Route::get('/cita/{$id}', function () {
+    return view('panels.citaId');
+})->name('citasId');
 
 Route::get('/paciente', function () {
     return view('panels.pacientes.paciente');

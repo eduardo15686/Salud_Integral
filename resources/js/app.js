@@ -51,6 +51,9 @@ app.component('password', Password);
 import ProcesoCitas from './components/Inicio.vue';
 app.component('generar-cita', ProcesoCitas);
 
+import ProcesoCitaId from './components/InicioId.vue';
+app.component('cita-id', ProcesoCitaId);
+
 import Agenda from './components/agenda/Agenda.vue';
 app.component('agenda', Agenda);
 

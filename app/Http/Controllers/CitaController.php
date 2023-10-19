@@ -16,6 +16,21 @@ use Illuminate\Http\Request;
 
 class CitaController extends Controller
 {
+    public function about($id)
+    {
+        $especialista = Especialista::where('id', $id)
+            ->first();
+
+        //return json_encode(array(view('panels.citaId')->with('especialista', $especialista), 'especialista' => $especialista));
+        // echo $especialista;
+       
+        return view('panels.citaId')->with('dato', $especialista);
+    }
+
+    public function agendarCitaId(Request $id)
+    {
+        return $id;
+    }
     public function getEspecialistasFiltro(Request $request)
     {
         $nuevaLista = [];

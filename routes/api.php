@@ -130,5 +130,6 @@ Route::prefix('/citas')->group(function () {
     Route::post('/getEspecialistasFiltro', [CitaController::class, 'getEspecialistasFiltro']);
     Route::get('/obtenerLinkFoto', [CitaController::class, 'obtenerLinkFoto']);
     Route::post('/agendarCita', [CitaController::class, 'agendarCita']);
+    Route::get('/agendarCitaId/{id}', [CitaController::class, 'agendarCitaId']);
     Route::get('/getSubCategorias', [CitaController::class, 'getSubCategorias']);
 });

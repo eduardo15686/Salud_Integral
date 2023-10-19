@@ -31,9 +31,6 @@
             <!-- <h1 class="logo me-auto"><a href="index.html">Salud Integral</a></h1> -->
             <!-- Uncomment below if you prefer to use an image logo -->
             <a href="/" class="logo me-auto"><img src="principal/assets/img/logo.png" alt="" class="img-fluid"></a>
-
-
-
             <a href="/" class="appointment-btn scrollto"><span class="d-none d-md-inline">Página Principal</span>
             </a>
 
