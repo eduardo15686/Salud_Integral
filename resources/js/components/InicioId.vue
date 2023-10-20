@@ -402,9 +402,7 @@ export default {
     },
 
     async mounted() {
-        this.obtenerCita();
-        this.getEspecialista();
-        this.obtenerServicios();
+
         let date = new Date();
         let day = date.getDate();
         let month = date.getMonth() + 1;
@@ -420,6 +418,9 @@ export default {
                 this.fechaCita = (`${year}-0${month}-0${day}`)
             }
         }
+        this.obtenerCita();
+        this.getEspecialista();
+        this.obtenerServicios();
     }
 }
 </script>
