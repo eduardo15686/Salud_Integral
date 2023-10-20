@@ -30,7 +30,7 @@
                             <div class="form-floating col-md-5">
                                 <label class="form-label">Que buscas solucionar con la terapia</label>
                                 <Multiselect v-model="servicioSeleccionado" :searchable="true" :create-option="false"
-                                    :options="options" @select="getNuevaLista()" />
+                                    :options="options" />
 
                             </div>
                             <div class="form-floating col-md-6" style="margin-left: 25px;">
@@ -383,13 +383,28 @@ export default {
                 .catch((error) => {
 
                 });
+        },
+        async obtenerServicios() {
+            const thisVue = this;
+            await axios.get(thisVue.path_url + `/api/citas/getSubCategorias`)
+                .then(res => {
+                    res.data.forEach(element => {
+                        thisVue.options.push({
+                            value: element.id,
+                            label: element.text_html,
+                        });
+                    });
+                })
+                .catch(error => {
 
-        }
+                });
+        },
     },
 
     async mounted() {
         this.obtenerCita();
         this.getEspecialista();
+        this.obtenerServicios();
         let date = new Date();
         let day = date.getDate();
         let month = date.getMonth() + 1;
