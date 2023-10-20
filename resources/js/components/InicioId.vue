@@ -55,7 +55,7 @@
                             </div>
                             <div class="col-md-3" style="margin-bottom: 20px;">
                                 <label for="startDate">Selecciona una fecha:</label>
-                                <input id="startDate" class="form-control" @change="getEspecialistas(item)" type="date"
+                                <input id="startDate" class="form-control" @change="getEspecialista(item)" type="date"
                                     v-model="fechaCita" />
 
                             </div>
@@ -64,33 +64,35 @@
                         <div class="card">
                             <div class="row">
                                 <div class="col-md-8">
-                                    <!-- <div v-if="item.foto == null" style="margin-left: 10px;">
-                                        <img :src="path_url + 'assets/images/logos/perfil.png'"
+                                    <div v-if="especialista.foto == null" style="margin-left: 10px;">
+                                        <img src="http://saludintegraltest.duckdns.org//assets/images/logos/perfil.png"
                                             style="height: 60px; width: 60px; background-repeat: no-repeat; background-position: 50%; border-radius: 50%; background-size: 100% auto;">
                                     </div>
                                     <div v-else>
-                                        <img :src="path_url + 'storage/' + (item.foto.imagen_path).substring(6)"
+                                        <img :src="urlFoto + '/storage/' + (especialista.foto.imagen_path).substring(6)"
                                             style="height: 60px; width: 60px; background-repeat: no-repeat; background-position: 50%; border-radius: 50%; background-size: 100% auto;">
-                                    </div> -->
+                                    </div>
                                     <div class="card-body" style="margin-left: 10px;">
                                         <h4 class="card-title">{{ especialista.titulo }} {{ especialista.nombre }}
                                             {{ especialista.apellido_pat }}
                                             {{ especialista.apellido_mat }}</h4>
-                                        <!-- <h5>{{ item.especialidad }}</h5> -->
+                                        <!-- <h5>{{ especialista.especialidad }}</h5> -->
                                         <p class="card-text">{{ especialista.descripcion }}</p>
                                     </div>
                                 </div>
 
-                                <!-- <div v-if="item.contador_mañana != 0 || item.contador_tarde != 0" class="row col-md-4"
-                                    style="text-align: center;">
+                                <div v-if="especialista.contador_mañana != 0 || especialista.contador_tarde != 0"
+                                    class="row col-md-4" style="text-align: center;">
                                     <div class="col-md-6">
-                                        <div v-for="(horas, index) in item.horario_mañana" style="padding-bottom: 5px;">
+                                        <div v-for="(horas, index) in especialista.horario_mañana"
+                                            style="padding-bottom: 5px;">
                                             <button type="button" class="btn btn-primary btn-sm"
                                                 v-on:click="obtenerHora(horas)">{{ horas.hora.substring(0, 5) }}</button>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
-                                        <div v-for="(horas, index) in item.horario_tarde" style="padding-bottom: 5px;">
+                                        <div v-for="(horas, index) in especialista.horario_tarde"
+                                            style="padding-bottom: 5px;">
                                             <button type="button" class="btn btn-primary btn-sm"
                                                 v-on:click="obtenerHora(horas)">{{ horas.hora.substring(0, 5) }}</button>
                                         </div>
@@ -99,7 +101,7 @@
                                 <div v-else class="row col-md-4" style="text-align: center;">
                                     <i class="fa-regular fa-calendar-xmark"></i>
                                     <p>Este calendario ya tiene todas sus horas cubiertas</p>
-                                </div> -->
+                                </div>
 
                             </div>
 
@@ -266,7 +268,8 @@
                         <h5 style="padding: 25px">Su solicitud a sido enviada al terapeuta, el se comunicara con usted lo
                             antes posible para confirmar su cita. </h5>
                         <div>
-                            <img src="principal/assets/img/registro.png" width="150" height="150">
+                            <img src="http://saludintegraltest.duckdns.org/principal/assets/img/registro.png" width="150"
+                                height="150">
                             <p style="padding: 25px">Gracias por su tiempo.</p>
 
                         </div>
@@ -299,6 +302,7 @@ export default {
 
             path_url: window.vue_url,
             options: [],
+            urlFoto: '',
             servicioSeleccionado: 0,
             especialista: {},
             generarCita: {},
@@ -348,24 +352,44 @@ export default {
         obtenerCita() {
             const thisVue = this;
             var URLactual = window.location;
-            
-            console.log(URLactual.href.split('/'));
-
+            let idEspecialista = URLactual.href.split('/');
+            this.urlFoto = idEspecialista[0] + '//' + idEspecialista[2];
+            console.log(this.urlFoto);
             //editor
-            axios.get(thisVue.path_url + '/api/citas/agendarCitaId')
+            axios.get(thisVue.path_url + '/api/citas/agendarCitaId/' + idEspecialista[4])
                 .then((res) => {
 
                 })
                 .catch((error) => {
 
                 });
-        }
+        },
 
+        getEspecialista() {
+            const thisVue = this;
+            thisVue.especialista = [];
+            var URLactual = window.location;
+            let idEspecialista = URLactual.href.split('/');
+            let obj = {
+                fecha: thisVue.fechaCita,
+                id: idEspecialista[4]
+            };
+            axios.post(thisVue.path_url + '/api/citas/getEspecialista', obj)
+                .then((res) => {
+                    thisVue.especialista = res.data[0];
+                    //thisVue.nuevaLista = res.data;
+                    console.log(res.data[0]);
+                })
+                .catch((error) => {
+
+                });
+
+        }
     },
 
     async mounted() {
         this.obtenerCita();
-
+        this.getEspecialista();
         let date = new Date();
         let day = date.getDate();
         let month = date.getMonth() + 1;

@@ -127,6 +127,7 @@ Route::middleware('auth:sanctum')->prefix('/expedientes')->group(function () {
 
 Route::prefix('/citas')->group(function () {
     Route::post('/getEspecialistas', [CitaController::class, 'getEspecialistas']);
+    Route::post('/getEspecialista', [CitaController::class, 'getEspecialista']);
     Route::post('/getEspecialistasFiltro', [CitaController::class, 'getEspecialistasFiltro']);
     Route::get('/obtenerLinkFoto', [CitaController::class, 'obtenerLinkFoto']);
     Route::post('/agendarCita', [CitaController::class, 'agendarCita']);

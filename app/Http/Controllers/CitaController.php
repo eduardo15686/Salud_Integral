@@ -23,11 +23,11 @@ class CitaController extends Controller
 
         //return json_encode(array(view('panels.citaId')->with('especialista', $especialista), 'especialista' => $especialista));
         // echo $especialista;
-       
+
         return view('panels.citaId')->with('dato', $especialista);
     }
 
-    public function agendarCitaId(Request $id)
+    public function agendarCitaId($id)
     {
         return $id;
     }
@@ -67,6 +67,40 @@ class CitaController extends Controller
         }
         return $nuevaLista;
     }
+    public function getEspecialista(Request $request)
+    {
+        $fecha = $request['fecha'];
+        $especialistas = Especialista::with('foto')
+            ->with([
+                'horario_mañana' => function ($query) use ($fecha) {
+                    $query->whereDate('fecha', '>=', Carbon::today());
+                    $query->whereDate('fecha', $fecha);
+                },
+                'horario_tarde' => function ($query) use ($fecha) {
+                    $query->whereDate('fecha', '>=', Carbon::today());
+                    $query->whereDate('fecha', $fecha);
+                }
+
+            ])
+            ->withCount([
+                'horario_tarde as contador_tarde' => function ($query) use ($fecha) {
+                    $query->whereDate('fecha', '>=', Carbon::today());
+                    $query->whereDate('fecha', $fecha);
+                }
+            ])->withCount([
+                    'horario_mañana as contador_mañana' => function ($query) use ($fecha) {
+                        $query->whereDate('fecha', '>=', Carbon::today());
+                        $query->whereDate('fecha', $fecha);
+                    }
+                ])
+            ->where('estatus', 'Activo')
+            ->where('id', $request['id'])
+            ->get();
+
+        return response()->json($especialistas, 200);
+
+    }
+
     public function getEspecialistas(Request $request)
     {
         $fecha = $request['fecha'];
