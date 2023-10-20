@@ -213,7 +213,7 @@
           <div class="col-lg-3 col-md-6">
             <div class="count-box">
               <i class="fas fa-user-md"></i>
-              <span data-purecounter-start="0" data-purecounter-end="85" data-purecounter-duration="1"
+              <span data-purecounter-start="0" data-purecounter-end="+12" data-purecounter-duration="1"
                 class="purecounter"></span>
               <p>ESPECIALISTAS</p>
             </div>
@@ -222,7 +222,7 @@
           <div class="col-lg-3 col-md-6 mt-5 mt-md-0">
             <div class="count-box">
               <i class="far fa-hospital"></i>
-              <span data-purecounter-start="0" data-purecounter-end="18" data-purecounter-duration="1"
+              <span data-purecounter-start="0" data-purecounter-end="+10" data-purecounter-duration="1"
                 class="purecounter"></span>
               <p>ESPECIALIDADES</p>
             </div>
@@ -231,7 +231,7 @@
           <div class="col-lg-3 col-md-6 mt-5 mt-lg-0">
             <div class="count-box">
               <i class="fas fa-flask"></i>
-              <span data-purecounter-start="0" data-purecounter-end="12" data-purecounter-duration="1"
+              <span data-purecounter-start="0" data-purecounter-end="10" data-purecounter-duration="1"
                 class="purecounter"></span>
               <p>AÑOS DE SERVICIO</p>
             </div>
@@ -240,7 +240,7 @@
           <div class="col-lg-3 col-md-6 mt-5 mt-lg-0">
             <div class="count-box">
               <i class="fas fa-award"></i>
-              <span data-purecounter-start="0" data-purecounter-end="150" data-purecounter-duration="1"
+              <span data-purecounter-start="0" data-purecounter-end="+1000" data-purecounter-duration="1"
                 class="purecounter"></span>
               <p>PACIENTES ATENDIDOS</p>
             </div>
@@ -434,12 +434,8 @@
               <div class="tab-pane" id="tab-2">
                 <div class="row gy-4">
                   <div class="col-lg-8 details order-2 order-lg-1">
-                    <h3>Et blanditiis nemo veritatis excepturi</h3>
-                    <p class="fst-italic">Qui laudantium consequatur laborum sit qui ad sapiente dila parde sonata raqer
-                      a videna mareta paulona marka</p>
-                    <p>Ea ipsum voluptatem consequatur quis est. Illum error ullam omnis quia et reiciendis sunt sunt
-                      est. Non aliquid repellendus itaque accusamus eius et velit ipsa voluptates. Optio nesciunt eaque
-                      beatae accusamus lerode pakto madirna desera vafle de nideran pal</p>
+                    <h3>Medicina regenerartiva</h3>
+                    <p class="fst-italic">La medicina regenerativa es un campo amplio que incluye la ingeniería de tejidos, pero también incorpora la investigación sobre auto curación – donde el cuerpo usa sus propios sistemas, algunas veces con ayuda de material biológico extraño, para recrear células y reconstruir tejidos y órganos. </p>
                   </div>
                   <div class="col-lg-4 text-center order-1 order-lg-2">
                     <img src="principal/assets/img/departments-2.jpg" alt="" class="img-fluid">
@@ -449,12 +445,8 @@
               <div class="tab-pane" id="tab-3">
                 <div class="row gy-4">
                   <div class="col-lg-8 details order-2 order-lg-1">
-                    <h3>Impedit facilis occaecati odio neque aperiam sit</h3>
-                    <p class="fst-italic">Eos voluptatibus quo. Odio similique illum id quidem non enim fuga. Qui natus
-                      non sunt dicta dolor et. In asperiores velit quaerat perferendis aut</p>
-                    <p>Iure officiis odit rerum. Harum sequi eum illum corrupti culpa veritatis quisquam. Neque
-                      necessitatibus illo rerum eum ut. Commodi ipsam minima molestiae sed laboriosam a iste odio. Earum
-                      odit nesciunt fugiat sit ullam. Soluta et harum voluptatem optio quae</p>
+                    <h3>Tanatología</h3>
+                    <p class="fst-italic">La Tanatología es una disciplina científica que se encarga de encontrar el sentido al proceso de la muerte, sus ritos y significado concebido como disciplina profesional, que integra a la persona como un ser biológico, psicológico, social y espiritual para vivir en plenitud y buscar su transcendencia. También se encarga de los duelos derivados de pérdidas significativas que no tengan que ver con la muerte física o enfermos terminales.</p>
                   </div>
                   <div class="col-lg-4 text-center order-1 order-lg-2">
                     <img src="principal/assets/img/departments-3.jpg" alt="" class="img-fluid">
@@ -644,7 +636,7 @@
               Diego de Vilchis #2951 Col. San Felipe <br>
               Chihuahua, Chihuahua C.P. 31203<br>
               Chihuahua, México <br><br>
-              <strong>Teléfono:</strong><br>
+              <strong>Teléfono:</strong> 614-106 3267<br>
               <strong>Correo:</strong> contacto@saludintegral.com.mx<br>
             </p>
           </div>
