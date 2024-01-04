@@ -4,7 +4,7 @@
 <head>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9678376346589368"
         crossorigin="anonymous"></script>
-
+    <meta name="google-adsense-account" content="ca-pub-9678376346589368">
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <title>Salud Integral</title>
