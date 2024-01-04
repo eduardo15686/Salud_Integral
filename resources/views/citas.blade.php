@@ -2,6 +2,9 @@
 <html lang="en">
 
 <head>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9678376346589368"
+        crossorigin="anonymous"></script>
+
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <title>Salud Integral</title>
@@ -40,10 +43,10 @@
     <div class="row">
         <div id="app">
             <main id="main" class="main">
-                <section class="section">  
+                <section class="section">
                     <div class="row" style="text-align: center;">
                         @yield('content')
-                        </div>
+                    </div>
                 </section>
             </main><!-- End #main -->
         </div>

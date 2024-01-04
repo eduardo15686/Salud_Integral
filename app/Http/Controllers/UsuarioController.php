@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Crypt;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
@@ -12,8 +13,11 @@ class UsuarioController extends Controller
 {
     public function getUsuarios()
     {
-        $usuarios = User::with('perfil')->get();
-        return response()->json($usuarios, 200);
+        $usuarios = User::with('perfil')
+        ->get();
+        //$cadenaDesencriptada = Crypt::decryptString($usuarios[0]['password']);
+        return $usuarios;
+        //return response()->json($usuarios, 200);
 
     }
 
