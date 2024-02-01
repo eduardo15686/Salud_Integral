@@ -65,10 +65,10 @@
                                         <img :src="path_url + 'assets/images/logos/perfil.png'"
                                             style="height: 60px; width: 60px; background-repeat: no-repeat; background-position: 50%; border-radius: 50%; background-size: 100% auto;">
                                     </div>
-                                    <div v-else>
+                                    <!-- <div v-else>
                                         <img :src="path_url + 'storage/' + (item.foto.imagen_path).substring(6)"
                                             style="height: 60px; width: 60px; background-repeat: no-repeat; background-position: 50%; border-radius: 50%; background-size: 100% auto;">
-                                    </div>
+                                    </div> -->
                                     <div class="card-body" style="margin-left: 10px;">
                                         <h4 class="card-title">{{ item.titulo }} {{ item.nombre }}
                                             {{ item.apellido_pat }}
