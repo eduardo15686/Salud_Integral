@@ -512,11 +512,12 @@
                
                 ?>
                   <h3>{{ $especialista['especialista'] -> titulo}} {{ $especialista['especialista'] -> nombre}} {{ $especialista['especialista']-> apellido_pat}} {{ $especialista['especialista'] -> apellido_mat}}</h3>
-                  <h4>{{$especialista['especialidad']}}</h4>
-                  <p>
-                    <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-                    {{ $especialista['especialista'] -> descripcion}}
-                    <i class="bx bxs-quote-alt-right quote-icon-right"></i>
+                  <h4>{{ $especialista['especialista'] -> descripcion}}</h4>
+                  
+                  <p style="font-size: small">
+                    <i class="bx bxs-quote-alt-left quote-icon-left" style="font-size: x-small"></i>
+                      {{$especialista['especialidad']}}
+                    <i class="bx bxs-quote-alt-right quote-icon-right" style="font-size: x-small"></i>
                   </p>
                 </div>
               </div>
