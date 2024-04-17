@@ -44,65 +44,7 @@
                             </div>
                         </div>
                     </TabContent>
-                    <TabContent title="Terapeutas" icon="fa-solid fa-user-doctor">
-
-                        <div class="row">
-                            <div class="col-md-9" style="text-align: center;">
-                                <h4>{{ fechaCompleta }}</h4>
-                            </div>
-                            <div class="col-md-3" style="margin-bottom: 20px;">
-                                <label for="startDate">Selecciona una fecha:</label>
-                                <input id="startDate" class="form-control" @change="getEspecialistas(item)" type="date"
-                                    v-model="fechaCita" />
-
-                            </div>
-                        </div>
-
-                        <div v-for="(item, index) in especialistas" class="card">
-                            <div class="row">
-                                <div class="col-md-8">
-                                    <div v-if="item.foto == null" style="margin-left: 10px;">
-                                        <img :src="path_url + 'assets/images/logos/perfil.png'"
-                                            style="height: 60px; width: 60px; background-repeat: no-repeat; background-position: 50%; border-radius: 50%; background-size: 100% auto;">
-                                    </div>
-                                    <div v-else>
-                                        <img :src="path_url + 'storage/' + (item.foto.imagen_path).substring(6)"
-                                            style="height: 60px; width: 60px; background-repeat: no-repeat; background-position: 50%; border-radius: 50%; background-size: 100% auto;">
-                                    </div>
-                                    <div class="card-body" style="margin-left: 10px;">
-                                        <h4 class="card-title">{{ item.titulo }} {{ item.nombre }}
-                                            {{ item.apellido_pat }}
-                                            {{ item.apellido_mat }}</h4>
-                                        <!-- <h5>{{ item.especialidad }}</h5> -->
-                                        <p class="card-text">{{ item.descripcion }}</p>
-                                    </div>
-                                </div>
-
-                                <div v-if="item.contador_mañana != 0 || item.contador_tarde != 0" class="row col-md-4"
-                                    style="text-align: center;">
-                                    <div class="col-md-6">
-                                        <div v-for="(horas, index) in item.horario_mañana" style="padding-bottom: 5px;">
-                                            <button type="button" class="btn btn-primary btn-sm"
-                                                v-on:click="obtenerHora(horas)">{{ horas.hora.substring(0, 5) }}</button>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div v-for="(horas, index) in item.horario_tarde" style="padding-bottom: 5px;">
-                                            <button type="button" class="btn btn-primary btn-sm"
-                                                v-on:click="obtenerHora(horas)">{{ horas.hora.substring(0, 5) }}</button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div v-else class="row col-md-4" style="text-align: center;">
-                                    <i class="fa-regular fa-calendar-xmark"></i>
-                                    <p>Este calendario ya tiene todas sus horas cubiertas</p>
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                    </TabContent>
+                    
                     <TabContent title="Sobre ti" icon="fa-regular fa-address-card">
                         <div class="row">
                             <div class="col-sm-12">
@@ -217,6 +159,64 @@
                             <p><b>¿Qué buscas solucionar con la terapia?</b></p>
                         </div>
                     </TabContent>
+                    <TabContent title="Terapeutas" icon="fa-solid fa-user-doctor">
+
+<div class="row">
+    <div class="col-md-9" style="text-align: center;">
+        <h4>{{ fechaCompleta }}</h4>
+    </div>
+    <div class="col-md-3" style="margin-bottom: 20px;">
+        <label for="startDate">Selecciona una fecha:</label>
+        <input id="startDate" class="form-control" @change="getEspecialistas(item)" type="date"
+            v-model="fechaCita" />
+
+    </div>
+</div>
+
+<div v-for="(item, index) in especialistas" class="card">
+    <div class="row">
+        <div class="col-md-8">
+            <div v-if="item.foto == null" style="margin-left: 10px;">
+                <img :src="path_url + 'assets/images/logos/perfil.png'"
+                    style="height: 60px; width: 60px; background-repeat: no-repeat; background-position: 50%; border-radius: 50%; background-size: 100% auto;">
+            </div>
+            <div v-else>
+                <img :src="path_url + 'storage/' + (item.foto.imagen_path).substring(6)"
+                    style="height: 60px; width: 60px; background-repeat: no-repeat; background-position: 50%; border-radius: 50%; background-size: 100% auto;">
+            </div>
+            <div class="card-body" style="margin-left: 10px;">
+                <h4 class="card-title">{{ item.titulo }} {{ item.nombre }}
+                    {{ item.apellido_pat }}
+                    {{ item.apellido_mat }}</h4>
+                <!-- <h5>{{ item.especialidad }}</h5> -->
+                <p class="card-text">{{ item.descripcion }}</p>
+            </div>
+        </div>
+
+        <div v-if="item.contador_mañana != 0 || item.contador_tarde != 0" class="row col-md-4"
+            style="text-align: center;">
+            <div class="col-md-6">
+                <div v-for="(horas, index) in item.horario_mañana" style="padding-bottom: 5px;">
+                    <button type="button" class="btn btn-primary btn-sm"
+                        v-on:click="obtenerHora(horas)">{{ horas.hora.substring(0, 5) }}</button>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div v-for="(horas, index) in item.horario_tarde" style="padding-bottom: 5px;">
+                    <button type="button" class="btn btn-primary btn-sm"
+                        v-on:click="obtenerHora(horas)">{{ horas.hora.substring(0, 5) }}</button>
+                </div>
+            </div>
+        </div>
+        <div v-else class="row col-md-4" style="text-align: center;">
+            <i class="fa-regular fa-calendar-xmark"></i>
+            <p>Este calendario ya tiene todas sus horas cubiertas para el día de hoy. (Te recomendamos buscar otra fecha o solicitar que el terapeuta te contacté)</p>
+            <button type="button" class="btn btn-primary btn-sm" v-on:click="solicitarCita()">Solicitar</button>
+        </div>
+    </div>
+</div>
+
+</TabContent>
                     <TabContent title="Datos de Contacto" icon="fa-regular fa-address-book">
                         <div class="row">
                             <h5 class="info-text">Datos del paciente</h5>
@@ -324,6 +324,9 @@ export default {
             // }
         },
 
+        solicitarCita(){
+            console.log('cita solicitada');
+        },
         getNuevaLista() {
             const thisVue = this;
             this.nuevaLista = [];

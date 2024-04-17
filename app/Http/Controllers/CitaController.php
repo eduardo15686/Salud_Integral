@@ -172,7 +172,7 @@ class CitaController extends Controller
             '\nHora: ' . $agendar['hora'];
 
         $params = array(
-            'token' => 'j9yrhy3r3l9f33ma',
+            'token' => 'bb99atjshh5f7wre',
             'to' => $especialista['celular'],
             'body' => $message
         );
@@ -180,7 +180,7 @@ class CitaController extends Controller
         curl_setopt_array(
             $curl,
             array(
-                CURLOPT_URL => "https://api.ultramsg.com/instance62942/messages/chat",
+                CURLOPT_URL => "https://api.ultramsg.com/instance83750/messages/chat",
                 CURLOPT_RETURNTRANSFER => true,
                 CURLOPT_ENCODING => "",
                 CURLOPT_MAXREDIRS => 10,
